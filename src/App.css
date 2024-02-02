@@ -1,10 +1,20 @@
+/* src/App.css */
+
 .App {
   text-align: center;
+  font-family: 'Baloo 2', cursive;
+  font-weight: 600;
+  background-image: url('./pompombg.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #ffffff; 
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+  margin-bottom: 20px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -14,18 +24,18 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: rgba(255, 255, 255, 0.45); /* White background with 45% opacity? */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: calc(23px + 2vmin); 
+  color: #6a5acd; /* Lavender */
 }
 
 .App-link {
-  color: #61dafb;
+  color: #87cefa; /* Light Sky Blue */
 }
 
 @keyframes App-logo-spin {
