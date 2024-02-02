@@ -1,9 +1,12 @@
 // src/Timer.js
 import React, { useState, useEffect } from 'react';
 
-const Timer = () => {
-  const [seconds, setSeconds] = useState(25 * 60); // Initial 25-minute timer
-  const [isBreak, setIsBreak] = useState(false);
+const Timer = ({ timerLength }) => {
+  const [seconds, setSeconds] = useState(timerLength);
+
+  useEffect(() => {
+    setSeconds(timerLength);
+  }, [timerLength]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -12,15 +15,14 @@ const Timer = () => {
           return prevSeconds - 1;
         } else {
           clearInterval(intervalId);
-          setIsBreak(true); // Enable break timer when the initial timer reaches 0
-          return 300; // Set break timer to 5 minutes (300 seconds)
+          return 0;
         }
       });
     }, 1000);
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
-  }, []);
+  }, [timerLength]);
 
   // Format seconds into MM:SS
   const formatTime = (timeInSeconds) => {
@@ -31,8 +33,8 @@ const Timer = () => {
 
   return (
     <div>
-      <h2>{isBreak ? 'Break Timer' : 'Focus Time'}</h2>
-      <p>Time Remaining: {formatTime(seconds)}</p>
+      <h2>Timer</h2>
+      <p>Elapsed Time: {formatTime(seconds)} minutes</p>
     </div>
   );
 };
