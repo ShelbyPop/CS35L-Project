@@ -1,9 +1,11 @@
 // src/App.js
 import React, { useState } from 'react';
+import { MantineProvider } from '@mantine/core';
 import './App.css';
 import Timer from './Timer';
 import Clock from './Clock';
 import TimerInput from './TimerInput';
+import LoginInput from './LoginInput';
 
 function App() {
   const [timerLength, setTimerLength] = useState(25 * 60); // Initial timer length in seconds
@@ -19,9 +21,14 @@ function App() {
         <TimerInput onSetTimer={handleSetTimer} />
         <Timer timerLength={timerLength} />
         <Clock />
+        <MantineProvider>
+          <LoginInput />
+        </MantineProvider>
       </header>
     </div>
   );
+
+  // Wrap components that use Mantine
 }
 
 export default App;
