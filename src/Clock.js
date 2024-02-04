@@ -9,7 +9,6 @@ const Clock = () => {
       setTime(new Date());
     }, 1000);
 
-    // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
   }, []);
 
@@ -20,7 +19,7 @@ const Clock = () => {
 
   return (
     <div>
-      <h2>Live Clock</h2>
+      <h2>Current time: </h2>
       <p>{formattedTime()}</p>
     </div>
   );

@@ -20,7 +20,6 @@ const Timer = ({ timerLength }) => {
       });
     }, 1000);
 
-    // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
   }, [timerLength]);
 
@@ -34,7 +33,7 @@ const Timer = ({ timerLength }) => {
   return (
     <div>
       <h2>Timer</h2>
-      <p>Elapsed Time: {formatTime(seconds)} minutes</p>
+      <p>Time remaining: {formatTime(seconds)} minutes</p>
     </div>
   );
 };
