@@ -30,11 +30,31 @@ const Timer = ({ timerLength }) => {
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   };
 
+  const progress = (timerLength - seconds) / timerLength;
+
   return (
-    <div>
-      <h2>Timer</h2>
-      <p>Time remaining: {formatTime(seconds)} minutes</p>
-    </div>
+      <div>
+        <h2>Timer</h2>
+        <div className="circular-timer">
+          <svg className="circular-timer-svg" width="200" height="200">
+            <circle className="circular-timer-background" cx="100" cy="100" r="90"></circle>
+            <circle
+                className="circular-timer-progress"
+                cx="100"
+                cy="100"
+                r="90"
+                strokeDasharray={`${progress * 565} 565`}
+                stroke="pink"
+                strokeWidth="20"
+                fill="white"
+            ></circle>
+            <text className="circular-timer-text" x="50%" y="50%" textAnchor="middle" dy="0.3em">
+              {formatTime(seconds)}
+            </text>
+          </svg>
+        </div>
+        <p>Time remaining: {formatTime(seconds)} minutes</p>
+      </div>
   );
 };
 
