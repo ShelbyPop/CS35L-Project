@@ -2,8 +2,8 @@
 
 .App {
   text-align: center;
-  font-family: 'Baloo 2', cursive;
-  text-shadow: 5px 4px 1px rgba(246, 20, 193, 0.963), 3px 9px 9px rgb(186, 174, 255);
+  font-family: 'Frankfurter Std', cursive;
+  text-shadow: 5px 5px 5px rgba(246, 20, 193, 0.963), 5px 9px 6px rgb(4, 4, 6);
   font-weight: 600;
   background-image: url('./pompombg.png'); 
   background-size: cover;
