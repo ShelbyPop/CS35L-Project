@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e1e202a7.css",
+    "main.js": "/static/js/main.126fcc80.js",
+    "static/js/592.c91a4001.chunk.js": "/static/js/592.c91a4001.chunk.js",
+    "static/media/pompombg.png": "/static/media/pompombg.26362322335e4a73f9a2.png",
+    "index.html": "/index.html",
+    "main.e1e202a7.css.map": "/static/css/main.e1e202a7.css.map",
+    "main.126fcc80.js.map": "/static/js/main.126fcc80.js.map",
+    "592.c91a4001.chunk.js.map": "/static/js/592.c91a4001.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e1e202a7.css",
+    "static/js/main.126fcc80.js"
+  ]
+}
