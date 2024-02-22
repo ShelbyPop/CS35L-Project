@@ -1,14 +1,18 @@
 // src/Timer.js
 import React, { useState, useEffect } from 'react';
 
-const Timer = ({ timerLength }) => {
+const Timer = ({ timerLength, onTimerFinish }) => {  // Add the onTimerFinish prop
   const [seconds, setSeconds] = useState(timerLength);
 
   useEffect(() => {
     setSeconds(timerLength);
   }, [timerLength]);
 
-  useEffect(() => {
+    useEffect(() => {
+    if(seconds === 0) {
+      onTimerFinish();  // Call the onTimerFinish when the timer hits 0
+      return;
+    }
     const intervalId = setInterval(() => {
       setSeconds((prevSeconds) => {
         if (prevSeconds > 0) {
@@ -21,8 +25,10 @@ const Timer = ({ timerLength }) => {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [timerLength]);
+  }, [seconds, onTimerFinish]);  // Include onTimerFinish in the dependency array
 
+
+  
   // Format seconds into MM:SS
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
