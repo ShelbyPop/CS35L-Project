@@ -5,7 +5,7 @@
   font-family: 'Frankfurter Std', cursive;
   text-shadow: 5px 5px 5px rgba(246, 20, 193, 0.963), 5px 9px 6px rgb(4, 4, 6);
   font-weight: 600;
-  background-image: url('./pompombg.png'); 
+  background-image: url('./pompombg1_shelby.png'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -25,7 +25,7 @@
 }
 
 .App-header {
-  background-color: rgba(255, 255, 255, 0.3); /* opacity */
+  background-color: rgba(255, 255, 255, 0.05); /* opacity */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
