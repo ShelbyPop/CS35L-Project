@@ -1,5 +1,5 @@
 // src/LoginInput.js
-import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
+import { TextInput, Button, Group, Box } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 export default function LoginInput() {
@@ -16,9 +16,21 @@ export default function LoginInput() {
     },
   });
 
+  const handleSubmit = async (values) => {
+    console.log(values);
+    const response = await fetch(
+      `http://localhost:5050/users/create?${new URLSearchParams(values)}`,
+      {method: 'POST'}
+    );
+    if (response.ok) {
+      const values = await response.json();
+      console.log(values);
+    }
+  };
+
   return (
     <Box maw={340} mx="auto">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
           label="Username"
           placeholder="your username"

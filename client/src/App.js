@@ -16,13 +16,12 @@ function App() {
     setTimerLength(length ? length * 60 : 25 * 60); // Convert minutes to seconds, default to 25 minutes if not specified
   };
 
-  const exitGame = () => {
-    setGameStarted(false);
-  };
-
-
   const startGame = () => {
     setGameStarted(true); // Function to start the game
+  };
+
+  const exitGame = () => {
+    setGameStarted(false);
   };
 
   return (
