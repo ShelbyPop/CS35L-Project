@@ -6,7 +6,7 @@ import Timer from './Timer';
 import Clock from './Clock';
 import TimerInput from './TimerInput';
 import LoginInput from './LoginInput';
-import GameWorld from './GameWorld';
+import GameWorld from './GameWorld'
 
 function App() {
   const [timerLength, setTimerLength] = useState(25 * 60); // Initial timer length in seconds
@@ -16,32 +16,45 @@ function App() {
     setTimerLength(length ? length * 60 : 25 * 60); // Convert minutes to seconds, default to 25 minutes if not specified
   };
 
-  const startGame = () => {
-    setGameStarted(true); // Function to start the game
-  };
-
   const exitGame = () => {
     setGameStarted(false);
   };
 
+
+  const startGame = () => {
+    setGameStarted(true); // Function to start the game
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>PomPom</h1>
-        {!gameStarted ? (
-          <>
-            <TimerInput onSetTimer={handleSetTimer} />
-            <Timer timerLength={timerLength} onTimerFinish={startGame} />
-            <Clock />
-            <MantineProvider>
-              <LoginInput />
-            </MantineProvider>
-          </>
-        ) : (
-          <GameWorld onExitGame={exitGame} />
-        )}
-      </header>
-    </div>
+      <div className="App">
+        <header className="App-header">
+          <h1 style={{ marginLeft: '335px', marginTop: '20px' }}>Café PomPom</h1>
+          {!gameStarted ? (
+              <>
+
+                <MantineProvider>
+                  <p className="custom-font" style={{ marginLeft: '1100px', marginTop: '70px' }}> Login
+                    <LoginInput />
+                  </p>
+                </MantineProvider>
+
+
+                <p style={{marginTop: '200px', marginBottom:"0px" }}>
+                  <Timer timerLength={timerLength} onTimerFinish={startGame} />
+                </p>
+
+                <p >
+                  <TimerInput onSetTimer={handleSetTimer} />
+                  <Clock />
+                </p>
+
+
+              </>
+          ) : (
+              <GameWorld onExitGame={exitGame} />
+          )}
+        </header>
+      </div>
   );
 }
 

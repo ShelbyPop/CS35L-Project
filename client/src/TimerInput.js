@@ -14,13 +14,13 @@ const TimerInput = ({ onSetTimer }) => {
   };
 
   return (
-    <div>
-      <label>
-        Set Timer Length (minutes):
-        <input type="number" value={timerLength} onChange={handleChange} />
-      </label>
-      <button onClick={handleSetTimer}>Set Timer</button>
-    </div>
+      <div>
+        <label  className="custom-font">
+          Set Timer Length (minutes):
+          <input type="number" value={timerLength} onChange={handleChange} />
+        </label>
+        <button onClick={handleSetTimer}>Set Timer</button>
+      </div>
   );
 };
 
