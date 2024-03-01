@@ -16,13 +16,23 @@ export default function LoginInput() {
     validate: {
       username: (value) => (/^\S+$/.test(value) ? null : 'Invalid username (has whitespace or is empty)'),
       password: (value) => (/^\S{6}\S*$/.test(value) ? null : 'Invalid password (has whitespace or less than 6 characters)')
-    },
-    onSubmit: (values) => {
-      setUsername(values.username);
-      setPassword(values.password);
-      setIsOpen(false);
     }
   });
+
+  const handleSubmit = async (values) => {
+    setUsername(values.username);
+    setPassword(values.password);
+    setIsOpen(false);
+    console.log(values);
+    const response = await fetch(
+      `http://localhost:5050/users/create?${new URLSearchParams(values)}`,
+      {method: 'POST'}
+    );
+    if (response.ok) {
+      const values = await response.json();
+      console.log(values);
+    }
+  };
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -46,7 +56,7 @@ export default function LoginInput() {
             <Text className="login-heading" size="xl" align="center" weight={700}>
               Login
             </Text>
-            <form onSubmit={form.onSubmit}>
+            <form onSubmit={form.onSubmit(handleSubmit)}>
               <TextInput
                 label="Username"
                 placeholder="your username"
