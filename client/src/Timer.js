@@ -59,7 +59,6 @@ const Timer = ({ timerLength, onTimerFinish }) => {  // Add the onTimerFinish pr
             </text>
           </svg>
         </div>
-        <p>Time remaining: {formatTime(seconds)} minutes</p>
       </div>
   );
 };

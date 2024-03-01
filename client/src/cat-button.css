@@ -1,0 +1,12 @@
+/* Cat login button */
+.cat-login-button {
+    width: 90px; 
+    height: 90px; 
+    background-image: url('cat2.jpeg'); /* Set background image */
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    border: none;
+    position: relative;
+    overflow: hidden;
+  }

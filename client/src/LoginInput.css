@@ -1,0 +1,69 @@
+/* Import cat button styles */
+@import url('cat-button.css');
+
+.navbar {
+  background-color: #f0f0f0;
+  padding: 5px 10px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  cursor: pointer;
+  font-size: 18px; /* Adjusted font size */
+  color: rgb(5, 5, 5);
+  text-shadow: 2px 2px 2px rgba(240, 168, 219, 0.963);
+  border-radius: 20px; 
+  animation: float 5s infinite alternate; 
+  animation-timing-function: ease-in-out; 
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateX(0);
+  }
+  25% {
+    transform: translate(-50%, -50%) translateX(-20px) translateY(-20px);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateX(0) translateY(-40px);
+  }
+  75% {
+    transform: translate(-50%, -50%) translateX(20px) translateY(-20px);
+  }
+}
+
+.navbar button:hover {
+  transform: scale(1.1);
+}
+
+.content {
+  position: absolute;
+  left: 20px; /* Adjusted position to the left ???*/
+  top: 50%; 
+  transform: translateY(-50%);
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(-100%);
+}
+
+.content-open {
+  transform: translateX(0);
+}
+
+.login-paper {
+  margin-top: 20px;
+}
+
+.login-heading {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .content {
+    top: 45px; 
+  }
+}
+
