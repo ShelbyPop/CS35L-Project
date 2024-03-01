@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { TextInput, Button, Group, Container, Paper, Text } from '@mantine/core';
+import { useState } from 'react';
+import { TextInput, Button, Group, Box, Container, Text, Paper } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import './LoginInput.css'; // Import CSS file
+import './LogIninput.css'; 
 
 export default function LoginInput() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true); // State to track if the login form is open
 
   const form = useForm({
     initialValues: {
@@ -14,36 +12,27 @@ export default function LoginInput() {
       password: ''
     },
     validate: {
-      username: (value) => (/^\S+$/.test(value) ? null : 'Invalid username (has whitespace or is empty)'),
-      password: (value) => (/^\S{6}\S*$/.test(value) ? null : 'Invalid password (has whitespace or less than 6 characters)')
-    }
+        username: (value) => (/^\S+$/.test(value) ? null : 'Invalid username (has whitespace or is empty)'),
+        password: (value) => (/^\S{6}\S*$/.test(value) ? null : 'Invalid password (has whitespace or less than 6 characters)')
+    },
   });
 
   const handleSubmit = async (values) => {
-    setUsername(values.username);
-    setPassword(values.password);
-    setIsOpen(false);
     console.log(values);
     const response = await fetch(
       `http://localhost:5050/users/create?${new URLSearchParams(values)}`,
       {method: 'POST'}
     );
     if (response.ok) {
-      const values = await response.json();
-      console.log(values);
+      const data = await response.json();
+      console.log(data);
+      setIsOpen(false); // CLOSE the login form after successful submission
     }
   };
 
   const handleClick = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(!isOpen); // CHANGE the login form state when the button is clicked
   };
-
-
-<div class="navbar">
-  <button class="login-button cat-login-button"><span>Login</span></button>
-</div>
-
-
 
   return (
     <Container size="xl">
@@ -53,9 +42,6 @@ export default function LoginInput() {
       <div className={`content ${isOpen ? 'content-open' : ''}`}>
         {isOpen && (
           <Paper className="login-paper" padding="md">
-            <Text className="login-heading" size="xl" align="center" weight={700}>
-              Login
-            </Text>
             <form onSubmit={form.onSubmit(handleSubmit)}>
               <TextInput
                 label="Username"
@@ -63,26 +49,17 @@ export default function LoginInput() {
                 {...form.getInputProps('username')}
               />
               <TextInput
-                type="password"
                 label="Password"
                 placeholder="your password"
                 {...form.getInputProps('password')}
               />
-              <Group position="right" mt="md">
+              <Group justify="flex-end" mt="md">
                 <Button type="submit">Submit</Button>
               </Group>
             </form>
           </Paper>
         )}
-        {username && password && (
-          <Text align="center" mt="md">
-            
-          </Text>
-        )}
       </div>
     </Container>
   );
 }
-
-
-
