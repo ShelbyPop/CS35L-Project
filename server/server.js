@@ -19,6 +19,20 @@ async function createUser(username, password) {
   });
 }
 
+// Connect to MongoDB server
+async function connectToMongo() {
+  try {
+    await client.connect();
+    console.log("Connected to MongoDB server");
+  } catch (error) {
+    console.error("Failed to connect to MongoDB server:", error);
+    process.exit(1); // Exit the process if unable to connect
+  }
+}
+
+// Call the connectToMongo function to establish the connection
+connectToMongo();
+
 // post: modify database, get: asks for data from database
 // Express routes: https://expressjs.com/en/guide/routing.html
 
