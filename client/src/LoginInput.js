@@ -4,7 +4,7 @@ import { useForm } from '@mantine/form';
 import './LoginInput.css'; 
 
 export default function LoginInput() {
-  const [isOpen, setIsOpen] = useState(true); // State to track if the login form is open
+  const [isOpen, setIsOpen] = useState(false); // State to track if the login form is open
 
   const form = useForm({
     initialValues: {
