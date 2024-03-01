@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TextInput, Button, Group, Box, Container, Text, Paper } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import './LogIninput.css'; 
+import './LoginInput.css'; 
 
 export default function LoginInput() {
   const [isOpen, setIsOpen] = useState(true); // State to track if the login form is open
