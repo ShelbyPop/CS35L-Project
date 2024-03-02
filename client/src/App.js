@@ -30,12 +30,12 @@ function App() {
   // Update data on render
   useEffect(() => {
     async function fetchUsers() {
-      const res = await fetch("http://localhost:5050");
+      const res = await fetch(`http://localhost:5050?query=${query}`);
       const data = await res.json();
       setData(data);
     };
     fetchUsers();
-  }, []);
+  }, [query]);
 
   return (
     <div className="App">

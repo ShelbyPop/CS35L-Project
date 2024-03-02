@@ -10,15 +10,6 @@ const client = new MongoClient(uri);
 const users = client.db("database").collection("users");
 // MongoDB documentation: https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/
 
-// Insert new user into users collection with empty sessions array
-async function createUser(username, password) {
-  return await users.insertOne({
-    username: username,
-    password: password,
-    sessions: [],
-  });
-}
-
 // Connect to MongoDB server
 async function connectToMongo() {
   try {
@@ -32,6 +23,15 @@ async function connectToMongo() {
 
 // Call the connectToMongo function to establish the connection
 connectToMongo();
+
+// Insert new user into users collection with empty sessions array
+async function createUser(username, password) {
+  return await users.insertOne({
+    username: username,
+    password: password,
+    sessions: [],
+  });
+}
 
 // post: modify database, get: asks for data from database
 // Express routes: https://expressjs.com/en/guide/routing.html
@@ -48,7 +48,21 @@ app.post("/users/create", async function (req, res) {
 app.get("/", async function (req, res) {
   const cursor = users.find({});
   const allUserData = await cursor.toArray();
-  res.json(allUserData);
+  const { query } = req.query;
+
+  const keys = ["username"];
+
+  const search = (data) => {
+    return data.filter((item) =>
+      keys.some((key) => {
+        // console.log("key: " + item[key], typeof item[key]);
+        return item[key].toLowerCase().includes(query.toLowerCase());
+      })
+    );
+  };
+
+  res.json(search(allUserData));
+  // res.json(allUserData[0]["username"]);
 });
 
 // start server; listening at port 5050

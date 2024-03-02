@@ -9,12 +9,10 @@ const Table = ({ data }) => {
     <table>
       <tbody>
         <tr>
-          <th>ID</th>
           <th>Username</th>
         </tr>
         {data.map((item) => (
           <tr key={item._id}>
-            <td>{item._id}</td>
             <td>{item.username}</td>
           </tr>
         ))}
