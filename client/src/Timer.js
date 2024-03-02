@@ -40,7 +40,6 @@ const Timer = ({ timerLength, onTimerFinish }) => {  // Add the onTimerFinish pr
 
   return (
       <div>
-        <h2>Timer</h2>
         <div className="circular-timer">
           <svg className="circular-timer-svg" width="200" height="200">
             <circle className="circular-timer-background" cx="100" cy="100" r="90"></circle>
@@ -59,7 +58,6 @@ const Timer = ({ timerLength, onTimerFinish }) => {  // Add the onTimerFinish pr
             </text>
           </svg>
         </div>
-        <p>Time remaining: {formatTime(seconds)} minutes</p>
       </div>
   );
 };
