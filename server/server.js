@@ -31,5 +31,11 @@ app.post("/users/create", async function (req, res) {
   res.json(result);
 });
 
+app.get("/", async function (req, res) {
+  const cursor = users.find({});
+  const allUserData = await cursor.toArray();
+  res.json(allUserData);
+});
+
 // start server; listening at port 5050
 app.listen(5050);

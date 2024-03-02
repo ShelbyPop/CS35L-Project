@@ -47,3 +47,21 @@
     transform: rotate(360deg);
   }
 }
+
+/* Styling for table
+.search {
+  padding: 10px;
+  font-size: 20px;
+}
+
+.list {
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.listItem {
+  margin-bottom: 20px;
+  font-size: 25px;
+  font-weight: 300;
+} */
