@@ -3,13 +3,15 @@
 .App {
   text-align: center;
   font-family: 'Frankfurter Std', cursive;
-  text-shadow: 5px 5px 5px rgba(246, 20, 193, 0.963), 5px 9px 6px rgb(4, 4, 6);
+  text-shadow: 5px 5px 5px rgba(223, 161, 255, 0.96), 5px 9px 6px rgba(255, 198, 182, 0.96);
   font-weight: 600;
-  background-image: url('./pompombg1_shelby.png'); 
-  background-size: cover;
+  background-image: url('./pompombg1_shelby.png');
+  background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
-  color: #ffffff; 
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
 }
 
 .App-logo {
@@ -24,16 +26,6 @@
   }
 }
 
-.App-header {
-  background-color: rgba(255, 255, 255, 0.05); /* opacity */
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(25px + 2vmin); 
-  color: #faa1ff; 
-}
 
 .App-link {
   color: #87cefa;
@@ -47,3 +39,58 @@
     transform: rotate(360deg);
   }
 }
+
+.custom-header {
+  background-color: rgba(255, 255, 255, 0.05); /* opacity */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(13px + 2vmin);
+  color: #faa1ff;
+  position: relative;
+  left: 110px;
+  bottom: 75px;
+}
+
+.custom-login {
+  font-family: 'Lucida Console', monospace;
+  text-shadow: none;
+  font-size: calc(5px + 2vmin);
+  color: cornsilk;
+  position: relative;
+  left: 70px;
+  top: 200px;
+}
+
+.custom-timer {
+  font-family: 'Lucida Console', monospace;
+  text-shadow: none;
+  color: cornsilk;
+  position: relative;
+  font-size: calc(30px + 2vmin);
+  top: 165px;
+  right: 80px;
+}
+
+.custom-input {
+  font-family: 'Lucida Console', monospace;
+  text-shadow: none;
+  font-size: calc(5px + 2vmin);
+  position: relative;
+  color: cornsilk;
+  top: 155px;
+  right: 75px;
+}
+
+.custom-clock {
+  font-family: 'Lucida Console', monospace;
+  text-shadow: none;
+  font-size: calc(5px + 2vmin);
+  position: relative;
+  color: cornsilk;
+  top: 80px;
+  right: 100px;
+}
+

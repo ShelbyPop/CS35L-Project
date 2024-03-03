@@ -19,8 +19,7 @@ const Clock = () => {
 
   return (
     <div>
-      <h2>Current time: </h2>
-      <p>{formattedTime()}</p>
+      <div className="custom-clock">Current time: {formattedTime()} </div>
     </div>
   );
 };
