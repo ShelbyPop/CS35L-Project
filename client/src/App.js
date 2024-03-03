@@ -27,7 +27,7 @@ function App() {
     setGameStarted(false);
   };
 
-  // Update data on render
+  // Update data on render & on query update
   useEffect(() => {
     async function fetchUsers() {
       const res = await fetch(`http://localhost:5050?query=${query}`);

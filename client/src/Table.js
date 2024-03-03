@@ -9,11 +9,13 @@ const Table = ({ data }) => {
     <table>
       <tbody>
         <tr>
-          <th>Username</th>
+          <th>User</th>
+          <th>Points</th>
         </tr>
         {data.map((item) => (
           <tr key={item._id}>
             <td>{item.username}</td>
+            <td>{item.points}</td>
           </tr>
         ))}
       </tbody>

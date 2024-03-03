@@ -29,12 +29,14 @@ async function createUser(username, password) {
   return await users.insertOne({
     username: username,
     password: password,
-    sessions: [],
+    points: "0",
   });
 }
 
 // post: modify database, get: asks for data from database
 // Express routes: https://expressjs.com/en/guide/routing.html
+
+// BE CAREFUL WHEN MODIFYING POINTS: IT'S A STRING, NOT A NUMBER
 
 // Handle POST request for creating a new user
 app.post("/users/create", async function (req, res) {
@@ -45,24 +47,32 @@ app.post("/users/create", async function (req, res) {
   res.json(result);
 });
 
+// Handle GET request for retrieving leaderboard
 app.get("/", async function (req, res) {
   const cursor = users.find({});
   const allUserData = await cursor.toArray();
   const { query } = req.query;
 
-  const keys = ["username"];
+  const keys = ["username", "points"];
 
   const search = (data) => {
     return data.filter((item) =>
       keys.some((key) => {
-        // console.log("key: " + item[key], typeof item[key]);
         return item[key].toLowerCase().includes(query.toLowerCase());
       })
     );
   };
 
-  res.json(search(allUserData));
-  // res.json(allUserData[0]["username"]);
+  const comparePoints = (a, b) => {
+    if (Number(a.points) > Number(b.points)) {
+      return -1;
+    } else if (Number(a.points) < Number(b.points)) {
+      return 1;
+    }
+    return 0;
+  };
+
+  res.json(search(allUserData).sort(comparePoints));
 });
 
 // start server; listening at port 5050
