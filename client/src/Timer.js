@@ -1,13 +1,10 @@
 // src/Timer.js
 import React, { useState, useEffect } from 'react';
 
-const Timer = ({ timerLength}) => {
+const Timer = ({ timerLength, onTimerFinish }) => {
   const [seconds, setSeconds] = useState(timerLength);
-  // const [breakSeconds, setBreakSeconds] = useState(5 * 60);
-  const [cyclesCompleted, setCyclesCompleted] = useState(0); // use for tracking which cycle we are on
-  const [isNewTimerInput, setIsNewTimerInput] = useState(false); // use for tracking if there is new timer input
-
-
+  const [cyclesCompleted, setCyclesCompleted] = useState(0);
+  const [isNewTimerInput, setIsNewTimerInput] = useState(false);
 
   useEffect(() => {
     setSeconds(timerLength);
@@ -15,46 +12,28 @@ const Timer = ({ timerLength}) => {
   }, [timerLength]);
 
   useEffect(() => {
-    if(cyclesCompleted > 4 && isNewTimerInput) { // RETURN once we have reached 4 cycles
-      // will change once we set up the user database
-      // for now, we will just RETURN
-      setCyclesCompleted(1);
+    if (seconds > 0) {
+      const intervalId = setInterval(() => {
+        setSeconds(prevSeconds => prevSeconds - 1);
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    } else {
+      if (cyclesCompleted < 4) {
+        // When the timer reaches 0 and cycles are less than 4, just update cycles and reset as needed
+        setCyclesCompleted(cyclesCompleted + 1);
+        setIsNewTimerInput(false);
+      } else {
+        // If cyclesCompleted is 4, and the timer reaches 0, call  onTimerFinish to trigger transition
+        onTimerFinish();
+      }
     }
-    const intervalId = setInterval(() => {
+  }, [seconds, cyclesCompleted, onTimerFinish]);
 
-      setSeconds((prevSeconds) => {
-        if (prevSeconds > 0) {
-          return prevSeconds - 1;
-        }
-
-            // if (prevSeconds === 0 && cyclesCompleted > 0) {
-            //   return breakSeconds - 1;
-        // }
-
-
-        else {
-
-          clearInterval(intervalId);
-          setCyclesCompleted(cyclesCompleted + 1); // update cycle
-          setIsNewTimerInput(false);
-          // setBreakSeconds(5 * 60);
-          return 0;
-        }
-
-      });
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, [seconds], timerLength);
-
-
-
-
-  // Format seconds into MM:SS
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
-    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
 

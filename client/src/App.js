@@ -38,7 +38,7 @@ function App() {
                 </MantineProvider>
 
                 <div className="custom-timer">
-                  <Timer timerLength={timerLength} onTimerFinish={startGame}/>
+                <Timer timerLength={timerLength} onTimerFinish={startGame} />
                 </div>
 
 
