@@ -1,17 +1,11 @@
 // src/Timer.js
 import React, { useState, useEffect } from 'react';
 
-const Timer = ({ timerLength, onTimerFinish}) => {
+const Timer = ({ timerLength}) => {
   const [seconds, setSeconds] = useState(timerLength);
+  // const [breakSeconds, setBreakSeconds] = useState(5 * 60);
   const [cyclesCompleted, setCyclesCompleted] = useState(0); // use for tracking which cycle we are on
   const [isNewTimerInput, setIsNewTimerInput] = useState(false); // use for tracking if there is new timer input
-
-
-
-
-//note: timer still does not have 5-min breaks
-// note2: time input has issues, and you must put in a different value in order to start a new cycle, for some reason
-
 
 
 
@@ -19,13 +13,12 @@ const Timer = ({ timerLength, onTimerFinish}) => {
     setSeconds(timerLength);
     setIsNewTimerInput(true);
   }, [timerLength]);
-ç
+
   useEffect(() => {
-    if(cyclesCompleted > 4) { // RETURN once we have reached 4 cycles
+    if(cyclesCompleted > 4 && isNewTimerInput) { // RETURN once we have reached 4 cycles
       // will change once we set up the user database
       // for now, we will just RETURN
-      onTimerFinish();
-      return;
+      setCyclesCompleted(1);
     }
     const intervalId = setInterval(() => {
 
@@ -34,10 +27,17 @@ const Timer = ({ timerLength, onTimerFinish}) => {
           return prevSeconds - 1;
         }
 
+        // if (prevSeconds === 0 && cyclesCompleted > 0) {
+        //   return breakSeconds - 1;
+        // }
+
+
         else {
+
           clearInterval(intervalId);
           setCyclesCompleted(cyclesCompleted + 1); // update cycle
           setIsNewTimerInput(false);
+         // setBreakSeconds(5 * 60);
           return 0;
         }
 
@@ -64,19 +64,9 @@ const Timer = ({ timerLength, onTimerFinish}) => {
   // filling the quarters according to which cycle we are on
   const getQuadrantFill = (quadrantIndex) => {
 
-    if (cyclesCompleted === 0) {
-      if (quadrantIndex === 0) {
-        return `rgba(200, 162, 200, ${progress})`; // get more opaque as time goes on (lilac!)
-      }
-      else {
-        return 'transparent';
-      }
-    }
+
 
     if (cyclesCompleted === 1) {
-      if (quadrantIndex === 0 ) { // make sure previous fillings do not get reset
-        return `rgba(200, 162, 200)`;
-      }
       if (quadrantIndex === 1 && isNewTimerInput) { // check if there is new time input
         return `rgba(200, 162, 200, ${progress})`;
       }
@@ -85,14 +75,12 @@ const Timer = ({ timerLength, onTimerFinish}) => {
       }
     }
 
-    if (cyclesCompleted === 2 ) {
-      if (quadrantIndex === 0) {
+
+    if (cyclesCompleted === 2) {
+      if (quadrantIndex === 1 ) { // make sure previous fillings do not get reset
         return `rgba(200, 162, 200)`;
       }
-      if (quadrantIndex === 1) {
-        return `rgba(200, 162, 200)`;
-      }
-      if (quadrantIndex === 2 && isNewTimerInput) {
+      if (quadrantIndex === 2 && isNewTimerInput) { // check if there is new time input
         return `rgba(200, 162, 200, ${progress})`;
       }
       else {
@@ -100,11 +88,7 @@ const Timer = ({ timerLength, onTimerFinish}) => {
       }
     }
 
-
     if (cyclesCompleted === 3 ) {
-      if (quadrantIndex === 0) {
-        return `rgba(200, 162, 200)`;
-      }
       if (quadrantIndex === 1) {
         return `rgba(200, 162, 200)`;
       }
@@ -118,6 +102,44 @@ const Timer = ({ timerLength, onTimerFinish}) => {
         return 'transparent';
       }
     }
+
+
+    if (cyclesCompleted === 4 ) {
+      if (quadrantIndex === 1) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 2) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 3) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 4 && isNewTimerInput) {
+        return `rgba(200, 162, 200, ${progress})`;
+      }
+      else {
+        return 'transparent';
+      }
+    }
+
+    if (cyclesCompleted === 5 ) {
+      if (quadrantIndex === 1) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 2) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 3) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 4) {
+        return `rgba(200, 162, 200)`;
+      }
+      else {
+        return 'transparent';
+      }
+    }
+
 
 
     else {
@@ -134,19 +156,19 @@ const Timer = ({ timerLength, onTimerFinish}) => {
             <g transform="rotate(-90, 150, 150)">
               <path
                   d="M 150 150 L 265 150 A 110 200 0 0 1 150 260 Z" // manually drew quadrants
-                  fill={getQuadrantFill(0)}
-              ></path>
-              <path
-                  d="M 150 150 L 47 150 A 90 90 0 0 0 150 260 Z"
                   fill={getQuadrantFill(1)}
               ></path>
               <path
-                  d="M 150 150 L 150 40 A 100 90 0 0 0 45 150 Z"
+                  d="M 150 150 L 47 150 A 90 90 0 0 0 150 260 Z"
                   fill={getQuadrantFill(2)}
               ></path>
               <path
-                  d="M 150 150 L 150 40 A 100 100 0 0 1 260 150 Z"
+                  d="M 150 150 L 150 40 A 100 90 0 0 0 45 150 Z"
                   fill={getQuadrantFill(3)}
+              ></path>
+              <path
+                  d="M 150 150 L 150 40 A 100 100 0 0 1 260 150 Z"
+                  fill={getQuadrantFill(4)}
               ></path>
               <circle
                   cx="150"       // create outer white ring
@@ -167,7 +189,7 @@ const Timer = ({ timerLength, onTimerFinish}) => {
                   fill="transparent"
               ></circle>
             </g>
-            <text className="circular-timer-text custom-font" x="50%" y="50%" textAnchor="middle" dy="0.3em" fill="cornsilk">
+            <text className="circular-timer-text custom-timer" x="50%" y="50%" textAnchor="middle" dy="0.3em" fill="cornsilk">
               {formatTime(seconds)}
             </text>
           </svg>

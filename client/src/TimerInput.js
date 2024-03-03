@@ -15,7 +15,7 @@ const TimerInput = ({ onSetTimer }) => {
 
   return (
       <div>
-        <label  className="custom-font">
+        <label  >
           Set Timer Length (minutes):
           <input type="number" value={timerLength} onChange={handleChange} />
         </label>
