@@ -29,9 +29,9 @@ const GameWorld = ({ onExitGame }) => {
           <h2>This is the Shop</h2>
           <p>Buy items here!</p>
           <div className="shop-items">
-          <img src={require("./Assets/coffee_64x.png")} />
-          <img src={require("./Assets/muffin_64x.png")} />
-          <img src={require("./Assets/toast_64x.png")} />
+          <img src={require("./Assets/coffee_64x.png")} alt=""/>
+          <img src={require("./Assets/muffin_64x.png")} alt="" />
+          <img src={require("./Assets/toast_64x.png")} alt=""/>
 
             {/* Add more sprites here */}
           </div>

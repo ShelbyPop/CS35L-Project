@@ -32,6 +32,7 @@ function App() {
     setGameStarted(false);
   };
 
+  
   return (
     <div className="App">
       <Navigation />
