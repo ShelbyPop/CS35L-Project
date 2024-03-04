@@ -8,7 +8,7 @@ const GameWorld = ({ onExitGame }) => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       onExitGame(); // This will be called after 5 minutes
-    }, 30000); // 300000 milliseconds = 5 minutes
+    }, 10000); // 300000 milliseconds = 5 minutes
 
     return () => clearTimeout(timeoutId);
   }, [onExitGame]);

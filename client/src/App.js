@@ -6,6 +6,8 @@ import Clock from './Clock';
 import TimerInput from './TimerInput';
 import LoginInput from './LoginInput';
 import GameWorld from './GameWorld';
+import Navigation from './Navigation'; // Adjust the path as necessary
+
 
 function App() {
   const [timerLength, setTimerLength] = useState(0); 
@@ -32,10 +34,15 @@ function App() {
 
   return (
     <div className="App">
+      <Navigation />
       <header className="custom-header">
         <h1>Café PomPom</h1>
         {!gameStarted ? (
           <>
+          <Navigation /> 
+            <MantineProvider>
+
+            </MantineProvider>
             <MantineProvider>
               <div className="custom-login">
                 <LoginInput/>
