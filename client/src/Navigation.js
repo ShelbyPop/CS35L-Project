@@ -13,6 +13,10 @@ const LeaderboardPopup = () => (
   <div className="popup">Coming soon</div>
 );
 
+const LifeTimeStatsPopup = () => (
+  <div className="popup">Coming soon</div>
+);
+
 const Navigation = ({ points, onAddPoints }) => {
   const [activePopup, setActivePopup] = useState('');
 
@@ -30,10 +34,14 @@ const Navigation = ({ points, onAddPoints }) => {
               <button onClick={() => showPopup('points')}>Points</button>
               <button onClick={() => showPopup('history')}>History</button>
               <button onClick={() => showPopup('leaderboard')}>Leaderboard</button>
+              <button onClick={() => showPopup('lifetime stats')}>Lifetime Stats</button>
+
           </nav>
           {activePopup === 'points' && <PointsPopup points={points} />}
           {activePopup === 'history' && <HistoryPopup />}
           {activePopup === 'leaderboard' && <LeaderboardPopup />}
+          {activePopup === 'lifetime stats' && <LifeTimeStatsPopup />}
+
       </div>
   );
 };
