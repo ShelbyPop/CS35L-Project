@@ -24,13 +24,36 @@ async function connectToMongo() {
 // Call the connectToMongo function to establish the connection
 connectToMongo();
 
+// Get array of user (users, if we messed up) matching username
+async function getUser(username) {
+  const cursor = users.find({ username: username });
+  const user = await cursor.toArray();
+  console.log(user);
+  return user;
+}
+
 // Insert new user into users collection with empty sessions array
 async function createUser(username, password) {
+  const user = await getUser(username);
+  // Return if username already exists
+  if (user.length) {
+    return;
+  }
   return await users.insertOne({
     username: username,
     password: password,
     points: "0",
   });
+}
+
+// Validate existence of user with matching password in collection
+async function loginUser(username, password) {
+  const user = await getUser(username);
+  if (user.length > 1) {
+    console.log("Too many users, please fix bug!!");
+  }
+  console.log(`${user[0].password}, ${password}`);
+  return (user.length === 1 && user[0].password === password);
 }
 
 // post: modify database, get: asks for data from database
@@ -44,7 +67,23 @@ app.post("/users/create", async function (req, res) {
   const password = req.query.password;
   console.log(`Create user ${username}`);
   const result = await createUser(username, password);
-  res.json(result);
+  console.log(result ? "Signup success" : "Signup failed");
+  if (result) {
+    res.json(result);
+  } else {
+    console.log("return error status");
+    res.status(400).send();
+  }
+});
+
+// Handle GET request for logging in
+app.get("/users/login", async function (req, res) {
+  const username = req.query.username;
+  const password = req.query.password;
+  console.log(`Log in as user ${username}`);
+  const result = await loginUser(username, password);
+  console.log(result ? "Login success" : "Login failed");
+  result ? res.status(200).send() : res.status(400).send();
 });
 
 // Handle GET request for retrieving leaderboard
@@ -58,7 +97,7 @@ app.get("/", async function (req, res) {
   const search = (data) => {
     return data.filter((item) =>
       keys.some((key) => {
-        return item[key].toLowerCase().includes(query.toLowerCase());
+        return item[key].toLowerCase().includes(query);
       })
     );
   };

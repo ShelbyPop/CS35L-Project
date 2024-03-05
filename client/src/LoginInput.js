@@ -6,7 +6,7 @@ import '@mantine/core/styles/Checkbox.css';
 
 export default function LoginInput() {
   const [isOpen, setIsOpen] = useState(false); // State to track if the login form is open
-  const [value, onChange] = useState(true);
+  const [user, setUser] = useState();
 
   const form = useForm({
     initialValues: {
@@ -22,16 +22,37 @@ export default function LoginInput() {
 
   const handleSubmit = async (values) => {
     console.log(values);
-    const response = await fetch(
-      `http://localhost:5050/users/create?${new URLSearchParams(values)}`,
-      {method: 'POST'}
-    );
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      setIsOpen(false); // CLOSE the login form after successful submission
+    let response = null;
+    if (values.firstTime) {
+      // Create a new account
+      response = await fetch(
+        `http://localhost:5050/users/create?${new URLSearchParams(values)}`,
+        {method: 'POST'}
+      );
+      console.log(response.status);
+    } else {
+      // Log in as an existing user
+      response = await fetch(
+        `http://localhost:5050/users/login?${new URLSearchParams(values)}`
+      );
+      console.log(response.status);
     }
-    form.reset();
+
+    if (response.ok) {
+      if (values.firstTime) {
+        const data = await response.json();
+        console.log(data);
+      }
+      values.firstTime
+        ? console.log("Signup success")
+        : console.log("Login success");
+      setIsOpen(false); // CLOSE the login form after successful submission
+    } else {
+      values.firstTime 
+        ? alert("Username is already taken, please try again")
+        : alert("Incorrect username or password, please try again"); // TODO: make this an inline message instead?
+    }
+    form.reset(); // Reset form values
   };
 
   const handleClick = () => {
