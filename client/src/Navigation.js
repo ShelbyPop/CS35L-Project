@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Navigation.css'; // Make sure to style your popups and navigation
+import Table from './Table.js';
 
 const PointsPopup = ({ points }) => ( // Accept points as a prop for PointsPopup
   <div className="popup">Coming soon{points}</div>
@@ -9,9 +10,27 @@ const HistoryPopup = () => (
   <div className="popup">Coming soon</div>
 );
 
-const LeaderboardPopup = () => (
-  <div className="popup">Coming soon</div>
-);
+const LeaderboardPopup = () => {
+  const [query, setQuery] = useState("");
+  const [data, setData] = useState([])
+  
+  // Update data on render & on query update
+  useEffect(() => {
+    async function fetchUsers() {
+      const res = await fetch(`http://localhost:5050?query=${query}`);
+      const data = await res.json();
+      setData(data);
+    };
+    fetchUsers();
+  }, [query]);
+  
+  return (
+    <>
+      <input placeholder="Search" className="search" onChange={(event) => setQuery(event.target.value)}/>
+      <Table data={data ?? []} />
+    </>
+  );
+};
 
 const LifeTimeStatsPopup = () => (
   <div className="popup">Coming soon</div>
@@ -41,7 +60,6 @@ const Navigation = ({ points, onAddPoints }) => {
           {activePopup === 'history' && <HistoryPopup />}
           {activePopup === 'leaderboard' && <LeaderboardPopup />}
           {activePopup === 'lifetime stats' && <LifeTimeStatsPopup />}
-
       </div>
   );
 };
