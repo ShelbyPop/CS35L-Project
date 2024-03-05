@@ -1,8 +1,8 @@
-// src/Table.js
+// src/Leaderboard.js
 
 import React from 'react'
 
-const Table = ({ data }) => {
+const Leaderboard = ({ data }) => {
   console.log(JSON.stringify(data));
 
   return (
@@ -23,4 +23,4 @@ const Table = ({ data }) => {
   )
 }
 
-export default Table
+export default Leaderboard

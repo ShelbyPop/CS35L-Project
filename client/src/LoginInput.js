@@ -1,19 +1,22 @@
 import { useState } from 'react';
-import { TextInput, Button, Group, Box, Container, Text, Paper } from '@mantine/core';
+import { TextInput, Button, Group, Checkbox, Container, Paper } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import './LoginInput.css'; 
+import './LoginInput.css';
+import '@mantine/core/styles/Checkbox.css';
 
 export default function LoginInput() {
   const [isOpen, setIsOpen] = useState(false); // State to track if the login form is open
+  const [value, onChange] = useState(true);
 
   const form = useForm({
     initialValues: {
       username: '',
-      password: ''
+      password: '',
+      firstTime: false
     },
     validate: {
-        username: (value) => (/^\S+$/.test(value) ? null : 'Invalid username (has whitespace or is empty)'),
-        password: (value) => (/^\S{6}\S*$/.test(value) ? null : 'Invalid password (has whitespace or less than 6 characters)')
+        username: (value) => (/^\S+$/.test(value) ? null : 'Invalid username'), // (has whitespace or is empty)
+        password: (value) => (/^\S{6}\S*$/.test(value) ? null : 'Invalid password') // (has whitespace or less than 6 characters)
     },
   });
 
@@ -28,6 +31,7 @@ export default function LoginInput() {
       console.log(data);
       setIsOpen(false); // CLOSE the login form after successful submission
     }
+    form.reset();
   };
 
   const handleClick = () => {
@@ -52,6 +56,12 @@ export default function LoginInput() {
                 label="Password"
                 placeholder="your password"
                 {...form.getInputProps('password')}
+              />
+              <Checkbox
+                mt="md"
+                color="pink"
+                label="First-time user"
+                {...form.getInputProps('firstTime', { type: 'checkbox' })}      
               />
               <Group justify="flex-end" mt="md">
                 <Button type="submit">Submit</Button>

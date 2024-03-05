@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { MantineProvider } from '@mantine/core';
 import './App.css';
+import '@mantine/core/styles/global.css';
 import Timer from './Timer';
 import Clock from './Clock';
 import TimerInput from './TimerInput';

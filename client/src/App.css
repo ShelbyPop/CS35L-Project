@@ -2,7 +2,7 @@
 
 .App {
   text-align: center;
-  font-family: 'Frankfurter Std', cursive;
+  font-family: 'Frankfurter Std', sans-serif;
   text-shadow: 5px 5px 5px rgba(223, 161, 255, 0.96), 5px 9px 6px rgba(255, 198, 182, 0.96);
   font-weight: 600;
   background-image: url('./pompombg1_shelby.png');

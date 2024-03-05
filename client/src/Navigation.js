@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Navigation.css'; // Make sure to style your popups and navigation
-import Table from './Table.js';
+import Leaderboard from './Leaderboard.js';
 
 const PointsPopup = ({ points }) => ( // Accept points as a prop for PointsPopup
   <div className="popup">Coming soon{points}</div>
@@ -27,7 +27,7 @@ const LeaderboardPopup = () => {
   return (
     <>
       <input placeholder="Search" className="search" onChange={(event) => setQuery(event.target.value)}/>
-      <Table data={data ?? []} />
+      <Leaderboard data={data ?? []} />
     </>
   );
 };

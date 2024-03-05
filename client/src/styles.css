@@ -2,8 +2,8 @@
 
 @font-face {
     font-family: 'Frankfurter Std';
-    src: url('./src/fonts/FrankfurterStd.woff2') format('woff2'),
-         url('./src/fonts/FrankfurterStd.woff') format('woff');
+    src: url('./FrankfurterStd.woff2') format('woff2'),
+         url('./FrankfurterStd.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
