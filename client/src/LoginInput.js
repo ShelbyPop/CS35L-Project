@@ -4,9 +4,8 @@ import { useForm } from '@mantine/form';
 import './LoginInput.css';
 import '@mantine/core/styles/Checkbox.css';
 
-export default function LoginInput() {
+export default function LoginInput({ setUsername }) {
   const [isOpen, setIsOpen] = useState(false); // State to track if the login form is open
-  const [user, setUser] = useState();
 
   const form = useForm({
     initialValues: {
@@ -46,6 +45,7 @@ export default function LoginInput() {
       values.firstTime
         ? console.log("Signup success")
         : console.log("Login success");
+      setUsername(values.username);
       setIsOpen(false); // CLOSE the login form after successful submission
     } else {
       values.firstTime 

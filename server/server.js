@@ -46,20 +46,64 @@ async function createUser(username, password) {
   });
 }
 
-// Validate existence of user with matching password in collection
+// Validate existence of user with matching password in collection (return boolean)
 async function loginUser(username, password) {
   const user = await getUser(username);
   if (user.length > 1) {
     console.log("Too many users, please fix bug!!");
+    return null;
+  } else if (user.length === 0) {
+    console.log("User does not exist");
+    return null;
   }
   console.log(`${user[0].password}, ${password}`);
   return (user.length === 1 && user[0].password === password);
 }
 
+// Return number of points of user
+async function getUserPoints(username) {
+  const user = await getUser(username);
+  if (user.length > 1) {
+    console.log("Too many users, please fix bug!!");
+    return null;
+  } else if (user.length === 0) {
+    console.log("User does not exist");
+    return null;
+  }
+  return (user[0].points);
+}
+
+// Add points to user; return true if success and false if user not found
+async function addUserPoints(username, diff) {
+  const user = await getUser(username);
+  if (user.length > 1) {
+    console.log("Too many users, please fix bug!!");
+    return false;
+  } else if (user.length === 0) {
+    console.log("User does not exist");
+    return false;
+  }
+  
+  // Calculate newPoints, set to 0 if the change would result in negative points
+  let newPoints = Number(user[0].points) + Number(diff);
+  if (newPoints < 0) {
+    newPoints = 0;
+  }
+  console.log(newPoints);
+
+  // Update value of points to newPoints
+  const updateDocument = {
+    $set: { points: newPoints.toString() }
+  };
+  const result = await users.updateOne({ username: username }, updateDocument);
+  //console.log(result);
+  return true;
+}
+
 // post: modify database, get: asks for data from database
 // Express routes: https://expressjs.com/en/guide/routing.html
 
-// BE CAREFUL WHEN MODIFYING POINTS: IT'S A STRING, NOT A NUMBER
+// BE CAREFUL WHEN MODIFYING POINTS: IT'S A STRING, NOT A NUMBER (so that # points is searchable in table)
 
 // Handle POST request for creating a new user
 app.post("/users/create", async function (req, res) {
@@ -71,7 +115,7 @@ app.post("/users/create", async function (req, res) {
   if (result) {
     res.json(result);
   } else {
-    console.log("return error status");
+    console.log("Return error status");
     res.status(400).send();
   }
 });
@@ -83,6 +127,28 @@ app.get("/users/login", async function (req, res) {
   console.log(`Log in as user ${username}`);
   const result = await loginUser(username, password);
   console.log(result ? "Login success" : "Login failed");
+  result ? res.status(200).send() : res.status(400).send();
+});
+
+// Handle GET request for getting a user's points
+app.get("/users/points/get", async function (req, res) {
+  const username = req.query.username;
+  console.log(`Get number of points for user ${username}`);
+  const result = await getUserPoints(username);
+  if (result) {
+    console.log(`${username} has ${result} points`);
+    res.send(result);
+  } else {
+    res.status(400).send();
+  }
+});
+
+// Handle POST request for changing a user's points (current points + diff)
+app.post("/users/points/add", async function (req, res) {
+  const username = req.query.username;
+  const diff = req.query.diff;
+  console.log(`Add ${diff} points for user ${username}`);
+  const result = await addUserPoints(username, diff);
   result ? res.status(200).send() : res.status(400).send();
 });
 

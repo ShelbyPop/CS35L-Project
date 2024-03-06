@@ -29,6 +29,16 @@
     transform: scale(1.1); 
     background-color: #fcd4e4; 
   }
+
+  .nav p {
+    font-family: 'Frankfurter Std', sans-serif;
+    font-size: 16px;
+    color: whitesmoke;
+    border-radius: 20px;
+    padding: 0px 15px;
+    background-color: transparent;
+    transition: transform 0.3s ease;
+  }
   
   .popup {
     position: fixed;

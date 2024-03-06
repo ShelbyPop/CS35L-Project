@@ -15,6 +15,7 @@ function App() {
   const [timerLength, setTimerLength] = useState(0); 
   const [gameStarted, setGameStarted] = useState(false); // Tracks if the game has started.
   const [isTimerActive, setIsTimerActive] = useState(false); // Tracks if the timer has been activated by the user.
+  const [username, setUsername] = useState(null);
 
   const handleSetTimer = (length) => {
     setTimerLength(length ? length * 1 : 25 * 60);
@@ -38,15 +39,15 @@ function App() {
         <h1>Café PomPom</h1>
         {!gameStarted ? (
           <>
-          <Navigation />
+          <Navigation username={username} />
             <MantineProvider>
               <div className="custom-login">
-                <LoginInput/>
+                <LoginInput setUsername={setUsername} />
               </div>
             </MantineProvider>
 
             <div className="custom-input">
-              <TimerInput onSetTimer={handleSetTimer}/>
+              <TimerInput onSetTimer={handleSetTimer} />
             </div>
 
             {isTimerActive && (
@@ -56,11 +57,11 @@ function App() {
             )}
 
             <div className="custom-clock">
-              <Clock/>
+              <Clock />
             </div>
           </>
         ) : (
-          <GameWorld onExitGame={exitGame}/>
+          <GameWorld onExitGame={exitGame} />
         )}
       </header>
     </div>
