@@ -8,6 +8,7 @@ import LoginInput from './LoginInput';
 import Navigation from './Navigation'; 
 import ShopButton from './ShopButton';
 import { createSession } from './SessionsRequests.js';
+import '@mantine/core/styles/global.css'; // Please don't delete this line, it will mess up the checkbox
 
 function App() {
   const [timerLength, setTimerLength] = useState(0);
