@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Navigation.css'; // Make sure to style your popups and navigation
+import SessionHistory from './SessionHistory.js';
 import Leaderboard from './Leaderboard.js';
 import { getPoints, addPoints } from './PointsRequests.js';
 
@@ -22,9 +23,29 @@ const handleGetPoints = async (username) => {
   (result === null) ? alert("Bad request") : alert(`${username} has ${result} points`);
 };
 
-const HistoryPopup = () => (
-  <div className="popup">Coming soon</div>
-);
+const HistoryPopup = () => {
+  const [query, setQuery] = useState("");
+  const [data, setData] = useState([])
+  
+  // Update data on render & on query update
+  useEffect(() => {
+    async function fetchSessions() {
+      const res = await fetch(`http://localhost:5050/sessions/history?query=${query}`);
+      const data = await res.json();
+      setData(data);
+    };
+    fetchSessions();
+  }, [query]);
+  
+  return (
+    <>
+    <div className="leaderboard-container" >
+      <input placeholder="Search" className="search" onChange={(event) => setQuery(event.target.value)}/>
+    </div>
+      <SessionHistory data={data ?? []} />
+    </>
+  );
+};
 
 const LeaderboardPopup = () => {
   const [query, setQuery] = useState("");
@@ -46,7 +67,6 @@ const LeaderboardPopup = () => {
       <input placeholder="Search" className="search" onChange={(event) => setQuery(event.target.value)}/>
     </div>
       <Leaderboard data={data ?? []} />
-
     </>
   );
 };

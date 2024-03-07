@@ -27,12 +27,14 @@ function App() {
     console.log("Timer cycle completed!");
     setIsTimerActive(false);
 
-    const sessionLength = Math.round(((new Date()) - sessionStartTime) / 1000);
-    console.log(sessionStartTime, new Date(), sessionLength);
+    const sessionEndTime = new Date();
+    const sessionLength = Math.round((sessionEndTime - sessionStartTime) / 1000);
+    console.log(sessionStartTime, sessionEndTime, sessionLength);
     // Insert new session into database
-    await createSession(username, sessionStartTime, new Date(), sessionLength);
+    await createSession(username, sessionStartTime, sessionEndTime, sessionLength);
   };
 
+  // username and setUsername dependencies needed for user-related things to work properly
   return (
     <div className="App">
       <Navigation username={username} />

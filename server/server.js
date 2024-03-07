@@ -219,5 +219,33 @@ app.post("/sessions/create", async function (req, res) {
   }
 });
 
+// Handle GET request for retrieving session history
+app.get("/sessions/history", async function (req, res) {
+  const cursor = sessions.find({});
+  const allSessionData = await cursor.toArray();
+  const { query } = req.query;
+  const keys = ["username", "startTime", "endTime", "sessionLength"];
+
+  const search = (data) => {
+    return data.filter((item) =>
+      keys.some((key) => {
+        return item[key].toLowerCase().includes(query);
+      })
+    );
+  };
+
+  // const comparePoints = (a, b) => {
+  //   if (Number(a.points) > Number(b.points)) {
+  //     return -1;
+  //   } else if (Number(a.points) < Number(b.points)) {
+  //     return 1;
+  //   }
+  //   return 0;
+  // };
+
+  // res.json(search(allSessionData).sort(comparePoints));
+  res.json(search(allSessionData));
+});
+
 // start server; listening at port 5050
 app.listen(5050);
