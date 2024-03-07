@@ -8,6 +8,7 @@ const uri =
   "mongodb+srv://Cluster06218:dj9ZW9n0VECoINZe@cluster06218.af6kogl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster06218";
 const client = new MongoClient(uri);
 const users = client.db("database").collection("users");
+const sessions = client.db("database").collection("sessions");
 // MongoDB documentation: https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/
 
 // Connect to MongoDB server
@@ -95,9 +96,29 @@ async function addUserPoints(username, diff) {
   const updateDocument = {
     $set: { points: newPoints.toString() }
   };
-  const result = await users.updateOne({ username: username }, updateDocument);
-  //console.log(result);
+  await users.updateOne({ username: username }, updateDocument);
   return true;
+}
+
+async function createSession(username, startTime, endTime, sessionLength) {
+  // Only insert session if user is signed in and startTime/endTime is valid
+  const user = await getUser(username);
+  if (user.length > 1) {
+    console.log("Too many users, please fix bug!!");
+    return null;
+  } else if (user.length === 0) {
+    console.log("User does not exist");
+    return null;
+  } else if (startTime === null || endTime === null) {
+    console.log("Session times invalid");
+    return null;
+  }
+  return await sessions.insertOne({
+    username: username,
+    startTime: startTime,
+    endTime: endTime,
+    sessionLength: sessionLength
+  });
 }
 
 // post: modify database, get: asks for data from database
@@ -153,11 +174,10 @@ app.post("/users/points/add", async function (req, res) {
 });
 
 // Handle GET request for retrieving leaderboard
-app.get("/", async function (req, res) {
+app.get("/users/leaderboard", async function (req, res) {
   const cursor = users.find({});
   const allUserData = await cursor.toArray();
   const { query } = req.query;
-
   const keys = ["username", "points"];
 
   const search = (data) => {
@@ -178,6 +198,25 @@ app.get("/", async function (req, res) {
   };
 
   res.json(search(allUserData).sort(comparePoints));
+});
+
+// Handle POST request for inserting a new session
+app.post("/sessions/create", async function (req, res) {
+  const username = req.query.username;
+  const startTime = req.query.startTime;
+  const endTime = req.query.endTime;
+  const sessionLength = req.query.sessionLength;
+
+  console.log(`Create new session for user ${username}`);
+  const result = await createSession(username, startTime, endTime, sessionLength);
+  console.log(result ? "Session creation success" : "Session creation failed");
+  if (result) {
+    console.log(result);
+    res.json(result);
+  } else {
+    console.log("Return error status");
+    res.status(400).send();
+  }
 });
 
 // start server; listening at port 5050

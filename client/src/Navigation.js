@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Navigation.css'; // Make sure to style your popups and navigation
 import Leaderboard from './Leaderboard.js';
-import { getPoints, addPoints } from './Points.js';
+import { getPoints, addPoints } from './PointsRequests.js';
 
 const PointsPopup = ({ username }) => {
   // Use these lines whenever you need a user's point total in a react component
@@ -19,7 +19,7 @@ const PointsPopup = ({ username }) => {
 // Or, if you can use async function (e.g. in a listener like this), do it this way
 const handleGetPoints = async (username) => {
   const result = await getPoints(username);
-  (result === null) ? alert("Bad request") : alert(`${username} has ${result} points`)
+  (result === null) ? alert("Bad request") : alert(`${username} has ${result} points`);
 };
 
 const HistoryPopup = () => (
@@ -33,7 +33,7 @@ const LeaderboardPopup = () => {
   // Update data on render & on query update
   useEffect(() => {
     async function fetchUsers() {
-      const res = await fetch(`http://localhost:5050?query=${query}`);
+      const res = await fetch(`http://localhost:5050/users/leaderboard?query=${query}`);
       const data = await res.json();
       setData(data);
     };

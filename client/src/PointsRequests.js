@@ -26,7 +26,7 @@ export async function getPoints(username) {
     const data = await response.json();
     return data;
   } else {
-    console.log("Ran into an issue");
+    console.log("Ran into an issue while attempting to retrieve points");
     return null;
   }
 }
@@ -47,7 +47,7 @@ export async function addPoints(username, diff) {
     console.log("Successfully changed user's points");
     return true;
   } else {
-    console.log("Ran into an issue");
+    console.log("Ran into an issue while attempting to change points");
     return false;
   }
 }

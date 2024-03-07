@@ -28,14 +28,13 @@ export default function LoginInput({ setUsername }) {
         `http://localhost:5050/users/create?${new URLSearchParams(values)}`,
         {method: 'POST'}
       );
-      console.log(response.status);
     } else {
       // Log in as an existing user
       response = await fetch(
         `http://localhost:5050/users/login?${new URLSearchParams(values)}`
       );
-      console.log(response.status);
     }
+    console.log(response.status);
 
     if (response.ok) {
       if (values.firstTime) {
