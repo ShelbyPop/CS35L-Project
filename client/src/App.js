@@ -35,12 +35,12 @@ function App() {
 
   return (
     <div className="App">
-      <Navigation />
+      <Navigation username={username} />
       <header className="custom-header">
         <h1>Café PomPom</h1>
         <MantineProvider>
           <div className="custom-login">
-            <LoginInput />
+            <LoginInput setUsername={setUsername} />
           </div>
         </MantineProvider>
 
