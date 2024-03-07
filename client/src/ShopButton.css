@@ -1,0 +1,52 @@
+
+.game-world button, .shop-popup button {
+  background-color: #f4a7b9; 
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: 'Comic Sans MS', cursive, sans-serif; 
+  font-size: 1em;
+  transition: background-color 0.3s;
+}
+
+.game-world button:hover, .shop-popup button:hover {
+  background-color: #f783ac; 
+}
+
+.shop-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff0f6;
+  border: 2px solid #f4a7b9; 
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+
+.shop-items img {
+  width: 64px; 
+  margin: 10px;
+  border-radius: 10px; 
+}
+
+.shop-items {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+h2 {
+  color: #f783ac; /* Darker pink for headings */
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+p {
+  color: #333;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
