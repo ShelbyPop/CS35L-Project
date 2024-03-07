@@ -17,12 +17,6 @@ const PointsPopup = ({ username }) => {
   );
 };
 
-// Or, if you can use async function (e.g. in a listener like this), do it this way
-const handleGetPoints = async (username) => {
-  const result = await getPoints(username);
-  (result === null) ? alert("Bad request") : alert(`${username} has ${result} points`);
-};
-
 const HistoryPopup = () => {
   const [query, setQuery] = useState("");
   const [data, setData] = useState([])
@@ -86,7 +80,6 @@ const Navigation = ({ username }) => {
       }
   };
   
-  // TODO: hide user body element completely when not logged in, so that other buttons are centered
   // TODO: "Add 5 points" is temporary for testing, get rid of this before submitting
   return (
       <div>
@@ -95,9 +88,10 @@ const Navigation = ({ username }) => {
               <button onClick={() => showPopup('history')}>History</button>
               <button onClick={() => showPopup('leaderboard')}>Leaderboard</button>
               <button onClick={() => showPopup('lifetime stats')}>Lifetime Stats</button>
-              <button onClick={() => handleGetPoints(username)}>Check points</button>
               <button onClick={() => addPoints(username, 5)}>Add 5 points</button>
-              <p>{username}</p>
+              {username && 
+                <p>{username}</p>
+              }
           </nav>
           {activePopup === 'points' && <PointsPopup username={username} />}
           {activePopup === 'history' && <HistoryPopup />}
