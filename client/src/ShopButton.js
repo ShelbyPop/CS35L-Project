@@ -21,7 +21,6 @@ const ShopButton = () => {
             <img src={require("./Assets/toast_64x.png")} alt="Toast"/>
             {/* Add more items here */}
           </div>
-          <button onClick={toggleShop}>Close</button>
         </div>
       )}
     </div>
