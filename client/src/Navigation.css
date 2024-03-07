@@ -68,6 +68,10 @@
     border-bottom: 10px solid #fff;
     transform: translateX(-50%);
   }
+
+.leaderboard-container {
+  margin-right: 80px; /* Adjust the margin between the search bar and the leaderboard */
+}
   
 /* Styling for table
 .search {
