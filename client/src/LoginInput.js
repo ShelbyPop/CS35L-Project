@@ -61,7 +61,7 @@ export default function LoginInput({ setUsername }) {
   return (
     <Container size="xl">
       <div className="navbar cat-login-button" onClick={handleClick}>
-        <h3>Login</h3>
+      <h3 style={{ fontFamily: 'Frankfurter Std', paddingBottom: '60px' }}>Login</h3>
       </div>
       <div className={`content ${isOpen ? 'content-open' : ''}`}>
         {isOpen && (
