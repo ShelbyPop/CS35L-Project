@@ -42,8 +42,11 @@ const LeaderboardPopup = () => {
   
   return (
     <>
+    <div className="leaderboard-container" >
       <input placeholder="Search" className="search" onChange={(event) => setQuery(event.target.value)}/>
+    </div>
       <Leaderboard data={data ?? []} />
+
     </>
   );
 };
