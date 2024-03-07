@@ -1,20 +1,40 @@
 .leaderboard-table {
-    width: 100%;
+    width: 40%;
     border-collapse: collapse;
     position: relative;
-    right: 50px;
+    margin: auto;
+    top: 100px;
 }
 
 .leaderboard-table th, .leaderboard-table td {
-    border: 5px solid #ddd;
-    padding: 5px;
+    padding: 5px 10px;
     text-align: left;
+    font-family: 'Lucida Console', monospace;
     font-size: 18px;
-    color: rgba(12, 12, 12, 0.96);
-    text-shadow: #ffb4f0;
+    color: #5d3a57;
+    text-shadow: none;
 }
 
 .leaderboard-table th {
     background-color: rgb(242, 242, 242);
+}
 
+.leaderboard-table td {
+    background-color: rgb(242, 242, 242, 0.7);
+}
+
+.leaderboard-table th:first-child {
+    border-top-left-radius: 10px;
+}
+
+.leaderboard-table th:last-child {
+    border-top-right-radius: 10px;
+}
+
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+    
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
 }

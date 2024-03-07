@@ -4,7 +4,7 @@
     position: fixed; 
     top: 0;
     left: 0;
-    width: 100%; 
+    width: 100%;
     background-color: #f9c1cc;
     padding: 10px 20px;
     display: flex;
@@ -69,25 +69,11 @@
     transform: translateX(-50%);
   }
 
-.leaderboard-container {
-  margin-right: 80px; /* Adjust the margin between the search bar and the leaderboard */
-}
-  
-/* Styling for table
-.search {
-  padding: 10px;
-  font-size: 20px;
-}
-
-.list {
-  padding: 0;
-  list-style: none;
-  text-align: center;
-}
-
-.listItem {
-  margin-bottom: 20px;
-  font-size: 25px;
-  font-weight: 300;
-}
-*/
+  .search {
+    padding: 5px 10px;
+    font-size: 16px;
+    position: relative;
+    top: 85px;
+    border: 0px;
+    border-radius: 15px;
+  }
