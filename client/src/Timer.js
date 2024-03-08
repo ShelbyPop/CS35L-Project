@@ -1,5 +1,6 @@
 // src/Timer.js
 import React, { useState, useEffect } from 'react';
+import './TimerMessage.css';
 import { addPoints } from './PointsRequests';
 
 const Timer = ({ timerLength, onTimerFinish }) => {
@@ -7,6 +8,7 @@ const Timer = ({ timerLength, onTimerFinish }) => {
   const [cyclesCompleted, setCyclesCompleted] = useState(0);
   const [isNewTimerInput, setIsNewTimerInput] = useState(false);
   const [lastQuadrantDelay, setLastQuadrantDelay] = useState(false); // this basically makes sure that we see last quadrant filled for a few seconds before the timer restarts
+  const [timerStatus, setTimerStatus] = useState('work'); // Add timer status state
 
 
   useEffect(() => {
@@ -16,6 +18,9 @@ const Timer = ({ timerLength, onTimerFinish }) => {
 
   useEffect(() => {
     let intervalId = null;
+    if (isNewTimerInput && seconds === timerLength) {
+      setTimerStatus('work');
+    }  
     if (seconds > 0) {
       intervalId = setInterval(() => {
         setSeconds(prevSeconds => prevSeconds - 1);
@@ -23,6 +28,8 @@ const Timer = ({ timerLength, onTimerFinish }) => {
     } else if (seconds === 0 && isNewTimerInput) {
       onTimerFinish();
       setSeconds(3); 
+      setTimerStatus('sessionBreak'); // Update timer status
+
                                             // THIS IS SESSION BREAK
       if (cyclesCompleted < 3) {
         setCyclesCompleted(cyclesCompleted + 1);
@@ -33,14 +40,27 @@ const Timer = ({ timerLength, onTimerFinish }) => {
           setCyclesCompleted(0);
           setLastQuadrantDelay(false); // Reset delay state
           setSeconds(5);                                    // THIS IS CYCLE BREAK
+          setTimerStatus('cycleBreak'); // Update timer status
 
         }, 5000); // Delay duration in milliseconds (this is 5)
       }
       setIsNewTimerInput(false);
     }
     return () => clearInterval(intervalId);
-  }, [seconds, cyclesCompleted, onTimerFinish, isNewTimerInput, lastQuadrantDelay]); // 
+  }, [seconds, cyclesCompleted, onTimerFinish, isNewTimerInput, lastQuadrantDelay, timerLength]); // 
 
+const getMessage = () => {
+  switch (timerStatus) {
+    case 'work':
+      return 'You are in work mode';
+    case 'sessionBreak':
+      return 'You are in session break';
+    case 'cycleBreak':
+      return 'You are in cycle break';
+    default:
+      return '';
+  }
+};
 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
@@ -117,8 +137,16 @@ const Timer = ({ timerLength, onTimerFinish }) => {
             </text>
           </svg>
         </div>
+        <div className="timer-message">
+        {getMessage()}
       </div>
+      </div>
+      
+      
   );
+  
 };
+
+
 
 export default Timer;

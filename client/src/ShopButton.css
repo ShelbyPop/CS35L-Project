@@ -1,19 +1,89 @@
-.game-world button, .shop-popup button {
+.game-world .shop-button {
+  animation: float 3s ease-in-out infinite;
+  position: relative; 
+  top: 140px;
+  left: 100px;
   background-color: #f4a7b9; 
-  color: white;
+  color: rgb(0, 0, 0);
   border: none;
-  border-radius: 8px;
+  border-radius: 20px; 
   padding: 10px 20px;
   cursor: pointer;
-  font-family: 'Frankfurter Std', cursive, sans-serif; 
-  transition: background-color 0.3s;
-  position: absolute;
-  top: 100px; 
-  left: 100px; 
+  font-family: 'Frankfurter Std';
+  box-shadow: 9 4px 8px rgba(0, 0, 0, 0.1); 
+  transition: transform 0.3s, background-color 0.9; 
 }
 
-.game-world button:hover, .shop-popup button:hover {
-  background-color: #f783ac; 
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.shop-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.shop-content {
+  background-color: #fff0f6;
+  border: 2px solid #f4a7b9;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative;
+  width: auto;
+  max-width: 600px;
+}
+
+
+.game-world .shop-button:hover {
+  transform: scale(1.05);
+  background-color: #f783ac;
+}
+
+.game-world .shop-button::before,
+.game-world .shop-button::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: transparent;
+  border-radius: 20px;
+}
+
+.game-world .shop-button:hover::before,
+.game-world .shop-button:hover::after {
+  animation: sparkle 1s infinite ease-in-out;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+                10px 10px 10px rgba(255, 255, 255, 0.4),
+               -10px -10px 10px rgba(255, 255, 255, 0.4),
+                10px -10px 10px rgba(255, 255, 255, 0.4),
+               -10px 10px 10px rgba(255, 255, 255, 0.4);
+    transform: rotate(0deg);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7),
+                15px 15px 10px rgba(255, 255, 255, 0.5),
+               -15px -15px 10px rgba(255, 255, 255, 0.5),
+                15px -15px 10px rgba(255, 255, 255, 0.5),
+               -15px 15px 10px rgba(255, 255, 255, 0.5);
+    transform: rotate(20deg);
+  }
 }
 
 .shop-popup {
