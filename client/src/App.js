@@ -52,7 +52,7 @@ function App() {
 
         {/* Always display Timer */}
         <div className="custom-timer">
-          <Timer timerLength={timerLength} onTimerFinish={onTimerFinish} />
+        <Timer timerLength={timerLength} onTimerFinish={onTimerFinish} username={username} />
         </div>
 
         <div className="custom-clock">

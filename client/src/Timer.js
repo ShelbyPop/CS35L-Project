@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './TimerMessage.css';
 import { addPoints } from './PointsRequests';
 
-const Timer = ({ timerLength, onTimerFinish }) => {
+const Timer = ({ timerLength, onTimerFinish, username }) => {
   const [seconds, setSeconds] = useState(timerLength);
   const [cyclesCompleted, setCyclesCompleted] = useState(0);
   const [isNewTimerInput, setIsNewTimerInput] = useState(false);
@@ -18,6 +18,9 @@ const Timer = ({ timerLength, onTimerFinish }) => {
 
   useEffect(() => {
     let intervalId = null;
+    const sessionPoints = 5;
+    const cyclePoints = 10;
+
     if (isNewTimerInput && seconds === timerLength) {
       setTimerStatus('work');
     }  
@@ -25,6 +28,7 @@ const Timer = ({ timerLength, onTimerFinish }) => {
       intervalId = setInterval(() => {
         setSeconds(prevSeconds => prevSeconds - 1);
       }, 1000);
+
     } else if (seconds === 0 && isNewTimerInput) {
       onTimerFinish();
       setSeconds(3); 
@@ -33,6 +37,13 @@ const Timer = ({ timerLength, onTimerFinish }) => {
                                             // THIS IS SESSION BREAK
       if (cyclesCompleted < 3) {
         setCyclesCompleted(cyclesCompleted + 1);
+        addPoints(username, sessionPoints).then((success) => {
+          if (success) {
+            console.log("Points successfully added after session break.");
+          } else {
+            console.error("Failed to add points after session break.");
+          }
+        });
       } else if (!lastQuadrantDelay) { // 4th quadrant checker
         setLastQuadrantDelay(true); // Start delaying for last quadrant
         setTimeout(() => {
@@ -41,13 +52,20 @@ const Timer = ({ timerLength, onTimerFinish }) => {
           setLastQuadrantDelay(false); // Reset delay state
           setSeconds(5);                                    // THIS IS CYCLE BREAK
           setTimerStatus('cycleBreak'); // Update timer status
+          addPoints(username, cyclePoints).then((success) => {
+            if (success) {
+              console.log("Points successfully added after cycle break.");
+            } else {
+              console.error("Failed to add points after cycle break.");
+            }
+          });  
 
         }, 5000); // Delay duration in milliseconds (this is 5)
       }
       setIsNewTimerInput(false);
     }
     return () => clearInterval(intervalId);
-  }, [seconds, cyclesCompleted, onTimerFinish, isNewTimerInput, lastQuadrantDelay, timerLength]); // 
+  }, [seconds, cyclesCompleted, onTimerFinish, isNewTimerInput, lastQuadrantDelay, timerLength, username]); // 
 
 const getMessage = () => {
   switch (timerStatus) {
