@@ -5,6 +5,8 @@ const Timer = ({ timerLength, onTimerFinish }) => {
   const [seconds, setSeconds] = useState(timerLength);
   const [cyclesCompleted, setCyclesCompleted] = useState(0);
   const [isNewTimerInput, setIsNewTimerInput] = useState(false);
+  const [lastQuadrantDelay, setLastQuadrantDelay] = useState(false); // this basically makes sure that we see last quadrant filled for a few seconds before the timer restarts
+
 
   useEffect(() => {
     setSeconds(timerLength);
@@ -12,23 +14,28 @@ const Timer = ({ timerLength, onTimerFinish }) => {
   }, [timerLength]);
 
   useEffect(() => {
+    let intervalId = null;
     if (seconds > 0) {
-      const intervalId = setInterval(() => {
+      intervalId = setInterval(() => {
         setSeconds(prevSeconds => prevSeconds - 1);
       }, 1000);
-
-      return () => clearInterval(intervalId);
-    } else {
-      if (cyclesCompleted < 4) {
-        // When the timer reaches 0 and cycles are less than 4, just update cycles and reset as needed
+    } else if (seconds === 0 && isNewTimerInput) {
+      if (cyclesCompleted < 3) {
         setCyclesCompleted(cyclesCompleted + 1);
-        setIsNewTimerInput(false);
-      } else {
-        // If cyclesCompleted is 4, and the timer reaches 0, call  onTimerFinish to trigger transition
-        onTimerFinish();
+      } else if (!lastQuadrantDelay) { // 4th quadrant checker
+        setLastQuadrantDelay(true); // Start delaying for last quadrant
+        setTimeout(() => {
+          // After delay remove last quadrant delay
+          onTimerFinish();
+          setCyclesCompleted(0);
+          setLastQuadrantDelay(false); // Reset delay state
+        }, 2000); // Delay duration in milliseconds (e.g., 2000ms = 2 seconds)
       }
+      setIsNewTimerInput(false);
     }
-  }, [seconds, cyclesCompleted, onTimerFinish]);
+    return () => clearInterval(intervalId);
+  }, [seconds, cyclesCompleted, onTimerFinish, isNewTimerInput, lastQuadrantDelay]); // 
+
 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
@@ -42,90 +49,25 @@ const Timer = ({ timerLength, onTimerFinish }) => {
 
   // filling the quarters according to which cycle we are on
   const getQuadrantFill = (quadrantIndex) => {
-
-
-
-    if (cyclesCompleted === 1) {
-      if (quadrantIndex === 1 && isNewTimerInput) { // check if there is new time input
-        return `rgba(200, 162, 200, ${progress})`;
-      }
-      else {
-        return 'transparent';
-      }
+    let currentSessionQuadrant = (cyclesCompleted % 4) + (isNewTimerInput || lastQuadrantDelay ? 1 : 0);
+    if (cyclesCompleted === 4 && (isNewTimerInput || lastQuadrantDelay)) {
+      currentSessionQuadrant = 1;
     }
-
-
-    if (cyclesCompleted === 2) {
-      if (quadrantIndex === 1 ) { // make sure previous fillings do not get reset
-        return `rgba(200, 162, 200)`;
-      }
-      if (quadrantIndex === 2 && isNewTimerInput) { // check if there is new time input
-        return `rgba(200, 162, 200, ${progress})`;
-      }
-      else {
-        return 'transparent';
-      }
+  console.log(currentSessionQuadrant);
+  console.log(quadrantIndex);
+   
+  
+    if (quadrantIndex < currentSessionQuadrant) {
+      // Quadrants before the current session are filled
+      return `rgba(200, 162, 200)`;
+    } else if (quadrantIndex === currentSessionQuadrant) {
+      // Current session's quadrant fills
+      return `rgba(200, 162, 200, ${progress})`;
     }
-
-    if (cyclesCompleted === 3 ) {
-      if (quadrantIndex === 1) {
-        return `rgba(200, 162, 200)`;
-      }
-      if (quadrantIndex === 2) {
-        return `rgba(200, 162, 200)`;
-      }
-      if (quadrantIndex === 3 && isNewTimerInput) {
-        return `rgba(200, 162, 200, ${progress})`;
-      }
-      else {
-        return 'transparent';
-      }
-    }
-
-
-    if (cyclesCompleted === 4 ) {
-      if (quadrantIndex === 1) {
-        return `rgba(200, 162, 200)`;
-      }
-      if (quadrantIndex === 2) {
-        return `rgba(200, 162, 200)`;
-      }
-      if (quadrantIndex === 3) {
-        return `rgba(200, 162, 200)`;
-      }
-      if (quadrantIndex === 4 && isNewTimerInput) {
-        return `rgba(200, 162, 200, ${progress})`;
-      }
-      else {
-        return 'transparent';
-      }
-    }
-
-    if (cyclesCompleted === 5 ) {
-      if (quadrantIndex === 1) {
-        return `rgba(200, 162, 200)`;
-      }
-      if (quadrantIndex === 2) {
-        return `rgba(200, 162, 200)`;
-      }
-      if (quadrantIndex === 3) {
-        return `rgba(200, 162, 200)`;
-      }
-      if (quadrantIndex === 4) {
-        return `rgba(200, 162, 200)`;
-      }
-      else {
-        return 'transparent';
-      }
-    }
-
-
-
-    else {
-      return 'transparent';
-    }
+  
+  
+    return 'transparent';
   };
-
 
 // did some clock reformatting!
   return (

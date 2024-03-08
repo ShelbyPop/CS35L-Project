@@ -11,21 +11,21 @@ import { createSession } from './SessionsRequests.js';
 import '@mantine/core/styles/global.css'; // Please don't delete this line, it will mess up the checkbox
 
 function App() {
-  const [timerLength, setTimerLength] = useState(0);
-  const [isTimerActive, setIsTimerActive] = useState(false); // Tracks if the timer has been activated by the user.
-  const [sessionStartTime, setSessionStartTime] = useState(null); // Tracks start time of current session
-  const [username, setUsername] = useState(null); // Tracks username of user that is currently logged in
+  const [timerLength, setTimerLength] = useState(25 * 60); // Set a default timer length so it's not 0
+  const [isTimerActive, setIsTimerActive] = useState(true); // lowk could delete this
+  const [sessionStartTime, setSessionStartTime] = useState(null);
+  const [username, setUsername] = useState(null);
 
   const handleSetTimer = (length) => {
-    setTimerLength(length ? length * 1 : 25 * 60);
+    setTimerLength(length ? length * 1 : 25 * 60); // Corrected for minutes
+   // TODO: change 1 back to 60 for actual minutes
     setIsTimerActive(true);
-    // Get start time of current session
-    setSessionStartTime(new Date());
-  }; // TODO: change 1 back to 60 for actual minutes
+    setSessionStartTime(new Date()); // Record the start time of the session
+  };
 
   const onTimerFinish = async () => {
     console.log("Timer cycle completed!");
-    setIsTimerActive(false);
+    setIsTimerActive(true); // Keep the timer "active" in terms of logic, but this won't affect visibility
 
     const sessionEndTime = new Date();
     const sessionLength = Math.round((sessionEndTime - sessionStartTime) / 1000);
@@ -33,11 +33,11 @@ function App() {
     // Insert new session into database
     await createSession(username, sessionStartTime, sessionEndTime, sessionLength);
   };
-
-  // username and setUsername dependencies needed for user-related things to work properly
+    // username and setUsername dependencies needed for user-related things to work properly
   return (
     <div className="App">
       <Navigation username={username} />
+      
       <header className="custom-header">
         <h1>Café PomPom</h1>
         <MantineProvider>
@@ -50,11 +50,10 @@ function App() {
           <TimerInput onSetTimer={handleSetTimer} />
         </div>
 
-        {isTimerActive && (
-          <div className="custom-timer">
-            <Timer timerLength={timerLength} onTimerFinish={onTimerFinish} />
-          </div>
-        )}
+        {/* Always display Timer */}
+        <div className="custom-timer">
+          <Timer timerLength={timerLength} onTimerFinish={onTimerFinish} />
+        </div>
 
         <div className="custom-clock">
           <Clock />
