@@ -21,6 +21,7 @@ const Timer = ({ timerLength, onTimerFinish }) => {
         setSeconds(prevSeconds => prevSeconds - 1);
       }, 1000);
     } else if (seconds === 0 && isNewTimerInput) {
+      onTimerFinish();
       setSeconds(3); 
                                             // THIS IS SESSION BREAK
       if (cyclesCompleted < 3) {
@@ -29,7 +30,6 @@ const Timer = ({ timerLength, onTimerFinish }) => {
         setLastQuadrantDelay(true); // Start delaying for last quadrant
         setTimeout(() => {
           // After delay remove last quadrant delay
-          onTimerFinish();
           setCyclesCompleted(0);
           setLastQuadrantDelay(false); // Reset delay state
           setSeconds(5);                                    // THIS IS CYCLE BREAK
