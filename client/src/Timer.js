@@ -1,5 +1,6 @@
 // src/Timer.js
 import React, { useState, useEffect } from 'react';
+import { addPoints } from './PointsRequests';
 
 const Timer = ({ timerLength, onTimerFinish }) => {
   const [seconds, setSeconds] = useState(timerLength);
@@ -20,6 +21,8 @@ const Timer = ({ timerLength, onTimerFinish }) => {
         setSeconds(prevSeconds => prevSeconds - 1);
       }, 1000);
     } else if (seconds === 0 && isNewTimerInput) {
+      setSeconds(3); 
+                                            // THIS IS SESSION BREAK
       if (cyclesCompleted < 3) {
         setCyclesCompleted(cyclesCompleted + 1);
       } else if (!lastQuadrantDelay) { // 4th quadrant checker
@@ -29,7 +32,9 @@ const Timer = ({ timerLength, onTimerFinish }) => {
           onTimerFinish();
           setCyclesCompleted(0);
           setLastQuadrantDelay(false); // Reset delay state
-        }, 2000); // Delay duration in milliseconds (e.g., 2000ms = 2 seconds)
+          setSeconds(5);                                    // THIS IS CYCLE BREAK
+
+        }, 5000); // Delay duration in milliseconds (this is 5)
       }
       setIsNewTimerInput(false);
     }
@@ -53,9 +58,6 @@ const Timer = ({ timerLength, onTimerFinish }) => {
     if (cyclesCompleted === 4 && (isNewTimerInput || lastQuadrantDelay)) {
       currentSessionQuadrant = 1;
     }
-  console.log(currentSessionQuadrant);
-  console.log(quadrantIndex);
-   
   
     if (quadrantIndex < currentSessionQuadrant) {
       // Quadrants before the current session are filled
