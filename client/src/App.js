@@ -9,6 +9,8 @@ import Navigation from './Navigation';
 import ShopButton from './ShopButton';
 import { createSession } from './SessionsRequests.js';
 import '@mantine/core/styles/global.css'; // Please don't delete this line, it will mess up the checkbox
+import { Notifications } from '@mantine/notifications';
+import '@mantine/notifications/styles.css';
 
 function App() {
   const [timerLength, setTimerLength] = useState(25 * 60); // Set a default timer length so it's not 0
@@ -40,6 +42,7 @@ function App() {
       
       <header className="custom-header">
         <h1>Café PomPom</h1>
+        
         <MantineProvider>
           <div className="custom-login">
             <LoginInput setUsername={setUsername} />
@@ -50,10 +53,12 @@ function App() {
           <TimerInput onSetTimer={handleSetTimer} />
         </div>
 
-        {/* Always display Timer */}
-        <div className="custom-timer">
-        <Timer timerLength={timerLength} onTimerFinish={onTimerFinish} username={username} />
-        </div>
+        <MantineProvider> 
+        <Notifications /> 
+          <div className="custom-timer">
+          <Timer timerLength={timerLength} onTimerFinish={onTimerFinish} username={username} />
+           </div>
+        </MantineProvider>
 
         <div className="custom-clock">
           <Clock />

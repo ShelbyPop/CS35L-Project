@@ -3,8 +3,7 @@
 .App {
   text-align: center;
   font-family: 'Frankfurter Std', sans-serif;
-  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.96), 6px 6px 6px rgba(87, 140, 181, 0.96)
-  ,9px 9px 9px rgba(243, 251, 142, 0.96),12px 12px 12px rgba(255, 94, 164, 0.96);
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.96);
   font-weight: 600;
   background-image: url('./PompomBG.png');
   background-size: cover;
@@ -49,9 +48,10 @@
   align-items: center;
   justify-content: center;
   font-size: calc(13px + 2vmin);
-  color: #fda8ca;
+  color: #f4a7b9;
   position: relative;
-  left: 110px;
+  left: 0px;
+  font-size: 40px;
   bottom: 75px;
 }
 

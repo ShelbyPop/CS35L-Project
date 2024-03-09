@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import './TimerMessage.css';
 import { addPoints } from './PointsRequests';
+import { showNotification } from '@mantine/notifications';
 
 const Timer = ({ timerLength, onTimerFinish, username }) => {
   const [seconds, setSeconds] = useState(timerLength);
   const [cyclesCompleted, setCyclesCompleted] = useState(0);
   const [isNewTimerInput, setIsNewTimerInput] = useState(false);
   const [lastQuadrantDelay, setLastQuadrantDelay] = useState(false); // this basically makes sure that we see last quadrant filled for a few seconds before the timer restarts
-  const [timerStatus, setTimerStatus] = useState('work'); // Add timer status state
+  const [timerStatus, setTimerStatus] = useState('work'); 
 
 
   useEffect(() => {
@@ -31,15 +32,31 @@ const Timer = ({ timerLength, onTimerFinish, username }) => {
 
     } else if (seconds === 0 && isNewTimerInput) {
       onTimerFinish();
-      setSeconds(3); 
+      setSeconds(5);             // THIS IS SESSION BREAK
       setTimerStatus('sessionBreak'); // Update timer status
 
-                                            // THIS IS SESSION BREAK
+                                        
       if (cyclesCompleted < 3) {
         setCyclesCompleted(cyclesCompleted + 1);
+
         addPoints(username, sessionPoints).then((success) => {
           if (success) {
-            console.log("Points successfully added after session break.");
+            showNotification({
+              title: '🌟 Points Added!',
+              message: `You've just earned ${sessionPoints} points! Great job! 🎉`,
+              color: 'pink', 
+              autoClose: 3000, 
+              style: {
+                backgroundColor: '#e8ad64', 
+                color: '#000000', 
+                fontFamily: '"Frankfurter Std", cursive', 
+                fontSize: '1.5rem', 
+                padding: '2rem',
+                borderRadius: '1.5rem', 
+              },
+              radius: 50, 
+              withCloseButton: false, 
+            });
           } else {
             console.error("Failed to add points after session break.");
           }
@@ -50,11 +67,27 @@ const Timer = ({ timerLength, onTimerFinish, username }) => {
           // After delay remove last quadrant delay
           setCyclesCompleted(0);
           setLastQuadrantDelay(false); // Reset delay state
-          setSeconds(5);                                    // THIS IS CYCLE BREAK
+          setSeconds(10);                                    // THIS IS CYCLE BREAK
           setTimerStatus('cycleBreak'); // Update timer status
           addPoints(username, cyclePoints).then((success) => {
             if (success) {
               console.log("Points successfully added after cycle break.");
+              showNotification({
+                title: '🌟 Points Added!',
+                message: `You've just earned ${cyclePoints} points! Great job! 🎉`,
+                color: 'pink', 
+                autoClose: 3000, 
+                style: {
+                  backgroundColor: '#e8ad64', 
+                  color: '#000000', 
+                  fontFamily: '"Frankfurter Std", cursive', 
+                  fontSize: '1.5rem', 
+                  padding: '2rem',
+                  borderRadius: '1.5rem', 
+                },
+                radius: 50, 
+                withCloseButton: false, 
+              });
             } else {
               console.error("Failed to add points after cycle break.");
             }
