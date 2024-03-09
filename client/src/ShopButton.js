@@ -27,12 +27,12 @@ const ShopButton = ({ username }) => {
       if (success) {
         const updatedPoints = await getPoints(username);
         setPoints(updatedPoints);
-        alert(`Item purchased! You now have ${points - cost} ${points - cost === 1? 'point' : 'points'} remaining.`);
+        alert(`Item purchased! You now have ${points - cost} ${points - cost === 1 ? 'coin' : 'coins'} remaining.`);
       } else {
         alert('There was an issue with the transaction.');
       }
     } else {
-      alert(`Not enough points! You only have ${points} points.`);
+      alert(`Not enough points! You only have ${points} ${points === 1 ? 'coin' : 'coins'}.`);
       
     }
   };
@@ -40,7 +40,6 @@ const ShopButton = ({ username }) => {
   return (
     <div className="game-world">
       <button className="shop-button" onClick={toggleShop}>Shop</button>
-      <p>You have {points} points.</p>
 
       {showShop && (
         <div className="shop-fullscreen">
