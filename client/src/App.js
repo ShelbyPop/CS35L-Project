@@ -59,7 +59,7 @@ function App() {
           <Clock />
         </div>
 
-        <ShopButton />
+        <ShopButton username={username} />
       </header>
     </div>
   );
