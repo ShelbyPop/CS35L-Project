@@ -17,6 +17,16 @@ import pie5Image from './Assets/pie5.png';
 import pie6Image from './Assets/pie6.png';
 import pan1Image from './Assets/pan1.png';
 import pan2Image from './Assets/pan2.png';
+import donut1Image from './Assets/donut1.png';
+import donut2Image from './Assets/donut2.png';
+import donut3Image from './Assets/donut3.png';
+import donut4Image from './Assets/donut4.png';
+import waffle1Image from './Assets/waffle1.png';
+import waffle2Image from './Assets/waffle2.png';
+import waffle3Image from './Assets/waffle3.png';
+import waffle4Image from './Assets/waffle4.png';
+import cin1Image from './Assets/cin1.png';
+import cin2Image from './Assets/cin2.png';
 
 
 
@@ -183,10 +193,85 @@ const ShopButton = ({ username }) => {
                 </div>
               </button>
 
-            
+              <button className="item-button" onClick={() => buyItem(12)}>
+                <img src={donut1Image}/>
+                <div className="item-info">
+                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
+                  <span>12</span>
+                </div>
+              </button>
 
+              <button className="item-button" onClick={() => buyItem(12)}>
+                <img src={donut2Image}/>
+                <div className="item-info">
+                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
+                  <span>12</span>
+                </div>
+              </button>
 
+              <button className="item-button" onClick={() => buyItem(12)}>
+                <img src={donut3Image}/>
+                <div className="item-info">
+                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
+                  <span>12</span>
+                </div>
+              </button>
 
+              <button className="item-button" onClick={() => buyItem(12)}>
+                <img src={donut4Image}/>
+                <div className="item-info">
+                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
+                  <span>12</span>
+                </div>
+              </button>
+
+              <button className="item-button" onClick={() => buyItem(12)}>
+                <img src={waffle1Image}/>
+                <div className="item-info">
+                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
+                  <span>12</span>
+                </div>
+              </button>
+
+              <button className="item-button" onClick={() => buyItem(12)}>
+                <img src={waffle2Image}/>
+                <div className="item-info">
+                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
+                  <span>12</span>
+                </div>
+              </button>
+
+              <button className="item-button" onClick={() => buyItem(12)}>
+                <img src={waffle3Image}/>
+                <div className="item-info">
+                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
+                  <span>12</span>
+                </div>
+              </button>
+
+              <button className="item-button" onClick={() => buyItem(12)}>
+                <img src={waffle4Image}/>
+                <div className="item-info">
+                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
+                  <span>12</span>
+                </div>
+              </button>
+
+              <button className="item-button" onClick={() => buyItem(12)}>
+                <img src={cin1Image}/>
+                <div className="item-info">
+                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
+                  <span>12</span>
+                </div>
+              </button>
+
+              <button className="item-button" onClick={() => buyItem(12)}>
+                <img src={cin2Image}/>
+                <div className="item-info">
+                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
+                  <span>12</span>
+                </div>
+              </button>
             </div>
             <button onClick={toggleShop}>Close</button>
           </div>
