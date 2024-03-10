@@ -27,6 +27,8 @@ import waffle3Image from './Assets/waffle3.png';
 import waffle4Image from './Assets/waffle4.png';
 import cin1Image from './Assets/cin1.png';
 import cin2Image from './Assets/cin2.png';
+import useSound from 'use-sound';
+import chaChingSound from './Assets/cha-ching.mp3';
 
 
 function ItemButton({ itemImage, price, buyItem }) {
@@ -46,31 +48,31 @@ const ShopButton = ({ username }) => {
   const [showShop, setShowShop] = useState(false);
   const [points, setPoints] = useState("");
   const [selectedTab, setSelectedTab] = useState('coffee');
-  
+  const [playChaChing] = useSound(chaChingSound); // Initialize useSound here
+
   useEffect(() => {
     getPoints(username).then((points) => setPoints(points));
   }, [username, showShop]);
 
-  console.log(`${points} points`);
-
   const toggleShop = () => {
     setShowShop(!showShop);
   };
-
+  
   const buyItem = async (cost) => {
     if (points >= cost) {
       const success = await addPoints(username, -cost);
       if (success) {
         const updatedPoints = await getPoints(username);
         setPoints(updatedPoints);
-        alert(`Item purchased! You now have ${points - cost} ${points - cost === 1 ? 'coin' : 'coins'} remaining.`);
+        playChaChing(); // Play the sound upon successful purchase
+        alert(`Item purchased! You now have ${updatedPoints} ${updatedPoints === 1 ? 'coin' : 'coins'} remaining.`);
       } else {
         alert('There was an issue with the transaction.');
       }
     } else {
       alert(`Not enough points! You only have ${points} ${points === 1 ? 'coin' : 'coins'}.`);
-      
     }
+  
   };
 
   const coffeeItems = [
