@@ -88,7 +88,6 @@ const Navigation = ({ username }) => {
               <button onClick={() => showPopup('history')}>History</button>
               <button onClick={() => showPopup('leaderboard')}>Leaderboard</button>
               <button onClick={() => showPopup('lifetime stats')}>Lifetime Stats</button>
-              <button onClick={() => addPoints(username, 5)}>Add 5 points</button>
               {username && 
                 <p>{username}</p>
               }
