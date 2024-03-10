@@ -16,10 +16,9 @@ const TimerInput = ({ onSetTimer }) => {
   return (
     <div>
       <label>
-        Set Timer Length (minutes):
         <input type="number" value={timerLength} onChange={handleChange} />
       </label>
-      <button onClick={handleSetTimer}>Set Timer</button>
+      <button onClick={handleSetTimer}>Set Timer (min)</button>
     </div>
   );
 };
