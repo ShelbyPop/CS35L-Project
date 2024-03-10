@@ -1,5 +1,14 @@
 /* src/App.css */
 
+@font-face {
+  font-family: 'Frankfurter Std';
+  src: url('./FrankfurterStd.woff2') format('woff2'),
+       url('./FrankfurterStd.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 .App {
   text-align: center;
   font-family: 'Frankfurter Std', sans-serif;
