@@ -39,7 +39,9 @@ import PiesPressed from './Assets/PiesPressed_64x.png';
 import DonutsPressed from './Assets/DonutsPressed_64x.png';
 import WafflesPressed from './Assets/WafflesPressed_64x.png';
 import MiscPressed from './Assets/MiscPressed_64x.png';
-import ShopWelcome from './Assets/ShopWelcome_384x.png'
+import ShopWelcome from './Assets/ShopWelcome_384x.png';
+import ReturnButton from './Assets/ReturnButton_64x.png';
+import ReturnPressed from './Assets/ReturnPressed_64x.png';
 import useSound from 'use-sound';
 import chaChingSound from './Assets/cha-ching.mp3';
 import wahWahSound from './Assets/wahwah.mp3';
@@ -204,7 +206,7 @@ const ShopButton = ({ username }) => {
                   ))}
                 </div>
               </div>
-              <button onClick={toggleShop}>Return</button>
+              <ImageButton defaultImage={ReturnButton} pressedImage={ReturnPressed} altText="Return" onClick={toggleShop} />
             </div>
           </div>
         </div>

@@ -73,6 +73,7 @@
   height: 480px;
   margin: auto;
   overflow: auto;
+  background-color: transparent;
 }
 
 .game-world .shop-button:hover {
