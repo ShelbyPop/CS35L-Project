@@ -45,7 +45,8 @@ function ItemButton({ itemImage, price, buyItem }) {
 const ShopButton = ({ username }) => {
   const [showShop, setShowShop] = useState(false);
   const [points, setPoints] = useState("");
-
+  const [selectedTab, setSelectedTab] = useState('coffee');
+  
   useEffect(() => {
     getPoints(username).then((points) => setPoints(points));
   }, [username, showShop]);
@@ -72,6 +73,54 @@ const ShopButton = ({ username }) => {
     }
   };
 
+  const coffeeItems = [
+    { image: coffeeImage, price: 10 },
+    { image: coffee1Image, price: 10 },
+    { image: coffee2Image, price: 10 }
+  ];
+  const cakeItems = [
+    { image: cake1Image, price: 40},
+    { image: cake2Image, price: 50}
+  ];
+  const pieItems = [
+    { image: pie1Image, price: 50},
+    { image: pie2Image, price: 50},
+    { image: pie3Image, price: 20},
+    { image: pie4Image, price: 25},
+    { image: pie5Image, price: 30},
+    { image: pie6Image, price: 50}
+  ];
+  const donutItems = [
+    { image: donut1Image, price: 12},
+    { image: donut2Image, price: 12},
+    { image: donut3Image, price: 12},
+    { image: donut4Image, price: 12}
+  ];
+  const waffleItems = [
+    { image: waffle1Image, price: 12},
+    { image: waffle2Image, price: 12},
+    { image: waffle3Image, price: 12},
+    { image: waffle4Image, price: 12}
+  ];
+  const miscItems = [
+    { image: pan1Image, price: 12},
+    { image: pan2Image, price: 12},
+    { image: cin1Image, price: 12},
+    { image: cin2Image, price: 12},
+    { image: muffinImage, price: 12},
+    { image: toastImage, price: 12}
+  ];
+
+  let itemsToDisplay;
+  switch (selectedTab) {
+    case 'coffee': itemsToDisplay= coffeeItems; break;
+    case 'cakes': itemsToDisplay = cakeItems; break;
+    case 'pies': itemsToDisplay = pieItems; break;
+    case 'donuts': itemsToDisplay = donutItems; break;
+    case 'waffles': itemsToDisplay = waffleItems; break;
+    case 'misc': itemsToDisplay = miscItems; break;
+  }
+
   return (
     <div className="game-world">
       <button className="shop-button" onClick={toggleShop}>Shop</button>
@@ -82,37 +131,22 @@ const ShopButton = ({ username }) => {
             <h2>This is the Shop</h2>
             <p>Buy items here!</p>
             <div className="shop-items">
-              <ItemButton itemImage={coffeeImage} price={10} buyItem={buyItem} />
-              <ItemButton itemImage={muffinImage} price={15} buyItem={buyItem} />
-              <ItemButton itemImage={toastImage} price={12} buyItem={buyItem} />
-              <ItemButton itemImage={coffee1Image} price={10} buyItem={buyItem} />
-              <ItemButton itemImage={coffee2Image} price={10} buyItem={buyItem} />
+              <div className="shop-tabs">
+                <button onClick={() => setSelectedTab('coffee')}>Coffee</button>
+                <button onClick={() => setSelectedTab('cakes')}>Cakes</button>
+                <button onClick={() => setSelectedTab('pies')}>Pies</button>
+                <button onClick={() => setSelectedTab('donuts')}>Donuts</button>
+                <button onClick={() => setSelectedTab('waffles')}>Waffles</button>
+                <button onClick={() => setSelectedTab('misc')}>Misc.</button>
+              </div>
 
-              <ItemButton itemImage={cake1Image} price={40} buyItem={buyItem} />
-              <ItemButton itemImage={cake2Image} price={50} buyItem={buyItem} />
-              <ItemButton itemImage={pie1Image} price={50} buyItem={buyItem} />
-              <ItemButton itemImage={pie2Image} price={50} buyItem={buyItem} />
-              <ItemButton itemImage={pie3Image} price={20} buyItem={buyItem} />
-
-              <ItemButton itemImage={pie4Image} price={25} buyItem={buyItem} />
-              <ItemButton itemImage={pie5Image} price={30} buyItem={buyItem} />
-              <ItemButton itemImage={pie6Image} price={50} buyItem={buyItem} />
-              <ItemButton itemImage={pan1Image} price={12} buyItem={buyItem} />
-              <ItemButton itemImage={pan2Image} price={12} buyItem={buyItem} />
-
-              <ItemButton itemImage={donut1Image} price={12} buyItem={buyItem} />
-              <ItemButton itemImage={donut2Image} price={12} buyItem={buyItem} />
-              <ItemButton itemImage={donut3Image} price={12} buyItem={buyItem} />
-              <ItemButton itemImage={donut4Image} price={12} buyItem={buyItem} />
-              <ItemButton itemImage={waffle1Image} price={12} buyItem={buyItem} />
-
-              <ItemButton itemImage={waffle2Image} price={12} buyItem={buyItem} />
-              <ItemButton itemImage={waffle3Image} price={12} buyItem={buyItem} />
-              <ItemButton itemImage={waffle4Image} price={12} buyItem={buyItem} />
-              <ItemButton itemImage={cin1Image} price={12} buyItem={buyItem} />
-              <ItemButton itemImage={cin2Image} price={12} buyItem={buyItem} />
+              <div className="shop-items">
+                {itemsToDisplay.map((item, index) => (
+                  <ItemButton key={index} itemImage={item.image} price={item.price} buyItem={buyItem} />
+                ))}
+              </div>
             </div>
-            <button onClick={toggleShop}>Close</button>
+            <button onClick={toggleShop}>Return</button>
           </div>
         </div>
       )}
