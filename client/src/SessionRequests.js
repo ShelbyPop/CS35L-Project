@@ -1,4 +1,4 @@
-// Helper functions for modifying a user's sessions
+// Helper functions for modifying or accessing a user's sessions
 
 // Create a session, given a user's username and Date objects startTime, endTime
 export async function createSession(username, startTime, endTime) {
@@ -27,6 +27,7 @@ export async function createSession(username, startTime, endTime) {
   }
 }
 
+// Return an array of all of a user's sessions
 export async function getUserSessions(username) {
   const obj = { username: username };
   const response = await fetch(`http://localhost:5050/sessions/user?${new URLSearchParams(obj)}`);
@@ -43,11 +44,24 @@ export async function getUserSessions(username) {
   }
 }
 
+// Parse the array returned by getUserSessions() into an object with various user statistics:
+// most recent session, total number of sessions, total time spent focusing, average session length
 export async function parseUserSessions (username) {
   const userSessionsArray = await getUserSessions(username);
-  console.log(`sessions array length: ${userSessionsArray.length}`);
+  const totalSessions = userSessionsArray.length;
+  const lastSession = userSessionsArray.length ? userSessionsArray[totalSessions-1].endTime : null;
+  const sessionLengthArray = userSessionsArray.map((session) => Number(session.sessionLength));
+  console.log(sessionLengthArray);
+  const totalFocusTime = sessionLengthArray.reduce(
+    (accumulator, currLength) => accumulator + currLength, 0
+  );
+  const averageSessionLength = Math.round(totalFocusTime / totalSessions);
+
   const stats = {
-    numSessions: userSessionsArray.length,
+    lastSession,
+    totalSessions,
+    totalFocusTime,
+    averageSessionLength
   };
   console.log(stats);
   return stats;

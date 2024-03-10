@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './Navigation.css'; // Make sure to style your popups and navigation
 import SessionHistory from './SessionHistory.js';
 import Leaderboard from './Leaderboard.js';
-import { getPoints, addPoints } from './PointsRequests.js';
-import { getUserSessions, parseUserSessions } from './SessionRequests.js';
+import { getPoints } from './PointsRequests.js';
+import { parseUserSessions } from './SessionRequests.js';
 
 const PointsPopup = ({ username }) => {
   // Use these lines whenever you need a user's point total in a react component
@@ -78,10 +78,13 @@ const UserStatsPopup = ({ username }) => {
   } else if (stats === null) {
     return (<div className="popup">No sessions yet</div>);
   } else {
-    console.log(`total sessions: ${stats.numSessions}`);
+    console.log(`total sessions: ${stats.totalSessions}`);
     return (
       <div className="popup">
-        {stats.numSessions + " sessions"}
+        <p>Most recent session: {stats.lastSession}</p>
+        <p>Total sessions: {stats.totalSessions}</p>
+        <p>Total time spent focusing: {stats.totalFocusTime} seconds</p>
+        <p>Average session length: {stats.averageSessionLength} seconds</p>
       </div>
     );
   }
