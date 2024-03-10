@@ -7,25 +7,67 @@ import timerDoneSound from './Assets/timerdone.mp3';
 import useSound from 'use-sound';
 
 
-const Timer = ({ timerLength}) => {
+const Timer = ({ timerLength, username}) => {
   const [seconds, setSeconds] = useState(timerLength);
   // const [breakSeconds, setBreakSeconds] = useState(5 * 60);
   const [cyclesCompleted, setCyclesCompleted] = useState(0); // use for tracking which cycle we are on
   const [isNewTimerInput, setIsNewTimerInput] = useState(false); // use for tracking if there is new timer input
+  const [timerStatus, setTimerStatus] = useState('work');
+  const [playTimerDone] = useSound(timerDoneSound);
 
 
 
   useEffect(() => {
     setSeconds(timerLength);
     setIsNewTimerInput(true);
+    setTimerStatus('work');
   }, [timerLength]);
 
   useEffect(() => {
+  //  let intervalId = null;
+    const sessionPoints = 5;
+    const cyclePoints = 10;
+
+
     if(cyclesCompleted > 7 && isNewTimerInput) { // RETURN once we have reached 4 cycles
       // will change once we set up the user database
       // for now, we will just RETURN
+      addPoints(username, cyclePoints).then((success) => {
+        if (success) {
+          console.log("Points successfully added after cycle break.");
+          showNotification({
+            title: '🌟 Points Added!',
+            message: `You've just earned ${cyclePoints} points! Great job! 🎉`,
+            color: 'pink',
+            autoClose: 3000,
+            style: {
+              backgroundColor: '#e8ad64',
+              color: '#000000',
+              fontFamily: '"Frankfurter Std", cursive',
+              fontSize: '1.5rem',
+              padding: '2rem',
+              borderRadius: '1.5rem',
+            },
+            radius: 50,
+            withCloseButton: false,
+          });
+        } else {
+          console.error("Failed to add points after cycle break.");
+        }
+      });
+
+
+
+
+
+
       setCyclesCompleted(0);
     }
+
+
+
+
+
     const intervalId = setInterval(() => {
 
       setSeconds((prevSeconds) => {
@@ -36,7 +78,36 @@ const Timer = ({ timerLength}) => {
 
 
         else if (prevSeconds === 0 && cyclesCompleted % 2 === 0) {
+          playTimerDone(timerDoneSound);
           setSeconds(5);
+
+          setTimerStatus('sessionBreak');
+          addPoints(username, sessionPoints).then((success) => {
+            if (success) {
+              showNotification({
+                title: '🌟 Points Added!',
+                message: `You've just earned ${sessionPoints} points! Great job!`,
+                color: 'pink',
+                autoClose: 3000,
+                style: {
+                  backgroundColor: '#e8ad64',
+                  color: '#000000',
+                  fontFamily: '"Frankfurter Std", cursive',
+                  fontSize: '1.5rem',
+                  padding: '2rem',
+                  borderRadius: '1.5rem',
+                },
+                radius: 50,
+                withCloseButton: false,
+              });
+            } else {
+              console.error("Failed to add points after session break.");
+            }
+          });
+
+
+
+
           setCyclesCompleted(cyclesCompleted + 1);
           // return 0;
 
@@ -58,6 +129,21 @@ const Timer = ({ timerLength}) => {
     return () => clearInterval(intervalId);
   }, [seconds], timerLength);
 
+
+
+
+  const getMessage = () => {
+    switch (timerStatus) {
+      case 'work':
+        return 'You are in work mode';
+      case 'sessionBreak':
+        return 'You are in session break';
+      case 'cycleBreak':
+        return 'You are in cycle break';
+      default:
+        return '';
+    }
+  };
 
 
 

@@ -88,16 +88,16 @@
   font-size: 20px;
   position: relative;
   color: cornsilk;
-  top: 430px;
+  top: 450px;
   right: 450px;
 }
 
 .custom-clock {
   font-family: 'Frankfurter Std', sans-serif;
-  text-shadow: none;
+  text-shadow: 4px 4px 0px #5d3a57;
   font-size: 30px;
   position: relative;
   color: rgb(97, 172, 187);
-  top: 30px;
-  right: 230px;
+  top: 20px;
+  right: 200px;
 }
