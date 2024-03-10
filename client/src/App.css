@@ -93,11 +93,11 @@
 }
 
 .custom-clock {
-  font-family: 'Lucida Console', monospace;
+  font-family: 'Frankfurter Std', sans-serif;
   text-shadow: none;
-  font-size: calc(5px + 2vmin);
+  font-size: 30px;
   position: relative;
-  color: cornsilk;
-  top: 80px;
-  right: 143px;
+  color: rgb(97, 172, 187);
+  top: 30px;
+  right: 230px;
 }

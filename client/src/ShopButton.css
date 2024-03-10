@@ -1,17 +1,17 @@
 .game-world .shop-button {
   animation: float 3s ease-in-out infinite;
-  position: relative; 
-  top: 140px;
-  left: 100px;
-  background-color: #f4a7b9; 
+  position: relative;
+  bottom: 550px;
+  left: 540px;
+  background-color: #f4a7b9;
   color: rgb(0, 0, 0);
   border: none;
-  border-radius: 20px; 
+  border-radius: 20px;
   padding: 10px 20px;
   cursor: pointer;
   font-family: 'Frankfurter Std';
-  box-shadow: 9 4px 8px rgba(0, 0, 0, 0.1); 
-  transition: transform 0.3s, background-color 0.9; 
+  box-shadow: 9 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, background-color 0.9;
 }
 
 @keyframes float {
