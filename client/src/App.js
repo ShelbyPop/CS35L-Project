@@ -7,6 +7,7 @@ import TimerInput from './TimerInput';
 import LoginInput from './LoginInput';
 import Navigation from './Navigation'; 
 import ShopButton from './ShopButton';
+import ToDoList from './ToDoList.js';
 import { createSession } from './SessionRequests.js';
 import '@mantine/core/styles/global.css'; // Please don't delete this line, it will mess up the checkbox
 import { Notifications } from '@mantine/notifications';
@@ -49,6 +50,7 @@ function App() {
           </div>
         </MantineProvider>
 
+    
         <div className="custom-input">
           <TimerInput onSetTimer={handleSetTimer} />
         </div>
@@ -64,6 +66,10 @@ function App() {
           <Clock />
         </div>
 
+        <div className="todo-list-position-wrapper">
+        <ToDoList />
+      </div>
+
         <ShopButton username={username} />
       </header>
     </div>
@@ -71,3 +77,4 @@ function App() {
 }
 
 export default App;
+

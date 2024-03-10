@@ -224,7 +224,7 @@ app.get("/sessions/history", async function (req, res) {
   const cursor = sessions.find({});
   const allSessionData = await cursor.toArray();
   const { query } = req.query;
-  const keys = ["username", "startTime", "endTime", "sessionLength"];
+  const keys = ["username"];
 
   const search = (data) => {
     return data.filter((item) =>

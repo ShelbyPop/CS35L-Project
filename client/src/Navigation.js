@@ -35,7 +35,7 @@ const HistoryPopup = () => {
   return (
     <>
     <div className="leaderboard-container" >
-      <input placeholder="Search" className="search" onChange={(event) => setQuery(event.target.value)}/>
+      <input placeholder="Search for user" className="search" onChange={(event) => setQuery(event.target.value)}/>
     </div>
       <SessionHistory data={data ?? []} />
     </>
