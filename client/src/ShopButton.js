@@ -75,9 +75,15 @@ class ImageButton extends React.Component {
 }
 
 function ItemButton({ itemImage, price, buyItem }) {
+  const [isPressed, setIsPressed] = React.useState(false);
+
   return (
-    <button className="item-button" onClick={() => buyItem(price)}>
-      <img src={itemImage}/>
+    <button className={`item-button ${isPressed ? 'pressed' : ''}`}
+            onMouseDown={() => setIsPressed(true)}
+            onMouseUp={() => setIsPressed(false)}
+            onMouseLeave={() => setIsPressed(false)}
+            onClick={() => buyItem(price)}>
+      <img className="item-image" src={itemImage} alt="Item" />
       <div className="item-info">
         <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
         <span>{price}</span>
@@ -85,6 +91,7 @@ function ItemButton({ itemImage, price, buyItem }) {
     </button>
   );
 }
+
 
 const ShopButton = ({ username }) => {
   const [showShop, setShowShop] = useState(false);
@@ -159,7 +166,7 @@ const ShopButton = ({ username }) => {
 
   let itemsToDisplay;
   switch (selectedTab) {
-    case 'coffee': itemsToDisplay= coffeeItems; break;
+    case 'coffee': itemsToDisplay = coffeeItems; break;
     case 'cakes': itemsToDisplay = cakeItems; break;
     case 'pies': itemsToDisplay = pieItems; break;
     case 'donuts': itemsToDisplay = donutItems; break;

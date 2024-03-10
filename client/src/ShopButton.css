@@ -128,10 +128,19 @@ p {
 }
 
 .item-button {
+  width: 144px;
+  height: 144px;
+  background-image: url('./Assets/ItemBG_256x.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  padding: 0;
+  padding-bottom: 30px;
+  outline: none;
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-bottom: 16px;
   align-items: center;
   justify-content: center;
 }
@@ -145,13 +154,24 @@ p {
 
 .item-info {
   position: absolute;
-  bottom: 0;
+  bottom: 15px;
   display: flex;
   align-items: center;
 }
 .item-info span {
   font-size: 18px;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: rgb(219, 164, 125);
+}
+
+.item-button.pressed {
+  background-image: url('./Assets/ItemBGPressed_256x.png');
+}
+
+.item-button.pressed .item-image,
+.item-button.pressed .coin-image,
+.item-button.pressed .item-info {
+  transform: translateY(4px);
 }
 
 .image-button {
