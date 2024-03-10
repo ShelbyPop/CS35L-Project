@@ -3,7 +3,7 @@
 @font-face {
   font-family: 'Frankfurter Std';
   src: url('./FrankfurterStd.woff2') format('woff2'),
-  url('./FrankfurterStd.woff') format('woff');
+       url('./FrankfurterStd.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -56,10 +56,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 55px;
+  font-size: calc(13px + 2vmin);
   color: #f4a7b9;
   position: relative;
-  bottom: 50px;
+  left: 0px;
+  font-size: 40px;
+  bottom: 75px;
 }
 
 .custom-login {
@@ -68,8 +70,8 @@
   font-size: calc(5px + 2vmin);
   color: cornsilk;
   position: relative;
-  left: 250px;
-  top: 230px;
+  left: 70px;
+  top: 200px;
 }
 
 .custom-timer {
@@ -78,31 +80,21 @@
   color: cornsilk;
   position: relative;
   font-size: calc(30px + 2vmin);
-  top: 100px;
-  left: 20px;
+  top: 165px;
+  right: 80px;
 }
 
 .custom-input {
   font-family: 'Lucida Console', monospace;
   text-shadow: none;
-  font-size: 20px;
+  font-size: calc(5px + 2vmin);
   position: relative;
   color: cornsilk;
-  top: 430px;
-  right: 450px;
+  top: 155px;
+  right: 75px;
 }
 
 .custom-clock {
-  font-family: 'Frankfurter Std', sans-serif;
-  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.96);
-  font-size: 40px;
-  position: relative;
-  color: rgb(97, 172, 187);
-  top: 20px;
-  right: 230px;
-}
-
-.custom-shop {
   font-family: 'Lucida Console', monospace;
   text-shadow: none;
   font-size: calc(5px + 2vmin);
