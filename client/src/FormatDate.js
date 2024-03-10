@@ -6,3 +6,8 @@ export function formatTime(seconds) {
   const formatMin = (min < 10) ? ("0" + min) : min;
   return formatMin + ":" + formatSec;
 }
+
+// Given a date string, chop off the time zone
+export function formatDate(dateString) {
+  return dateString.slice(4, dateString.length-33);
+}
