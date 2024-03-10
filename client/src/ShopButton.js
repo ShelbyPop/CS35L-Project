@@ -39,9 +39,11 @@ import PiesPressed from './Assets/PiesPressed_64x.png';
 import DonutsPressed from './Assets/DonutsPressed_64x.png';
 import WafflesPressed from './Assets/WafflesPressed_64x.png';
 import MiscPressed from './Assets/MiscPressed_64x.png';
+import ShopWelcome from './Assets/ShopWelcome_384x.png'
 import useSound from 'use-sound';
 import chaChingSound from './Assets/cha-ching.mp3';
 import wahWahSound from './Assets/wahwah.mp3';
+
 
 // This Allows a new image to be displayed while the user clicks an image button.
 class ImageButton extends React.Component {
@@ -177,29 +179,30 @@ const ShopButton = ({ username }) => {
   return (
     <div className="game-world">
       <button className="shop-button" onClick={toggleShop}>Shop</button>
-
+      
       {showShop && (
         <div className="shop-fullscreen">
           <div className="shop-content">
-            <h2>This is the Shop</h2>
-            <p>Buy items here!</p>
-            <div className="shop-items">
-              <div className="shop-tabs">
-                <ImageButton defaultImage={CoffeeButton} pressedImage={CoffeePressed} altText="Coffee" onClick={() => setSelectedTab('coffee')} />
-                <ImageButton defaultImage={CakesButton} pressedImage={CakesPressed} altText="Cakes" onClick={() => setSelectedTab('cakes')} />
-                <ImageButton defaultImage={PiesButton} pressedImage={PiesPressed} altText="Pies" onClick={() => setSelectedTab('pies')} />
-                <ImageButton defaultImage={DonutsButton} pressedImage={DonutsPressed} altText="Donuts" onClick={() => setSelectedTab('donuts')} />
-                <ImageButton defaultImage={WafflesButton} pressedImage={WafflesPressed} altText="Waffles" onClick={() => setSelectedTab('waffles')} />
-                <ImageButton defaultImage={MiscButton} pressedImage={MiscPressed} altText="Misc" onClick={() => setSelectedTab('misc')} />
-              </div>
-
+            <div className="shop-container">
+              <img src={ShopWelcome} alt="Shop - Buy Below."/>
               <div className="shop-items">
-                {itemsToDisplay.map((item, index) => (
-                  <ItemButton key={index} itemImage={item.image} price={item.price} buyItem={buyItem} />
-                ))}
+                <div className="shop-tabs">
+                  <ImageButton defaultImage={CoffeeButton} pressedImage={CoffeePressed} altText="Coffee" onClick={() => setSelectedTab('coffee')} />
+                  <ImageButton defaultImage={CakesButton} pressedImage={CakesPressed} altText="Cakes" onClick={() => setSelectedTab('cakes')} />
+                  <ImageButton defaultImage={PiesButton} pressedImage={PiesPressed} altText="Pies" onClick={() => setSelectedTab('pies')} />
+                  <ImageButton defaultImage={DonutsButton} pressedImage={DonutsPressed} altText="Donuts" onClick={() => setSelectedTab('donuts')} />
+                  <ImageButton defaultImage={WafflesButton} pressedImage={WafflesPressed} altText="Waffles" onClick={() => setSelectedTab('waffles')} />
+                  <ImageButton defaultImage={MiscButton} pressedImage={MiscPressed} altText="Misc" onClick={() => setSelectedTab('misc')} />
+                </div>
+
+                <div className="shop-items">
+                  {itemsToDisplay.map((item, index) => (
+                    <ItemButton key={index} itemImage={item.image} price={item.price} buyItem={buyItem} />
+                  ))}
+                </div>
               </div>
+              <button onClick={toggleShop}>Return</button>
             </div>
-            <button onClick={toggleShop}>Return</button>
           </div>
         </div>
       )}
