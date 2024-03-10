@@ -12,7 +12,7 @@
 .App {
   text-align: center;
   font-family: 'Frankfurter Std', sans-serif;
-  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.96);
+  text-shadow: 4px 4px 0px #5d3a57;
   font-weight: 600;
   background-image: url('./PompomBG.png');
   background-size: cover;
