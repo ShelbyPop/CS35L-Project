@@ -75,7 +75,7 @@ const UserStatsPopup = ({ username }) => {
 
   if (username === null) {
     return (<div className="popup">Not logged in!</div>);
-  } else if (stats === null) {
+  } else if (stats === null || stats.totalSessions === 0) {
     return (<div className="popup">No sessions yet</div>);
   } else {
     console.log(`total sessions: ${stats.totalSessions}`);
