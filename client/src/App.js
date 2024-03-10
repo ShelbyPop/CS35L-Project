@@ -7,7 +7,7 @@ import TimerInput from './TimerInput';
 import LoginInput from './LoginInput';
 import Navigation from './Navigation'; 
 import ShopButton from './ShopButton';
-import { createSession } from './SessionsRequests.js';
+import { createSession } from './SessionRequests.js';
 import '@mantine/core/styles/global.css'; // Please don't delete this line, it will mess up the checkbox
 import { Notifications } from '@mantine/notifications';
 import '@mantine/notifications/styles.css';

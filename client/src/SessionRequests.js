@@ -26,3 +26,29 @@ export async function createSession(username, startTime, endTime) {
     return false;
   }
 }
+
+export async function getUserSessions(username) {
+  const obj = { username: username };
+  const response = await fetch(`http://localhost:5050/sessions/user?${new URLSearchParams(obj)}`);
+
+  console.log(response);
+  if (response.ok) {
+    console.log("Successfully retrieved user sessions");
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } else {
+    console.log("Ran into an issue while attempting to insert session");
+    return null;
+  }
+}
+
+export async function parseUserSessions (username) {
+  const userSessionsArray = await getUserSessions(username);
+  console.log(`sessions array length: ${userSessionsArray.length}`);
+  const stats = {
+    numSessions: userSessionsArray.length,
+  };
+  console.log(stats);
+  return stats;
+}

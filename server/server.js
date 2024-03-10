@@ -219,7 +219,7 @@ app.post("/sessions/create", async function (req, res) {
   }
 });
 
-// Handle GET request for retrieving session history
+// Handle GET request for retrieving all session history
 app.get("/sessions/history", async function (req, res) {
   const cursor = sessions.find({});
   const allSessionData = await cursor.toArray();
@@ -245,6 +245,21 @@ app.get("/sessions/history", async function (req, res) {
 
   // res.json(search(allSessionData).sort(comparePoints));
   res.json(search(allSessionData));
+});
+
+// Handle GET request for retrieving all sessions of a specific user
+app.get("/sessions/user", async function (req, res) {
+  const username = req.query.username;
+  console.log(`Get sessions for ${username}`);
+  const cursor = sessions.find({ username: username });
+  const result = await cursor.toArray();
+
+  if (result) {
+    console.log(result);
+    res.send(result);
+  } else {
+    res.status(400).send();
+  }
 });
 
 // start server; listening at port 5050

@@ -3,6 +3,7 @@ import './Navigation.css'; // Make sure to style your popups and navigation
 import SessionHistory from './SessionHistory.js';
 import Leaderboard from './Leaderboard.js';
 import { getPoints, addPoints } from './PointsRequests.js';
+import { getUserSessions, parseUserSessions } from './SessionRequests.js';
 
 const PointsPopup = ({ username }) => {
   // Use these lines whenever you need a user's point total in a react component
@@ -65,9 +66,26 @@ const LeaderboardPopup = () => {
   );
 };
 
-const LifeTimeStatsPopup = () => (
-  <div className="popup">Coming soon</div>
-);
+const UserStatsPopup = ({ username }) => {
+  //const totalSessions = parseUserSessions(username).numSessions;
+  const [stats, setStats] = useState(null);
+  useEffect(() => {
+    parseUserSessions(username).then((stats) => setStats(stats));
+  }, [username]);
+
+  if (username === null) {
+    return (<div className="popup">Not logged in!</div>);
+  } else if (stats === null) {
+    return (<div className="popup">No sessions yet</div>);
+  } else {
+    console.log(`total sessions: ${stats.numSessions}`);
+    return (
+      <div className="popup">
+        {stats.numSessions + " sessions"}
+      </div>
+    );
+  }
+};
 
 const Navigation = ({ username }) => {
   const [activePopup, setActivePopup] = useState('');
@@ -87,7 +105,7 @@ const Navigation = ({ username }) => {
               <button onClick={() => showPopup('points')}>Points</button>
               <button onClick={() => showPopup('history')}>History</button>
               <button onClick={() => showPopup('leaderboard')}>Leaderboard</button>
-              <button onClick={() => showPopup('lifetime stats')}>Lifetime Stats</button>
+              <button onClick={() => showPopup('user stats')}>User Stats</button>
               {username && 
                 <p>{username}</p>
               }
@@ -95,7 +113,7 @@ const Navigation = ({ username }) => {
           {activePopup === 'points' && <PointsPopup username={username} />}
           {activePopup === 'history' && <HistoryPopup />}
           {activePopup === 'leaderboard' && <LeaderboardPopup />}
-          {activePopup === 'lifetime stats' && <LifeTimeStatsPopup />}
+          {activePopup === 'user stats' && <UserStatsPopup username={username} />}
       </div>
   );
 };
