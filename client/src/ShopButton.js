@@ -27,9 +27,52 @@ import waffle3Image from './Assets/waffle3.png';
 import waffle4Image from './Assets/waffle4.png';
 import cin1Image from './Assets/cin1.png';
 import cin2Image from './Assets/cin2.png';
+import CoffeeButton from './Assets/CoffeeButton_64x.png';
+import CakesButton from './Assets/CakesButton_64x.png';
+import PiesButton from './Assets/PiesButton_64x.png';
+import DonutsButton from './Assets/DonutsButton_64x.png';
+import WafflesButton from './Assets/WafflesButton_64x.png';
+import MiscButton from './Assets/MiscButton_64x.png';
+import CoffeePressed from './Assets/CoffeePressed_64x.png';
+import CakesPressed from './Assets/CakesPressed_64x.png';
+import PiesPressed from './Assets/PiesPressed_64x.png';
+import DonutsPressed from './Assets/DonutsPressed_64x.png';
+import WafflesPressed from './Assets/WafflesPressed_64x.png';
+import MiscPressed from './Assets/MiscPressed_64x.png';
 import useSound from 'use-sound';
 import chaChingSound from './Assets/cha-ching.mp3';
 import wahWahSound from './Assets/wahwah.mp3';
+
+// This Allows a new image to be displayed while the user clicks an image button.
+class ImageButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { isPressed: false };
+  }
+
+  handleMouseDown = () => {
+    this.setState({ isPressed: true });
+  };
+
+  handleMouseUp = () => {
+    this.setState({ isPressed: false });
+  };
+
+  render() {
+    const { isPressed } = this.state;
+    const { defaultImage, pressedImage, altText, onClick } = this.props;
+
+    return (
+      <button className="image-button" 
+              onMouseDown={this.handleMouseDown} 
+              onMouseUp={this.handleMouseUp} 
+              onMouseLeave={this.handleMouseUp} 
+              onClick={onClick}>
+        <img src={isPressed ? pressedImage : defaultImage} alt={altText} />
+      </button>
+    );
+  }
+}
 
 function ItemButton({ itemImage, price, buyItem }) {
   return (
@@ -135,12 +178,12 @@ const ShopButton = ({ username }) => {
             <p>Buy items here!</p>
             <div className="shop-items">
               <div className="shop-tabs">
-                <button onClick={() => setSelectedTab('coffee')}>Coffee</button>
-                <button onClick={() => setSelectedTab('cakes')}>Cakes</button>
-                <button onClick={() => setSelectedTab('pies')}>Pies</button>
-                <button onClick={() => setSelectedTab('donuts')}>Donuts</button>
-                <button onClick={() => setSelectedTab('waffles')}>Waffles</button>
-                <button onClick={() => setSelectedTab('misc')}>Misc.</button>
+                <ImageButton defaultImage={CoffeeButton} pressedImage={CoffeePressed} altText="Coffee" onClick={() => setSelectedTab('coffee')} />
+                <ImageButton defaultImage={CakesButton} pressedImage={CakesPressed} altText="Cakes" onClick={() => setSelectedTab('cakes')} />
+                <ImageButton defaultImage={PiesButton} pressedImage={PiesPressed} altText="Pies" onClick={() => setSelectedTab('pies')} />
+                <ImageButton defaultImage={DonutsButton} pressedImage={DonutsPressed} altText="Donuts" onClick={() => setSelectedTab('donuts')} />
+                <ImageButton defaultImage={WafflesButton} pressedImage={WafflesPressed} altText="Waffles" onClick={() => setSelectedTab('waffles')} />
+                <ImageButton defaultImage={MiscButton} pressedImage={MiscPressed} altText="Misc" onClick={() => setSelectedTab('misc')} />
               </div>
 
               <div className="shop-items">
