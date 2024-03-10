@@ -7,14 +7,12 @@ import timerDoneSound from './Assets/timerdone.mp3';
 import useSound from 'use-sound';
 
 
-const Timer = ({ timerLength, onTimerFinish, username }) => {
+const Timer = ({ timerLength}) => {
   const [seconds, setSeconds] = useState(timerLength);
-  const [cyclesCompleted, setCyclesCompleted] = useState(0);
-  const [isNewTimerInput, setIsNewTimerInput] = useState(false);
-  const [lastQuadrantDelay, setLastQuadrantDelay] = useState(false); // this basically makes sure that we see last quadrant filled for a few seconds before the timer restarts
-  const [timerStatus, setTimerStatus] = useState('work'); 
+  // const [breakSeconds, setBreakSeconds] = useState(5 * 60);
+  const [cyclesCompleted, setCyclesCompleted] = useState(0); // use for tracking which cycle we are on
+  const [isNewTimerInput, setIsNewTimerInput] = useState(false); // use for tracking if there is new timer input
 
-  const [playTimerDone] = useSound(timerDoneSound); 
 
 
   useEffect(() => {
@@ -23,105 +21,51 @@ const Timer = ({ timerLength, onTimerFinish, username }) => {
   }, [timerLength]);
 
   useEffect(() => {
-    let intervalId = null;
-    const sessionPoints = 5;
-    const cyclePoints = 10;
-
-    if (isNewTimerInput && seconds === timerLength) {
-      setTimerStatus('work');
-    }  
-    if (seconds > 0) {
-      intervalId = setInterval(() => {
-        setSeconds(prevSeconds => prevSeconds - 1);
-      }, 1000);
-
-    } else if (seconds === 0 && isNewTimerInput) {
-      onTimerFinish();
-      playTimerDone(timerDoneSound); 
-      setSeconds(5);             // THIS IS SESSION BREAK
-      
-                                        
-      if (cyclesCompleted < 3) {
-        setTimerStatus('sessionBreak'); // Update timer status
-        setCyclesCompleted(cyclesCompleted + 1);
-        addPoints(username, sessionPoints).then((success) => {
-          if (success) {
-            showNotification({
-              title: '🌟 Points Added!',
-              message: `You've just earned ${sessionPoints} points! Great job!`,
-              color: 'pink', 
-              autoClose: 3000, 
-              style: {
-                backgroundColor: '#e8ad64', 
-                color: '#000000', 
-                fontFamily: '"Frankfurter Std", cursive', 
-                fontSize: '1.5rem', 
-                padding: '2rem',
-                borderRadius: '1.5rem', 
-              },
-              radius: 50, 
-              withCloseButton: false, 
-            });
-          } else {
-            console.error("Failed to add points after session break.");
-          }
-        });
-      } else if (!lastQuadrantDelay) { // 4th quadrant checker
-        setLastQuadrantDelay(true); // Start delaying for last quadrant
-        setTimeout(() => {
-          // After delay remove last quadrant delay
-          setCyclesCompleted(0);
-          setLastQuadrantDelay(false); // Reset delay state
-          setSeconds(10);                                    // THIS IS CYCLE BREAK
-          setTimerStatus('cycleBreak'); // Update timer status
-          addPoints(username, cyclePoints).then((success) => {
-            if (success) {
-              console.log("Points successfully added after cycle break.");
-              showNotification({
-                title: '🌟 Points Added!',
-                message: `You've just earned ${cyclePoints} points! Great job! 🎉`,
-                color: 'pink', 
-                autoClose: 3000, 
-                style: {
-                  backgroundColor: '#e8ad64', 
-                  color: '#000000', 
-                  fontFamily: '"Frankfurter Std", cursive', 
-                  fontSize: '1.5rem', 
-                  padding: '2rem',
-                  borderRadius: '1.5rem', 
-                },
-                radius: 50, 
-                withCloseButton: false, 
-              });
-            } else {
-              console.error("Failed to add points after cycle break.");
-            }
-          });  
-
-        }, 7000); // Delay duration in milliseconds (this is 7)
-      }
-      setIsNewTimerInput(false);
+    if(cyclesCompleted > 7 && isNewTimerInput) { // RETURN once we have reached 4 cycles
+      // will change once we set up the user database
+      // for now, we will just RETURN
+      setCyclesCompleted(0);
     }
+    const intervalId = setInterval(() => {
+
+      setSeconds((prevSeconds) => {
+        if (prevSeconds > 0) {
+
+          return prevSeconds - 1;
+        }
+
+
+        else if (prevSeconds === 0 && cyclesCompleted % 2 === 0) {
+          setSeconds(5);
+          setCyclesCompleted(cyclesCompleted + 1);
+          // return 0;
+
+        }
+
+        else {
+
+          clearInterval(intervalId);
+          setCyclesCompleted(cyclesCompleted + 1); // update cycle
+          setIsNewTimerInput(false);
+          // setBreakSeconds(5 * 60);
+          return 0;
+        }
+
+      });
+    }, 1000);
+
+
     return () => clearInterval(intervalId);
-  }, [seconds, cyclesCompleted, onTimerFinish, isNewTimerInput, lastQuadrantDelay, timerLength, username]); // 
+  }, [seconds], timerLength);
 
-const getMessage = () => {
-  switch (timerStatus) {
-    case 'work':
-      return 'You are in work mode';
-    case 'sessionBreak':
-      return 'You are in session break';
-    case 'cycleBreak':
-      return 'You are in cycle break';
-    default:
-      return '';
-  }
-};
 
+
+
+  // Format seconds into MM:SS
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   };
 
 
@@ -130,22 +74,128 @@ const getMessage = () => {
 
   // filling the quarters according to which cycle we are on
   const getQuadrantFill = (quadrantIndex) => {
-    let currentSessionQuadrant = (cyclesCompleted % 4) + (isNewTimerInput || lastQuadrantDelay ? 1 : 0);
-    if (cyclesCompleted === 4 && (isNewTimerInput || lastQuadrantDelay)) {
-      currentSessionQuadrant = 1;
+
+
+
+    if (cyclesCompleted === 0) {
+      if (quadrantIndex === 1 && isNewTimerInput) { // check if there is new time input
+        return `rgba(200, 162, 200, ${progress})`;
+      }
+      else {
+        return 'transparent';
+      }
     }
-  
-    if (quadrantIndex < currentSessionQuadrant) {
-      // Quadrants before the current session are filled
-      return `rgba(200, 162, 200)`;
-    } else if (quadrantIndex === currentSessionQuadrant) {
-      // Current session's quadrant fills
-      return `rgba(200, 162, 200, ${progress})`;
+
+    if (cyclesCompleted === 1) {
+      if (quadrantIndex === 1 ) { // make sure previous fillings present during break
+        return `rgba(200, 162, 200)`;
+      }
+
+      else {
+        return 'transparent';
+      }
     }
-  
-  
-    return 'transparent';
+
+
+    if (cyclesCompleted === 2) {
+      if (quadrantIndex === 1 ) { // make sure previous fillings do not get reset
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 2 && isNewTimerInput) { // check if there is new time input
+        return `rgba(200, 162, 200, ${progress})`;
+      }
+      else {
+        return 'transparent';
+      }
+    }
+
+    if (cyclesCompleted === 3) {
+      if (quadrantIndex === 1 ) { // make sure previous fillings present during break
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 2) {
+        return `rgba(200, 162, 200)`;
+      }
+
+      else {
+        return 'transparent';
+      }
+
+    }
+
+    if (cyclesCompleted === 4) {
+      if (quadrantIndex === 1 ) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 2) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 3 && isNewTimerInput ) {
+        return `rgba(200, 162, 200, ${progress})`;
+      }
+      else {
+        return 'transparent';
+      }
+    }
+
+    if (cyclesCompleted === 5) {
+      if (quadrantIndex === 1 ) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 2 ) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 3 ) {
+        return `rgba(200, 162, 200)`;
+      }
+      else {
+        return 'transparent';
+      }
+    }
+
+
+    if (cyclesCompleted === 6 ) {
+      if (quadrantIndex === 1 ) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 2 ) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 3 ) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 4 && isNewTimerInput) {
+        return `rgba(200, 162, 200, ${progress})`;
+      }
+      else {
+        return 'transparent';
+      }
+    }
+
+
+    if (cyclesCompleted === 7 ) {
+      if (quadrantIndex === 1) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 2) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 3) {
+        return `rgba(200, 162, 200)`;
+      }
+      if (quadrantIndex === 4) {
+        return `rgba(200, 162, 200)`;
+      }
+      else {
+        return 'transparent';
+      }
+    }
+
+    else {
+      return 'transparent';
+    }
   };
+
 
 // did some clock reformatting!
   return (
@@ -193,16 +243,8 @@ const getMessage = () => {
             </text>
           </svg>
         </div>
-        <div className="timer-message">
-        {getMessage()}
       </div>
-      </div>
-      
-      
   );
-  
 };
-
-
 
 export default Timer;
