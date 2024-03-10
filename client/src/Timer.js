@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import './TimerMessage.css';
 import { addPoints } from './PointsRequests';
 import { showNotification } from '@mantine/notifications';
+import timerDoneSound from './Assets/timerdone.mp3';
+import useSound from 'use-sound';
+
 
 const Timer = ({ timerLength, onTimerFinish, username }) => {
   const [seconds, setSeconds] = useState(timerLength);
@@ -10,6 +13,8 @@ const Timer = ({ timerLength, onTimerFinish, username }) => {
   const [isNewTimerInput, setIsNewTimerInput] = useState(false);
   const [lastQuadrantDelay, setLastQuadrantDelay] = useState(false); // this basically makes sure that we see last quadrant filled for a few seconds before the timer restarts
   const [timerStatus, setTimerStatus] = useState('work'); 
+
+  const [playTimerDone] = useSound(timerDoneSound); 
 
 
   useEffect(() => {
@@ -32,7 +37,9 @@ const Timer = ({ timerLength, onTimerFinish, username }) => {
 
     } else if (seconds === 0 && isNewTimerInput) {
       onTimerFinish();
+      playTimerDone(timerDoneSound); 
       setSeconds(5);             // THIS IS SESSION BREAK
+      
                                         
       if (cyclesCompleted < 3) {
         setTimerStatus('sessionBreak'); // Update timer status
@@ -41,7 +48,7 @@ const Timer = ({ timerLength, onTimerFinish, username }) => {
           if (success) {
             showNotification({
               title: '🌟 Points Added!',
-              message: `You've just earned ${sessionPoints} points! Great job! 🎉`,
+              message: `You've just earned ${sessionPoints} points! Great job!`,
               color: 'pink', 
               autoClose: 3000, 
               style: {
