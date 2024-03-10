@@ -33,12 +33,10 @@ const Timer = ({ timerLength, onTimerFinish, username }) => {
     } else if (seconds === 0 && isNewTimerInput) {
       onTimerFinish();
       setSeconds(5);             // THIS IS SESSION BREAK
-      setTimerStatus('sessionBreak'); // Update timer status
-
                                         
       if (cyclesCompleted < 3) {
+        setTimerStatus('sessionBreak'); // Update timer status
         setCyclesCompleted(cyclesCompleted + 1);
-
         addPoints(username, sessionPoints).then((success) => {
           if (success) {
             showNotification({
@@ -93,7 +91,7 @@ const Timer = ({ timerLength, onTimerFinish, username }) => {
             }
           });  
 
-        }, 5000); // Delay duration in milliseconds (this is 5)
+        }, 7000); // Delay duration in milliseconds (this is 7)
       }
       setIsNewTimerInput(false);
     }
