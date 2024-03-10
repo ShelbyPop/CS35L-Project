@@ -43,6 +43,9 @@ import ShopWelcome from './Assets/ShopWelcome_384x.png'
 import useSound from 'use-sound';
 import chaChingSound from './Assets/cha-ching.mp3';
 import wahWahSound from './Assets/wahwah.mp3';
+// Wood button bases, pictures, font, and similar assets done by DustDFG
+// Font: https://opengameart.org/content/pixel-art-wooden-font-by-narik-soulofkiran
+// GUI: https://opengameart.org/content/pixel-art-wooden-gui-by-narik-soulofkiran
 
 
 // This Allows a new image to be displayed while the user clicks an image button.
