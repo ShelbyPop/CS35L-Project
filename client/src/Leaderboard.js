@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './Leaderboard.css'; // Import the CSS file for styling
 
 const Leaderboard = ({ data }) => {

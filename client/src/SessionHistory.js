@@ -1,6 +1,6 @@
 import React from 'react';
-
 import './Leaderboard.css'; // Import the CSS file for styling
+import { formatTime } from './FormatDate.js';
 
 const SessionHistory = ({ data }) => {
   return (
@@ -19,7 +19,7 @@ const SessionHistory = ({ data }) => {
             <td>{item.username}</td>
             <td>{item.startTime}</td>
             <td>{item.endTime}</td>
-            <td>{item.sessionLength}</td>
+            <td>{formatTime(item.sessionLength)}</td>
           </tr>
         ))}
       </tbody>
