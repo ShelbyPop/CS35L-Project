@@ -29,6 +29,17 @@ import cin1Image from './Assets/cin1.png';
 import cin2Image from './Assets/cin2.png';
 
 
+function ItemButton({ itemImage, price, buyItem }) {
+  return (
+    <button className="item-button" onClick={() => buyItem(price)}>
+      <img src={itemImage}/>
+      <div className="item-info">
+        <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
+        <span>{price}</span>
+      </div>
+    </button>
+  );
+}
 
 
 const ShopButton = ({ username }) => {
@@ -71,207 +82,35 @@ const ShopButton = ({ username }) => {
             <h2>This is the Shop</h2>
             <p>Buy items here!</p>
             <div className="shop-items">
+              <ItemButton itemImage={coffeeImage} price={10} buyItem={buyItem} />
+              <ItemButton itemImage={muffinImage} price={15} buyItem={buyItem} />
+              <ItemButton itemImage={toastImage} price={12} buyItem={buyItem} />
+              <ItemButton itemImage={coffee1Image} price={10} buyItem={buyItem} />
+              <ItemButton itemImage={coffee2Image} price={10} buyItem={buyItem} />
 
-              <button className="item-button" onClick={() => buyItem(10)}>
-                <img src={coffeeImage} alt="Coffee"/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>10</span>
-                </div>
-              </button>
+              <ItemButton itemImage={cake1Image} price={40} buyItem={buyItem} />
+              <ItemButton itemImage={cake2Image} price={50} buyItem={buyItem} />
+              <ItemButton itemImage={pie1Image} price={50} buyItem={buyItem} />
+              <ItemButton itemImage={pie2Image} price={50} buyItem={buyItem} />
+              <ItemButton itemImage={pie3Image} price={20} buyItem={buyItem} />
 
-              <button className="item-button" onClick={() => buyItem(15)}>
-                <img src={muffinImage}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>15</span>
-                </div>
-              </button>
+              <ItemButton itemImage={pie4Image} price={25} buyItem={buyItem} />
+              <ItemButton itemImage={pie5Image} price={30} buyItem={buyItem} />
+              <ItemButton itemImage={pie6Image} price={50} buyItem={buyItem} />
+              <ItemButton itemImage={pan1Image} price={12} buyItem={buyItem} />
+              <ItemButton itemImage={pan2Image} price={12} buyItem={buyItem} />
 
-              <button className="item-button" onClick={() => buyItem(12)}>
-                <img src={toastImage}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>12</span>
-                </div>
-              </button>
+              <ItemButton itemImage={donut1Image} price={12} buyItem={buyItem} />
+              <ItemButton itemImage={donut2Image} price={12} buyItem={buyItem} />
+              <ItemButton itemImage={donut3Image} price={12} buyItem={buyItem} />
+              <ItemButton itemImage={donut4Image} price={12} buyItem={buyItem} />
+              <ItemButton itemImage={waffle1Image} price={12} buyItem={buyItem} />
 
-              <button className="item-button" onClick={() => buyItem(10)}>
-                <img src={coffee1Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>10</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(10)}>
-                <img src={coffee2Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>10</span>
-                </div>
-              </button>
-              
-
-              <button className="item-button" onClick={() => buyItem(40)}>
-                <img src={cake1Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>40</span>
-                </div>
-              </button>
-              
-              <button className="item-button" onClick={() => buyItem(50)}>
-                <img src={cake2Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>50</span>
-                </div>
-              </button>
-              
-              <button className="item-button" onClick={() => buyItem(50)}>
-                <img src={pie1Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>50</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(50)}>
-                <img src={pie2Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>50</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(20)}>
-                <img src={pie3Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>20</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(25)}>
-                <img src={pie4Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>25</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(30)}>
-                <img src={pie5Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>30</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(50)}>
-                <img src={pie6Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>12</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(12)}>
-                <img src={pan1Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>12</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(12)}>
-                <img src={pan2Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>12</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(12)}>
-                <img src={donut1Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>12</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(12)}>
-                <img src={donut2Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>12</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(12)}>
-                <img src={donut3Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>12</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(12)}>
-                <img src={donut4Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>12</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(12)}>
-                <img src={waffle1Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>12</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(12)}>
-                <img src={waffle2Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>12</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(12)}>
-                <img src={waffle3Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>12</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(12)}>
-                <img src={waffle4Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>12</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(12)}>
-                <img src={cin1Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>12</span>
-                </div>
-              </button>
-
-              <button className="item-button" onClick={() => buyItem(12)}>
-                <img src={cin2Image}/>
-                <div className="item-info">
-                  <img src={coinImage} alt="Coin" style={{width:'16px', height:'16px'}}/>
-                  <span>12</span>
-                </div>
-              </button>
+              <ItemButton itemImage={waffle2Image} price={12} buyItem={buyItem} />
+              <ItemButton itemImage={waffle3Image} price={12} buyItem={buyItem} />
+              <ItemButton itemImage={waffle4Image} price={12} buyItem={buyItem} />
+              <ItemButton itemImage={cin1Image} price={12} buyItem={buyItem} />
+              <ItemButton itemImage={cin2Image} price={12} buyItem={buyItem} />
             </div>
             <button onClick={toggleShop}>Close</button>
           </div>

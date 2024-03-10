@@ -112,6 +112,11 @@
   flex-wrap: wrap;
 }
 
+.shop-content {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
 h2 {
   color: #f783ac; 
   font-family: 'Comic Sans MS', cursive, sans-serif;
@@ -146,6 +151,7 @@ p {
 }
 .item-info span {
   font-size: 18px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 
