@@ -49,7 +49,7 @@ export default function LoginInput({ setUsername }) {
     } else {
       values.firstTime 
         ? alert("Username is already taken, please try again")
-        : alert("Incorrect username or password, please try again"); // TODO: make this an inline message instead?
+        : alert("Incorrect username or password, please try again");
     }
     form.reset(); // Reset form values
   };

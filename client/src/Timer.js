@@ -7,31 +7,34 @@ import timerDoneSound from './Assets/timerdone.mp3';
 import useSound from 'use-sound';
 
 
-const Timer = ({ timerLength, username}) => {
+const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning }) => {
   const [seconds, setSeconds] = useState(timerLength);
   // const [breakSeconds, setBreakSeconds] = useState(5 * 60);
   const [cyclesCompleted, setCyclesCompleted] = useState(0); // use for tracking which cycle we are on
   const [isNewTimerInput, setIsNewTimerInput] = useState(false); // use for tracking if there is new timer input
   const [timerStatus, setTimerStatus] = useState('work');
+  const [intervalId, setIntervalId] = useState(null);
   const [playTimerDone] = useSound(timerDoneSound);
 
-
+  useEffect(() => {
+    if (isRunning) {
+      setSeconds(timerLength);
+      setIsNewTimerInput(true);
+      setTimerStatus('work');
+    }
+  }, [isRunning]);
 
   useEffect(() => {
-    setSeconds(timerLength);
-    setIsNewTimerInput(true);
-    setTimerStatus('work');
-  }, [timerLength]);
+    if (!isRunning) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+      return;
+    }
 
-  useEffect(() => {
-  //  let intervalId = null;
     const sessionPoints = 5;
     const cyclePoints = 10;
 
-
-    if(cyclesCompleted > 7 && isNewTimerInput) { // RETURN once we have reached 4 cycles
-      // will change once we set up the user database
-      // for now, we will just RETURN
+    if(cyclesCompleted === 7 && isNewTimerInput) { // RETURN once we have reached 4 cycles
       addPoints(username, cyclePoints).then((success) => {
         if (success) {
           console.log("Points successfully added after cycle break.");
@@ -56,32 +59,24 @@ const Timer = ({ timerLength, username}) => {
         }
       });
 
-
-
-
-
-
       setCyclesCompleted(0);
+      setIsRunning(false);
     }
 
-
-
-
-
-    const intervalId = setInterval(() => {
-
-      setSeconds((prevSeconds) => {
-        if (prevSeconds > 0) {
-
-          return prevSeconds - 1;
+    const tempIntervalId = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds((prevSeconds) => Math.max(0, prevSeconds - 1));
+        return;
         }
-
-
-        else if (prevSeconds === 0 && cyclesCompleted % 2 === 0) {
+      if (seconds === 0 && cyclesCompleted % 2 === 0) {
           playTimerDone(timerDoneSound);
           setSeconds(5);
+          setTimerLength(5);
+
+          console.log("Session complete in Timer.js");
 
           setTimerStatus('sessionBreak');
+
           addPoints(username, sessionPoints).then((success) => {
             if (success) {
               showNotification({
@@ -105,32 +100,22 @@ const Timer = ({ timerLength, username}) => {
             }
           });
 
-
-
-
           setCyclesCompleted(cyclesCompleted + 1);
           // return 0;
-
-        }
-
-        else {
-
+      } else {
           clearInterval(intervalId);
+
           setCyclesCompleted(cyclesCompleted + 1); // update cycle
           setIsNewTimerInput(false);
+          setIsRunning(false);
           // setBreakSeconds(5 * 60);
           return 0;
         }
-
-      });
     }, 1000);
 
-
-    return () => clearInterval(intervalId);
-  }, [seconds], timerLength);
-
-
-
+    setIntervalId(tempIntervalId);
+    return () => clearInterval(tempIntervalId);
+  }, [seconds, timerLength, isRunning]);
 
   const getMessage = () => {
     switch (timerStatus) {
@@ -145,8 +130,6 @@ const Timer = ({ timerLength, username}) => {
     }
   };
 
-
-
   // Format seconds into MM:SS
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
@@ -154,9 +137,7 @@ const Timer = ({ timerLength, username}) => {
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   };
 
-
   const progress = (timerLength - seconds) / timerLength;
-
 
   // filling the quarters according to which cycle we are on
   const getQuadrantFill = (quadrantIndex) => {
@@ -324,7 +305,14 @@ const Timer = ({ timerLength, username}) => {
                   fill="transparent"
               ></circle>
             </g>
-            <text className="circular-timer-text custom-timer" x="50%" y="50%" textAnchor="middle" dy="0.3em" fill="cornsilk">
+          <text
+            className="circular-timer-text custom-timer"
+            x="50%"
+            y="50%"
+            textAnchor="middle"
+            dy="0.3em"
+            fill="cornsilk"
+          >
               {formatTime(seconds)}
             </text>
           </svg>

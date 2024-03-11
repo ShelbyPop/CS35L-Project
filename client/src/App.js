@@ -9,8 +9,9 @@ import Navigation from './Navigation';
 import ShopButton from './ShopButton';
 import ToDoList from './ToDoList.js';
 import { createSession } from './SessionRequests.js';
+import { Notifications, showNotification } from '@mantine/notifications';
+import { addPoints } from './PointsRequests';
 import '@mantine/core/styles/global.css'; // Please don't delete this line, it will mess up the checkbox
-import { Notifications } from '@mantine/notifications';
 import '@mantine/notifications/styles.css';
 
 function App() {
@@ -18,24 +19,24 @@ function App() {
   const [isTimerActive, setIsTimerActive] = useState(true); // lowk could delete this
   const [sessionStartTime, setSessionStartTime] = useState(null);
   const [username, setUsername] = useState(null);
+  const [isRunning, setIsRunning] = useState(false);
 
-  const handleSetTimer = (length) => {
+  const onSetTimer = (length) => {
     setTimerLength(length ? length * 1 : 25 * 60); // Corrected for minutes
    // TODO: change 1 back to 60 for actual minutes
-    setIsTimerActive(true);
+    setIsRunning(true);
     setSessionStartTime(new Date()); // Record the start time of the session
   };
 
   const onTimerFinish = async () => {
     console.log("Timer cycle completed!");
-    setIsTimerActive(true); // Keep the timer "active" in terms of logic, but this won't affect visibility
-
     const sessionEndTime = new Date();
     const sessionLength = Math.round((sessionEndTime - sessionStartTime) / 1000);
     console.log(sessionStartTime, sessionEndTime, sessionLength);
     // Insert new session into database
     await createSession(username, sessionStartTime, sessionEndTime, sessionLength);
   };
+
     // username and setUsername dependencies needed for user-related things to work properly
   return (
     <div className="App">
@@ -52,13 +53,19 @@ function App() {
 
     
         <div className="custom-input">
-          <TimerInput onSetTimer={handleSetTimer} />
+          <TimerInput onSetTimer={onSetTimer} />
         </div>
 
         <MantineProvider> 
         <Notifications /> 
           <div className="custom-timer">
-          <Timer timerLength={timerLength} onTimerFinish={onTimerFinish} username={username} />
+          <Timer 
+            timerLength={timerLength} 
+            setTimerLength={setTimerLength}
+            onTimerFinish={onTimerFinish} 
+            username={username} 
+            isRunning={isRunning} 
+            setIsRunning={setIsRunning} />
            </div>
         </MantineProvider>
 

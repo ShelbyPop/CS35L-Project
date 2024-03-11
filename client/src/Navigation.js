@@ -101,7 +101,6 @@ const Navigation = ({ username }) => {
       }
   };
   
-  // TODO: "Add 5 points" is temporary for testing, get rid of this before submitting
   return (
       <div>
           <nav className="nav">
