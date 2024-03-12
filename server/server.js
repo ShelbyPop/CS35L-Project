@@ -70,11 +70,7 @@ async function createUser(username, password) {
 // Validate existence of user with matching password in collection (return boolean)
 async function loginUser(username, password) {
   const user = await getUser(username);
-  if (user.length > 1) {
-    console.log("Too many users, please fix bug!!");
-    return null;
-  } else if (user.length === 0) {
-    console.log("User does not exist");
+  if (!isValidUser(user.length)) {
     return null;
   }
   console.log(`${user[0].password}, ${password}`);
@@ -84,11 +80,7 @@ async function loginUser(username, password) {
 // Return number of points of user
 async function getUserPoints(username) {
   const user = await getUser(username);
-  if (user.length > 1) {
-    console.log("Too many users, please fix bug!!");
-    return null;
-  } else if (user.length === 0) {
-    console.log("User does not exist");
+  if (!isValidUser(user.length)) {
     return null;
   }
   return (user[0].points);
@@ -97,11 +89,7 @@ async function getUserPoints(username) {
 // Add points to user; return true if success and false if user not found
 async function addUserPoints(username, diff) {
   const user = await getUser(username);
-  if (user.length > 1) {
-    console.log("Too many users, please fix bug!!");
-    return false;
-  } else if (user.length === 0) {
-    console.log("User does not exist");
+  if (!isValidUser(user.length)) {
     return false;
   }
   
@@ -123,11 +111,7 @@ async function addUserPoints(username, diff) {
 // Check how many of a given item a user has
 async function getUserItemCount(username, item) {
   const user = await getUser(username);
-  if (user.length > 1) {
-    console.log("Too many users, please fix bug!!");
-    return null;
-  } else if (user.length === 0) {
-    console.log("User does not exist");
+  if (!isValidUser(user.length)) {
     return null;
   }
 
@@ -142,11 +126,7 @@ async function getUserItemCount(username, item) {
 // Add 1 to the count of item, given a user
 async function addUserItem(username, item) {
   const user = await getUser(username);
-  if (user.length > 1) {
-    console.log("Too many users, please fix bug!!");
-    return false;
-  } else if (user.length === 0) {
-    console.log("User does not exist");
+  if (!isValidUser(user.length)) {
     return false;
   }
 
@@ -164,13 +144,10 @@ async function addUserItem(username, item) {
 async function createSession(username, startTime, endTime, sessionLength) {
   // Only insert session if user is signed in and startTime/endTime is valid
   const user = await getUser(username);
-  if (user.length > 1) {
-    console.log("Too many users, please fix bug!!");
+  if (!isValidUser(user.length)) {
     return null;
-  } else if (user.length === 0) {
-    console.log("User does not exist");
-    return null;
-  } else if (startTime === null || endTime === null) {
+  }
+  if (startTime === null || endTime === null) {
     console.log("Session times invalid");
     return null;
   }
@@ -298,7 +275,6 @@ app.post("/sessions/create", async function (req, res) {
     console.log(result);
     res.json(result);
   } else {
-    console.log("Return error status");
     res.status(400).send();
   }
 });
