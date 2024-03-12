@@ -36,29 +36,29 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
     const cyclePoints = 10;
 
     if(cyclesCompleted === 8 && isNewTimerInput) { // RETURN once we have reached 4 cycles
-      addPoints(username, cyclePoints).then((success) => {
-        if (success) {
-          console.log("Points successfully added after cycle break.");
-          showNotification({
-            title: '🌟 Points Added!',
-            message: `You've just earned ${cyclePoints} points! Great job! 🎉`,
-            color: 'pink',
-            autoClose: 3000,
-            style: {
-              backgroundColor: '#e8ad64',
-              color: '#000000',
-              fontFamily: '"Frankfurter Std", cursive',
-              fontSize: '1.5rem',
-              padding: '2rem',
-              borderRadius: '1.5rem',
-            },
-            radius: 50,
-            withCloseButton: false,
-          });
-        } else {
-          console.error("Failed to add points after cycle break.");
-        }
-      });
+      // addPoints(username, cyclePoints).then((success) => {
+      //   if (success) {
+      //     console.log("Points successfully added after cycle break.");
+      //     showNotification({
+      //       title: '🌟 Points Added!',
+      //       message: `You've just earned ${cyclePoints} points! Great job! 🎉`,
+      //       color: 'pink',
+      //       autoClose: 3000,
+      //       style: {
+      //         backgroundColor: '#e8ad64',
+      //         color: '#000000',
+      //         fontFamily: '"Frankfurter Std", cursive',
+      //         fontSize: '1.5rem',
+      //         padding: '2rem',
+      //         borderRadius: '1.5rem',
+      //       },
+      //       radius: 50,
+      //       withCloseButton: false,
+      //     });
+      //   } else {
+      //     console.error("Failed to add points after cycle break.");
+      //   }
+      // });
 
       setCyclesCompleted(0);
 
@@ -76,7 +76,7 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
       if (seconds === 0 && cyclesCompleted % 2 === 0) {
           playTimerDone(timerDoneSound);
           onTimerFinish();
-
+        setTimerStatus('sessionBreak');
           setSeconds(5);
           setTimerLength(5);
 
@@ -113,6 +113,7 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
           clearInterval(intervalId);
 
           setCyclesCompleted(cyclesCompleted + 1); // update cycle
+        setTimerStatus('work');
           setIsNewTimerInput(false);
           setIsRunning(false);
           // setBreakSeconds(5 * 60);
@@ -324,7 +325,9 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
             </text>
           </svg>
         </div>
-
+        <div className="timer-message">
+          {getMessage()}
+        </div>
       </div>
   );
 };
