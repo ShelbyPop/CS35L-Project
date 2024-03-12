@@ -5,6 +5,7 @@ import Leaderboard from './Leaderboard.js';
 import { getPoints } from './PointsRequests.js';
 import { parseUserSessions } from './SessionRequests.js';
 import { allItems, getAllItemCounts } from './ItemRequests.js';
+import { formatTime, formatDate } from './FormatDate.js';
 
 const PointsPopup = ({ username }) => {
   // Use these lines whenever you need a user's point total in a react component
@@ -104,7 +105,7 @@ const UserStatsPopup = ({ username }) => {
                     <tbody>
                     <tr>
                         <td>Most recent session:</td>
-                        <td>{stats.lastSession}</td>
+                        <td>{formatDate(stats.lastSession)}</td>
                     </tr>
                     <tr>
                         <td>Total sessions:</td>
@@ -112,11 +113,11 @@ const UserStatsPopup = ({ username }) => {
                     </tr>
                     <tr>
                         <td>Total time spent focusing:</td>
-                        <td>{stats.totalFocusTime} seconds</td>
+                        <td>{formatTime(stats.totalFocusTime)}</td>
                     </tr>
                     <tr>
                         <td>Average session length:</td>
-                        <td>{stats.averageSessionLength} seconds</td>
+                        <td>{formatTime(stats.averageSessionLength)}</td>
                     </tr>
                     {allItems.map((item, index) => (
                         <tr key={index}>

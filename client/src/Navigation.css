@@ -90,7 +90,7 @@
   top: 56%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fff;
+  background-color: rgb(242, 242, 242);
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
@@ -108,6 +108,7 @@
 .user-stats-table {
   width: 100%;
   border-collapse: collapse;
+  background-color: rgb(242, 242, 242, 0.7);
 }
 
 .user-stats-table th, .user-stats-table td {
@@ -115,17 +116,21 @@
   text-align: left;
   font-family: 'Lucida Console', monospace;
   font-size: 18px;
-  color: rgba(12, 12, 12, 0.96);
+  color: #5d3a57;
   text-shadow: none;
 
 }
 
 .user-stats-table th {
-  background-color: #f2f2f2; /* Change the background color of table header cells */
+  background-color: rgb(242, 242, 242, 0.7); /* Change the background color of table header cells */
+}
+
+.leaderboard-table td {
+  background-color: rgb(242, 242, 242, 0.7);
 }
 
 .user-stats-table tr:nth-child(even) {
-  background-color: #ffccfa; /* Change the background color of even rows */
+  background-color: rgb(255, 192, 203, 0.7); /* Change the background color of even rows */
 }
 
 .user-stats-table tr:hover {
