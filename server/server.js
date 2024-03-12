@@ -11,6 +11,8 @@ const users = client.db("database").collection("users");
 const sessions = client.db("database").collection("sessions");
 // MongoDB documentation: https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/
 
+const allItems = ["coffee", "cakes", "pies", "donuts", "waffles", "misc"];
+
 // Connect to MongoDB server
 async function connectToMongo() {
   try {
@@ -118,6 +120,7 @@ async function addUserPoints(username, diff) {
   return true;
 }
 
+// Check how many of a given item a user has
 async function getUserItemCount(username, item) {
   const user = await getUser(username);
   if (user.length > 1) {
@@ -128,25 +131,15 @@ async function getUserItemCount(username, item) {
     return null;
   }
 
-  switch (item) {
-    case 'coffee':
-      return (user[0].coffee);
-    case 'cakes':
-      return (user[0].cakes);
-    case 'pies':
-      return (user[0].pies);
-    case 'donuts':
-      return (user[0].donuts);
-    case 'waffles':
-      return (user[0].waffles);
-    case 'misc':
-      return (user[0].misc);
-    default:
-      console.log(`Invalid item given: ${item}`);
-      return null;
+  if (allItems.includes(item)) {
+    return (user[0][item]);
   }
+
+  console.log(`Invalid item given: ${item}`);
+  return null;
 }
 
+// Add 1 to the count of item, given a user
 async function addUserItem(username, item) {
   const user = await getUser(username);
   if (user.length > 1) {
@@ -157,41 +150,17 @@ async function addUserItem(username, item) {
     return false;
   }
 
-  let newCount;
-
-  // Add 1 to item
-  switch (item) {
-    case 'coffee':
-      newCount = Number(user[0].coffee) + 1;
-      await users.updateOne({ username: username }, { $set: { coffee: newCount.toString() } });
-      break;
-    case 'cakes':
-      newCount = Number(user[0].cakes) + 1;
-      await users.updateOne({ username: username }, { $set: { cakes: newCount.toString() } });
-      break;
-    case 'pies':
-      newCount = Number(user[0].pies) + 1;
-      await users.updateOne({ username: username }, { $set: { pies: newCount.toString() } });
-      break;
-    case 'donuts':
-      newCount = Number(user[0].donuts) + 1;
-      await users.updateOne({ username: username }, { $set: { donuts: newCount.toString() } });
-      break;
-    case 'waffles':
-      newCount = Number(user[0].waffles) + 1;
-      await users.updateOne({ username: username }, { $set: { waffles: newCount.toString() } });
-      break;
-    case 'misc':
-      newCount = Number(user[0].misc) + 1;
-      await users.updateOne({ username: username }, { $set: { misc: newCount.toString() } });
-      break;
-    default:
-      console.log(`Invalid item given: ${item}`);
-      return false;
+  if (allItems.includes(item)) {
+    const newCount = Number(user[0][item]) + 1;
+    await users.updateOne({ username: username }, { $set: { [item]: newCount.toString() } });
+    return true;
   }
-  return true;
+
+  console.log(`Invalid item given: ${item}`);
+  return false;
 }
 
+// Insert a new session into the sessions collection
 async function createSession(username, startTime, endTime, sessionLength) {
   // Only insert session if user is signed in and startTime/endTime is valid
   const user = await getUser(username);
