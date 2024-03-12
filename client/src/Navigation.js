@@ -69,45 +69,66 @@ const LeaderboardPopup = () => {
 
 // Retrieve user stats from parseUserSessions & user item counts from getItemCounts
 const UserStatsPopup = ({ username }) => {
-  const [stats, setStats] = useState(null);
-  const [itemCt, setItemCt] = useState([Array(allItems.length).fill(null)]);
-  useEffect(() => {
-    parseUserSessions(username).then((stats) => setStats(stats));
-    getAllItemCounts(username).then((counts) => setItemCt(counts));
-  }, [username]);
+    const [stats, setStats] = useState(null);
+    const [itemCt, setItemCt] = useState(Array(allItems.length).fill(null));
 
-  if (username === null) {
-    return (<div className="popup">Not logged in!</div>);
-  } 
-  if (stats === null || stats.totalSessions === 0) {
-    return (
-      <div className="popup">
-        No sessions yet
-        <p>Total {allItems[0]}: {itemCt[0]}</p>
-        <p>Total {allItems[1]}: {itemCt[1]}</p>
-        <p>Total {allItems[2]}: {itemCt[2]}</p>
-        <p>Total {allItems[3]}: {itemCt[3]}</p>
-        <p>Total {allItems[4]}: {itemCt[4]}</p>
-        <p>Total {allItems[5]}: {itemCt[5]}</p>
-      </div>
-    );
-  } else {
-    console.log(`total sessions: ${stats.totalSessions}`);
-    return (
-      <div className="popup">
-        <p>Most recent session: {stats.lastSession}</p>
-        <p>Total sessions: {stats.totalSessions}</p>
-        <p>Total time spent focusing: {stats.totalFocusTime} seconds</p>
-        <p>Average session length: {stats.averageSessionLength} seconds</p>
-        <p>Total {allItems[0]}: {itemCt[0]}</p>
-        <p>Total {allItems[1]}: {itemCt[1]}</p>
-        <p>Total {allItems[2]}: {itemCt[2]}</p>
-        <p>Total {allItems[3]}: {itemCt[3]}</p>
-        <p>Total {allItems[4]}: {itemCt[4]}</p>
-        <p>Total {allItems[5]}: {itemCt[5]}</p>
-      </div>
-    );
-  }
+    useEffect(() => {
+        parseUserSessions(username).then((stats) => setStats(stats));
+        getAllItemCounts(username).then((counts) => setItemCt(counts));
+    }, [username]);
+
+    if (username === null) {
+        return <div className="user-popup">Not logged in!</div>;
+    } else if (stats === null || stats.totalSessions === 0) {
+        return (
+            <div className="user-popup">
+                <table className="user-stats-table">
+                    <tbody>
+                    <tr>
+                        <td>No sessions yet</td>
+                    </tr>
+                    {allItems.map((item, index) => (
+                        <tr key={index}>
+                            <td>Total {item}:</td>
+                            <td>{itemCt[index]}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+    } else {
+        return (
+            <div className="user-popup">
+                <table className="user-stats-table">
+                    <tbody>
+                    <tr>
+                        <td>Most recent session:</td>
+                        <td>{stats.lastSession}</td>
+                    </tr>
+                    <tr>
+                        <td>Total sessions:</td>
+                        <td>{stats.totalSessions}</td>
+                    </tr>
+                    <tr>
+                        <td>Total time spent focusing:</td>
+                        <td>{stats.totalFocusTime} seconds</td>
+                    </tr>
+                    <tr>
+                        <td>Average session length:</td>
+                        <td>{stats.averageSessionLength} seconds</td>
+                    </tr>
+                    {allItems.map((item, index) => (
+                        <tr key={index}>
+                            <td>Total {item}:</td>
+                            <td>{itemCt[index]}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
 };
 
 const Navigation = ({ username }) => {

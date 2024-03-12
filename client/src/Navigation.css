@@ -84,3 +84,50 @@
   border: 0px;
   border-radius: 15px;
 }
+
+.user-popup {
+  position: fixed;
+  top: 56%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+  width: 100%;
+  max-width: 500px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 40px;
+  color: pink;
+}
+
+
+.user-stats-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-stats-table th, .user-stats-table td {
+  padding: 8px;
+  text-align: left;
+  font-family: 'Lucida Console', monospace;
+  font-size: 18px;
+  color: rgba(12, 12, 12, 0.96);
+  text-shadow: none;
+
+}
+
+.user-stats-table th {
+  background-color: #f2f2f2; /* Change the background color of table header cells */
+}
+
+.user-stats-table tr:nth-child(even) {
+  background-color: #ffccfa; /* Change the background color of even rows */
+}
+
+.user-stats-table tr:hover {
+  background-color: rgb(147, 98, 148); /* Change the background color of rows on hover */
+}
