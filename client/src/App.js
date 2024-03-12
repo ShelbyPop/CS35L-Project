@@ -73,7 +73,7 @@ function App() {
         </div>
 
         <div className="todo-list-position-wrapper">
-        <ToDoList />
+        <ToDoList username={username}/>
       </div>
 
         <ShopButton username={username} />

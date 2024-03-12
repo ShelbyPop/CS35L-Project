@@ -9,6 +9,7 @@ const uri =
 const client = new MongoClient(uri);
 const users = client.db("database").collection("users");
 const sessions = client.db("database").collection("sessions");
+const todos = client.db("database").collection("todos");
 // MongoDB documentation: https://www.mongodb.com/docs/drivers/node/current/fundamentals/crud/
 
 const allItems = ["coffee", "cakes", "pies", "donuts", "waffles", "misc"];
@@ -92,7 +93,7 @@ async function addUserPoints(username, diff) {
   if (!isValidUser(user.length)) {
     return false;
   }
-  
+
   // Calculate newPoints, set to 0 if the change would result in negative points
   let newPoints = Number(user[0].points) + Number(diff);
   if (newPoints < 0) {
@@ -114,11 +115,9 @@ async function getUserItemCount(username, item) {
   if (!isValidUser(user.length)) {
     return null;
   }
-
   if (allItems.includes(item)) {
     return (user[0][item]);
   }
-
   console.log(`Invalid item given: ${item}`);
   return null;
 }
@@ -129,13 +128,11 @@ async function addUserItem(username, item) {
   if (!isValidUser(user.length)) {
     return false;
   }
-
   if (allItems.includes(item)) {
     const newCount = Number(user[0][item]) + 1;
     await users.updateOne({ username: username }, { $set: { [item]: newCount.toString() } });
     return true;
   }
-
   console.log(`Invalid item given: ${item}`);
   return false;
 }
@@ -151,11 +148,38 @@ async function createSession(username, startTime, endTime, sessionLength) {
     console.log("Session times invalid");
     return null;
   }
+
   return await sessions.insertOne({
     username: username,
     startTime: startTime,
     endTime: endTime,
     sessionLength: sessionLength
+  });
+}
+
+// Insert a new session into the sessions collection
+async function createToDo(username, text) {
+  const user = await getUser(username);
+  if (!isValidUser(user.length)) {
+    return null;
+  }
+  if (!text) {
+    console.log("Invalid todo text");
+    return null;
+  }
+  
+  // Only allow insertion if there is no other task with the same text
+  const cursor = todos.find({ username: username, text: text });
+  const todo = await cursor.toArray();
+  if (todo.length > 0) {
+    console.log("Duplicate todo not allowed");
+    return null;
+  }
+
+  return await todos.insertOne({
+    username: username,
+    text: text,
+    completed: false
   });
 }
 
@@ -310,6 +334,36 @@ app.get("/sessions/user", async function (req, res) {
   } else {
     res.status(400).send();
   }
+});
+
+// Handle POST request for inserting a new session
+app.post("/todos/create", async function (req, res) {
+  const username = req.query.username;
+  const text = req.query.text;
+  console.log(`Create new todo for user ${username}`);
+  const result = await createToDo(username, text);
+  console.log(result ? "Todo creation success" : "Todo creation failed");
+
+  if (result) {
+    const cursor = todos.find({ username: username, text: text });
+    const todo = await cursor.toArray();
+    console.log(todo[0]);
+    res.json(todo[0]);
+  } else {
+    res.status(400).send();
+  }
+});
+
+// Handle GET request for getting all of a user's todos
+app.get("/todos/get", async function (req, res){
+  const username = req.query.username;
+  console.log(`Get todos for user ${username}`);
+
+  // Return array of all todos for user
+  const cursor = todos.find({ username: username });
+  const todo = await cursor.toArray();
+  console.log(todo);
+  res.json(todo);
 });
 
 // start server; listening at port 5050

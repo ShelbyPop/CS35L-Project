@@ -1,33 +1,43 @@
 import React, { useState } from 'react';
 import './ToDoList.css'; 
+import { createToDo, getToDos } from './ToDoRequests.js';
 
-const ToDoList = () => {
+const ToDoList = ({ username }) => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
   const [isVisible, setIsVisible] = useState(false); 
 
-  const addTask = () => {
+  const openToDoList = async (username) => {
+    if (!isVisible) {
+      const allTasks = await getToDos(username);
+      setTasks(allTasks);
+    }
+    setIsVisible(!isVisible);
+  };
+
+  const addTask = async (username) => {
     if (!newTask.trim()) return;
-    const task = {
-      id: Date.now(),
-      text: newTask,
-      completed: false,
-    };
+    const task = await createToDo(username, newTask);
+    if (!task) {
+      alert("Cannot insert duplicate task");
+      return;
+    }
     setTasks((prevTasks) => [...prevTasks, task]);
     setNewTask('');
   };
 
   const deleteTask = (id) => {
-    setTasks(tasks.filter(task => task.id !== id));
+    setTasks(tasks.filter(task => task._id !== id));
+    // Also delete from database
   };
 
   const toggleCompletion = (id) => {
-    setTasks(tasks.map(task => task.id === id ? { ...task, completed: !task.completed } : task));
+    setTasks(tasks.map(task => task._id === id ? { ...task, completed: !task.completed } : task));
   };
 
   return (
     <div className="todo-list-container">
-      <button className="todo-toggle-button" onClick={() => setIsVisible(!isVisible)}>
+      <button className="todo-toggle-button" onClick={() => openToDoList(username)}>
         {isVisible ? 'Close' : 'ToDo List'}
       </button>
       
@@ -40,18 +50,18 @@ const ToDoList = () => {
             onChange={(e) => setNewTask(e.target.value)}
             placeholder="Add a new task"
           />
-          <button className="todo-button" onClick={addTask}>Add Task</button>
+          <button className="todo-button" onClick={() => addTask(username)}>Add Task</button>
           <ul>
             {tasks.map(task => (
-              <li key={task.id} className={`todo-item ${task.completed ? 'completed' : ''}`}>
+              <li key={task._id} className={`todo-item ${task.completed ? 'completed' : ''}`}>
                 <input
                   type="checkbox"
                   checked={task.completed}
-                  onChange={() => toggleCompletion(task.id)}
+                  onChange={() => toggleCompletion(task._id)}
                   className="todo-checkbox"
                 />
                 <span className="todo-text">{task.text}</span>
-                <button className="todo-delete-button" onClick={() => deleteTask(task.id)}>Delete</button>
+                <button className="todo-delete-button" onClick={() => deleteTask(task._id)}>Delete</button>
               </li>
             ))}
           </ul>
