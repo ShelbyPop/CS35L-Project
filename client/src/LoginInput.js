@@ -34,7 +34,6 @@ export default function LoginInput({ setUsername }) {
         `http://localhost:5050/users/login?${new URLSearchParams(values)}`
       );
     }
-    console.log(response.status);
 
     if (response.ok) {
       if (values.firstTime) {

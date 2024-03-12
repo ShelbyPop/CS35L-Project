@@ -7,7 +7,7 @@ import timerDoneSound from './Assets/timerdone.mp3';
 import useSound from 'use-sound';
 
 
-const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning }) => {
+const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning, onTimerFinish }) => {
   const [seconds, setSeconds] = useState(timerLength);
   // const [breakSeconds, setBreakSeconds] = useState(5 * 60);
   const [cyclesCompleted, setCyclesCompleted] = useState(0); // use for tracking which cycle we are on
@@ -70,6 +70,7 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning 
         }
       if (seconds === 0 && cyclesCompleted % 2 === 0) {
           playTimerDone(timerDoneSound);
+          onTimerFinish();
           setSeconds(5);
           setTimerLength(5);
 

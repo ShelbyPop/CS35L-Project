@@ -1,9 +1,7 @@
 // Helper functions for modifying or accessing a user's sessions
 
 // Create a session, given a user's username and Date objects startTime, endTime
-export async function createSession(username, startTime, endTime) {
-  // Calculate session length in seconds
-  const sessionLength = Math.round(((new Date()) - startTime) / 1000);
+export async function createSession(username, startTime, endTime, sessionLength) {
   const obj = {
     username: username,
     startTime: startTime,

@@ -9,14 +9,12 @@ import Navigation from './Navigation';
 import ShopButton from './ShopButton';
 import ToDoList from './ToDoList.js';
 import { createSession } from './SessionRequests.js';
-import { Notifications, showNotification } from '@mantine/notifications';
-import { addPoints } from './PointsRequests';
+import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles/global.css'; // Please don't delete this line, it will mess up the checkbox
 import '@mantine/notifications/styles.css';
 
 function App() {
   const [timerLength, setTimerLength] = useState(25 * 60); // Set a default timer length so it's not 0
-  const [isTimerActive, setIsTimerActive] = useState(true); // lowk could delete this
   const [sessionStartTime, setSessionStartTime] = useState(null);
   const [username, setUsername] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
@@ -30,7 +28,7 @@ function App() {
 
   const onTimerFinish = async () => {
     console.log("Timer cycle completed!");
-    const sessionEndTime = new Date();
+    const sessionEndTime = new Date(Date.now() - 1000); // offset by 1 second due to tempIntervalId delay
     const sessionLength = Math.round((sessionEndTime - sessionStartTime) / 1000);
     console.log(sessionStartTime, sessionEndTime, sessionLength);
     // Insert new session into database
@@ -62,10 +60,11 @@ function App() {
           <Timer 
             timerLength={timerLength} 
             setTimerLength={setTimerLength}
-            onTimerFinish={onTimerFinish} 
             username={username} 
             isRunning={isRunning} 
-            setIsRunning={setIsRunning} />
+            setIsRunning={setIsRunning} 
+            onTimerFinish={onTimerFinish} 
+            />
            </div>
         </MantineProvider>
 
