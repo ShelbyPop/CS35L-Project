@@ -4,6 +4,7 @@ import SessionHistory from './SessionHistory.js';
 import Leaderboard from './Leaderboard.js';
 import { getPoints } from './PointsRequests.js';
 import { parseUserSessions } from './SessionRequests.js';
+import { getItemCount, addItem } from './ItemRequests.js';
 
 const PointsPopup = ({ username }) => {
   // Use these lines whenever you need a user's point total in a react component
@@ -67,16 +68,23 @@ const LeaderboardPopup = () => {
 };
 
 const UserStatsPopup = ({ username }) => {
-  //const totalSessions = parseUserSessions(username).numSessions;
   const [stats, setStats] = useState(null);
+  const [coffeeCt, setCoffeeCt] = useState(null);
   useEffect(() => {
     parseUserSessions(username).then((stats) => setStats(stats));
+    getItemCount(username, 'coffee').then((coffeeCt) => setCoffeeCt(coffeeCt));
   }, [username]);
 
   if (username === null) {
     return (<div className="popup">Not logged in!</div>);
-  } else if (stats === null || stats.totalSessions === 0) {
-    return (<div className="popup">No sessions yet</div>);
+  } 
+  if (stats === null || stats.totalSessions === 0) {
+    return (
+      <div className="popup">
+        No sessions yet
+        <p>Total coffees: {coffeeCt}</p>
+      </div>
+    );
   } else {
     console.log(`total sessions: ${stats.totalSessions}`);
     return (
@@ -85,6 +93,7 @@ const UserStatsPopup = ({ username }) => {
         <p>Total sessions: {stats.totalSessions}</p>
         <p>Total time spent focusing: {stats.totalFocusTime} seconds</p>
         <p>Average session length: {stats.averageSessionLength} seconds</p>
+        <p>Total coffees: {coffeeCt}</p>
       </div>
     );
   }
@@ -108,6 +117,8 @@ const Navigation = ({ username }) => {
               <button onClick={() => showPopup('history')}>History</button>
               <button onClick={() => showPopup('leaderboard')}>Leaderboard</button>
               <button onClick={() => showPopup('user stats')}>User Stats</button>
+              <button onClick={() => getItemCount(username, 'coffee')}>Get Num Coffee</button>
+              <button onClick={() => addItem(username, 'coffee')}>Add Coffee</button>
               {username && 
                 <p>{username}</p>
               }

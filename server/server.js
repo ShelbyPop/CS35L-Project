@@ -33,6 +33,18 @@ async function getUser(username) {
   return user;
 }
 
+// Given a number of users, checks if numUsers is 1 and prints error messages otherwise
+function isValidUser(numUsers) {
+  if (numUsers > 1) {
+    console.log("Too many users, please fix bug!!");
+    return false;
+  } else if (numUsers === 0) {
+    console.log("User does not exist");
+    return false;
+  }
+  return true;
+}
+
 // Insert new user into users collection with empty sessions array
 async function createUser(username, password) {
   const user = await getUser(username);
@@ -44,6 +56,12 @@ async function createUser(username, password) {
     username: username,
     password: password,
     points: "0",
+    coffee: "0",
+    cakes: "0",
+    pies: "0",
+    donuts: "0", 
+    waffles: "0", 
+    misc: "0"
   });
 }
 
@@ -97,6 +115,80 @@ async function addUserPoints(username, diff) {
     $set: { points: newPoints.toString() }
   };
   await users.updateOne({ username: username }, updateDocument);
+  return true;
+}
+
+async function getUserItemCount(username, item) {
+  const user = await getUser(username);
+  if (user.length > 1) {
+    console.log("Too many users, please fix bug!!");
+    return null;
+  } else if (user.length === 0) {
+    console.log("User does not exist");
+    return null;
+  }
+
+  switch (item) {
+    case 'coffee':
+      return (user[0].coffee);
+    case 'cakes':
+      return (user[0].cakes);
+    case 'pies':
+      return (user[0].pies);
+    case 'donuts':
+      return (user[0].donuts);
+    case 'waffles':
+      return (user[0].waffles);
+    case 'misc':
+      return (user[0].misc);
+    default:
+      console.log(`Invalid item given: ${item}`);
+      return null;
+  }
+}
+
+async function addUserItem(username, item) {
+  const user = await getUser(username);
+  if (user.length > 1) {
+    console.log("Too many users, please fix bug!!");
+    return false;
+  } else if (user.length === 0) {
+    console.log("User does not exist");
+    return false;
+  }
+
+  let newCount;
+
+  // Add 1 to item
+  switch (item) {
+    case 'coffee':
+      newCount = Number(user[0].coffee) + 1;
+      await users.updateOne({ username: username }, { $set: { coffee: newCount.toString() } });
+      break;
+    case 'cakes':
+      newCount = Number(user[0].cakes) + 1;
+      await users.updateOne({ username: username }, { $set: { cakes: newCount.toString() } });
+      break;
+    case 'pies':
+      newCount = Number(user[0].pies) + 1;
+      await users.updateOne({ username: username }, { $set: { pies: newCount.toString() } });
+      break;
+    case 'donuts':
+      newCount = Number(user[0].donuts) + 1;
+      await users.updateOne({ username: username }, { $set: { donuts: newCount.toString() } });
+      break;
+    case 'waffles':
+      newCount = Number(user[0].waffles) + 1;
+      await users.updateOne({ username: username }, { $set: { waffles: newCount.toString() } });
+      break;
+    case 'misc':
+      newCount = Number(user[0].misc) + 1;
+      await users.updateOne({ username: username }, { $set: { misc: newCount.toString() } });
+      break;
+    default:
+      console.log(`Invalid item given: ${item}`);
+      return false;
+  }
   return true;
 }
 
@@ -173,6 +265,29 @@ app.post("/users/points/add", async function (req, res) {
   result ? res.status(200).send() : res.status(400).send();
 });
 
+// Handle GET request for accessing the count of an item in a user's inventory
+app.get("/users/items/get", async function (req, res) {
+  const username = req.query.username;
+  const item = req.query.item;
+  console.log(`Get count of ${item} from user ${username}'s inventory`);
+  const result = await getUserItemCount(username, item);
+  if (result) {
+    console.log(`${username} has ${result} ${item}`);
+    res.send(result);
+  } else {
+    res.status(400).send();
+  }
+});
+
+// Handle POST request for adding an item to a user's inventory
+app.post("/users/items/add", async function (req, res) {
+  const username = req.query.username;
+  const item = req.query.item;
+  console.log(`Add 1 of ${item} to user ${username}'s inventory`);
+  const result = await addUserItem(username, item);
+  result ? res.status(200).send() : res.status(400).send();
+});
+
 // Handle GET request for retrieving leaderboard
 app.get("/users/leaderboard", async function (req, res) {
   const cursor = users.find({});
@@ -234,16 +349,6 @@ app.get("/sessions/history", async function (req, res) {
     );
   };
 
-  // const comparePoints = (a, b) => {
-  //   if (Number(a.points) > Number(b.points)) {
-  //     return -1;
-  //   } else if (Number(a.points) < Number(b.points)) {
-  //     return 1;
-  //   }
-  //   return 0;
-  // };
-
-  // res.json(search(allSessionData).sort(comparePoints));
   res.json(search(allSessionData));
 });
 
