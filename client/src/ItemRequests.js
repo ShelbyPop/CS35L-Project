@@ -2,6 +2,7 @@
 
 export const allItems = ["coffee", "cakes", "pies", "donuts", "waffles", "misc"];
 
+// Get the count of an item in a user's inventory
 export async function getItemCount(username, item) {
   if (!allItems.includes(item)) {
     console.log(`Item does not exist: ${item}`);
@@ -14,11 +15,10 @@ export async function getItemCount(username, item) {
   );
 
   console.log(response);
-  console.log(response.status);
   if (response.ok) {
     console.log(`Retrieved user's ${item} count`);
     const data = await response.json();
-    console.log(data);
+    console.log(`${item}: ${data}`);
     return data;
   } else {
     console.log(`Ran into an issue while attempting to get user's ${item} count`);
@@ -26,6 +26,7 @@ export async function getItemCount(username, item) {
   }
 }
 
+// Add one to the count of item in a user's inventory
 export async function addItem(username, item) {
   if (!allItems.includes(item)) {
     console.log(`Item does not exist: ${item}`);
@@ -46,4 +47,16 @@ export async function addItem(username, item) {
     console.log(`Ran into an issue while attempting to change ${item} count`);
     return false;
   }
+}
+
+// Get an array of the count of all items in a user's inventory, in the same order as allItems
+export async function getAllItemCounts(username) {
+  let newItemCt = Array(allItems.length).fill(null);
+  for (let i = 0; i < allItems.length; i++) {
+    const count = await getItemCount(username, allItems[i]);
+    newItemCt[i] = count;
+  }
+
+  console.log(newItemCt);
+  return newItemCt;
 }

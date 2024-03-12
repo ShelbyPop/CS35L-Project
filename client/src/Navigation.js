@@ -4,7 +4,7 @@ import SessionHistory from './SessionHistory.js';
 import Leaderboard from './Leaderboard.js';
 import { getPoints } from './PointsRequests.js';
 import { parseUserSessions } from './SessionRequests.js';
-import { getItemCount, addItem } from './ItemRequests.js';
+import { allItems, getAllItemCounts } from './ItemRequests.js';
 
 const PointsPopup = ({ username }) => {
   // Use these lines whenever you need a user's point total in a react component
@@ -67,12 +67,13 @@ const LeaderboardPopup = () => {
   );
 };
 
+// Retrieve user stats from parseUserSessions & user item counts from getItemCounts
 const UserStatsPopup = ({ username }) => {
   const [stats, setStats] = useState(null);
-  const [coffeeCt, setCoffeeCt] = useState(null);
+  const [itemCt, setItemCt] = useState([Array(allItems.length).fill(null)]);
   useEffect(() => {
     parseUserSessions(username).then((stats) => setStats(stats));
-    getItemCount(username, 'coffee').then((coffeeCt) => setCoffeeCt(coffeeCt));
+    getAllItemCounts(username).then((counts) => setItemCt(counts));
   }, [username]);
 
   if (username === null) {
@@ -82,7 +83,12 @@ const UserStatsPopup = ({ username }) => {
     return (
       <div className="popup">
         No sessions yet
-        <p>Total coffees: {coffeeCt}</p>
+        <p>Total {allItems[0]}: {itemCt[0]}</p>
+        <p>Total {allItems[1]}: {itemCt[1]}</p>
+        <p>Total {allItems[2]}: {itemCt[2]}</p>
+        <p>Total {allItems[3]}: {itemCt[3]}</p>
+        <p>Total {allItems[4]}: {itemCt[4]}</p>
+        <p>Total {allItems[5]}: {itemCt[5]}</p>
       </div>
     );
   } else {
@@ -93,7 +99,12 @@ const UserStatsPopup = ({ username }) => {
         <p>Total sessions: {stats.totalSessions}</p>
         <p>Total time spent focusing: {stats.totalFocusTime} seconds</p>
         <p>Average session length: {stats.averageSessionLength} seconds</p>
-        <p>Total coffees: {coffeeCt}</p>
+        <p>Total {allItems[0]}: {itemCt[0]}</p>
+        <p>Total {allItems[1]}: {itemCt[1]}</p>
+        <p>Total {allItems[2]}: {itemCt[2]}</p>
+        <p>Total {allItems[3]}: {itemCt[3]}</p>
+        <p>Total {allItems[4]}: {itemCt[4]}</p>
+        <p>Total {allItems[5]}: {itemCt[5]}</p>
       </div>
     );
   }
@@ -117,8 +128,6 @@ const Navigation = ({ username }) => {
               <button onClick={() => showPopup('history')}>History</button>
               <button onClick={() => showPopup('leaderboard')}>Leaderboard</button>
               <button onClick={() => showPopup('user stats')}>User Stats</button>
-              <button onClick={() => getItemCount(username, 'coffee')}>Get Num Coffee</button>
-              <button onClick={() => addItem(username, 'coffee')}>Add Coffee</button>
               {username && 
                 <p>{username}</p>
               }
