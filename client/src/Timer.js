@@ -20,7 +20,6 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
     if (isRunning) {
       setSeconds(timerLength);
       setIsNewTimerInput(true);
-      setTimerStatus('work');
     }
   }, [isRunning]);
 
@@ -31,10 +30,12 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
       return;
     }
 
+
+
     const sessionPoints = 5;
     const cyclePoints = 10;
 
-    if(cyclesCompleted === 7 && isNewTimerInput) { // RETURN once we have reached 4 cycles
+    if(cyclesCompleted === 8 && isNewTimerInput) { // RETURN once we have reached 4 cycles
       addPoints(username, cyclePoints).then((success) => {
         if (success) {
           console.log("Points successfully added after cycle break.");
@@ -60,23 +61,28 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
       });
 
       setCyclesCompleted(0);
-      setIsRunning(false);
+
     }
 
     const tempIntervalId = setInterval(() => {
+
+
       if (seconds > 0) {
         setSeconds((prevSeconds) => Math.max(0, prevSeconds - 1));
+
+
         return;
         }
       if (seconds === 0 && cyclesCompleted % 2 === 0) {
           playTimerDone(timerDoneSound);
           onTimerFinish();
+
           setSeconds(5);
           setTimerLength(5);
 
           console.log("Session complete in Timer.js");
 
-          setTimerStatus('sessionBreak');
+
 
           addPoints(username, sessionPoints).then((success) => {
             if (success) {
@@ -306,18 +312,19 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
                   fill="transparent"
               ></circle>
             </g>
-          <text
-            className="circular-timer-text custom-timer"
-            x="50%"
-            y="50%"
-            textAnchor="middle"
-            dy="0.3em"
-            fill="cornsilk"
-          >
+            <text
+                className="circular-timer-text custom-timer"
+                x="50%"
+                y="50%"
+                textAnchor="middle"
+                dy="0.3em"
+                fill="cornsilk"
+            >
               {formatTime(seconds)}
             </text>
           </svg>
         </div>
+
       </div>
   );
 };
