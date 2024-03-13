@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef} from 'react';
 import './ShopButton.css';
 import { getPoints, addPoints } from './PointsRequests.js';
-import { allItems, addItem } from './ItemRequests.js';
+import { addItem } from './ItemRequests.js';
 import coffeeImage from './Assets/coffee_64x.png';
 import muffinImage from './Assets/muffin_64x.png';
 import toastImage from './Assets/toast_64x.png';
@@ -204,6 +204,7 @@ const buyItem = async (cost) => {
     case 'donuts': itemsToDisplay = donutItems; break;
     case 'waffles': itemsToDisplay = waffleItems; break;
     case 'misc': itemsToDisplay = miscItems; break;
+    default: break;
   }
 
 
