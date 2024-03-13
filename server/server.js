@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 
 const app = express();
 app.use(cors());
@@ -183,6 +183,22 @@ async function createToDo(username, text) {
   });
 }
 
+// Toggle the "completed" property for the todo matching id
+async function toggleToDo(objId) {
+  const cursor = todos.find({ _id: objId });
+  const todo = await cursor.toArray();
+  console.log(todo);
+
+  // First, make sure the todo with id actually exists
+  if (todo.length !== 1) {
+    return null;
+  }
+
+  const isCompleted = todo[0].completed;
+  const updateDocument = isCompleted ? { $set: { completed: false } } : { $set: { completed: true } };
+  return await todos.updateOne({ _id: objId }, updateDocument);
+}
+
 // post: modify database, get: asks for data from database
 // Express routes: https://expressjs.com/en/guide/routing.html
 
@@ -355,7 +371,7 @@ app.post("/todos/create", async function (req, res) {
 });
 
 // Handle GET request for getting all of a user's todos
-app.get("/todos/get", async function (req, res){
+app.get("/todos/get", async function (req, res) {
   const username = req.query.username;
   console.log(`Get todos for user ${username}`);
 
@@ -364,6 +380,25 @@ app.get("/todos/get", async function (req, res){
   const todo = await cursor.toArray();
   console.log(todo);
   res.json(todo);
+});
+
+app.post("/todos/toggle", async function (req, res) {
+  const id = req.query.id;
+  console.log(`Toggle completion for todo ${id}`);
+
+  const objId = new ObjectId(id);
+  const result = await toggleToDo(objId);
+  console.log(result);
+  console.log(result ? "Todo creation success" : "Todo creation failed");
+
+  if (result) {
+    const cursor = todos.find({ _id: objId });
+    const todo = await cursor.toArray();
+    console.log(todo[0]);
+    res.json(todo[0]);
+  } else {
+    res.status(400).send();
+  }
 });
 
 // start server; listening at port 5050

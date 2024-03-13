@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './ToDoList.css'; 
-import { createToDo, getToDos } from './ToDoRequests.js';
+import { createToDo, getToDos, toggleToDo } from './ToDoRequests.js';
 
 const ToDoList = ({ username }) => {
   const [tasks, setTasks] = useState([]);
@@ -17,6 +17,11 @@ const ToDoList = ({ username }) => {
 
   const addTask = async (username) => {
     if (!newTask.trim()) return;
+    if (!username) {
+      alert("Not logged in, cannot add task");
+      return;
+    }
+
     const task = await createToDo(username, newTask);
     if (!task) {
       alert("Cannot insert duplicate task");
@@ -32,6 +37,7 @@ const ToDoList = ({ username }) => {
   };
 
   const toggleCompletion = (id) => {
+    toggleToDo(id);
     setTasks(tasks.map(task => task._id === id ? { ...task, completed: !task.completed } : task));
   };
 

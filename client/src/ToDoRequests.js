@@ -43,3 +43,25 @@ export async function getToDos(username) {
     return null;
   }
 }
+
+// Toggle completion of a todo, given its id
+export async function toggleToDo(id) {
+  const obj = {
+    id: id
+  };
+  const response = await fetch(
+    `http://localhost:5050/todos/toggle?${new URLSearchParams(obj)}`,
+    {method: 'POST'}
+  );
+
+  console.log(response);
+  if (response.ok) {
+    console.log(`Successfully toggled completion of todo ${id}`);
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } else {
+    console.log(`Ran into an issue while attempting to toggle completion of todo ${id}`);
+    return null;
+  }
+}
