@@ -4,8 +4,19 @@ import { useForm } from '@mantine/form';
 import './LoginInput.css';
 import '@mantine/core/styles/Checkbox.css';
 
+/**
+ *
+ * This function is used to validate a user's username and password
+ * The username must not contain whitespace or be empty
+ * The password must not contain whitespace or less than 6 characters
+ * A user must check the checkbox if they are a new user, otherwise leave it unchecked
+ * 
+ * @export
+ * @param {*} { setUsername }
+ * @return {*} 
+ */
 export default function LoginInput({ setUsername }) {
-  const [isOpen, setIsOpen] = useState(false); // State to track if the login form is open
+  const [isOpen, setIsOpen] = useState(false); 
 
   const form = useForm({
     initialValues: {
@@ -14,11 +25,16 @@ export default function LoginInput({ setUsername }) {
       firstTime: false
     },
     validate: {
-        username: (value) => (/^\S+$/.test(value) ? null : 'Invalid username'), // (has whitespace or is empty)
-        password: (value) => (/^\S{6}\S*$/.test(value) ? null : 'Invalid password') // (has whitespace or less than 6 characters)
+        username: (value) => (/^\S+$/.test(value) ? null : 'Invalid username'), 
+        password: (value) => (/^\S{6}\S*$/.test(value) ? null : 'Invalid password') 
     },
   });
 
+  /**
+   *
+   *
+   * @param {*} values
+   */
   const handleSubmit = async (values) => {
     console.log(values);
     let response = null;
@@ -52,6 +68,7 @@ export default function LoginInput({ setUsername }) {
     }
     form.reset(); // Reset form values
   };
+
 
   const handleClick = () => {
     setIsOpen(!isOpen); // CHANGE the login form state when the button is clicked
