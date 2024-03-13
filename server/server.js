@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from "express";
 import cors from "cors";
 import { MongoClient, ObjectId } from "mongodb";
@@ -5,8 +6,7 @@ import sha256 from 'crypto-js/sha256.js';
 
 const app = express();
 app.use(cors());
-const uri =
-  "mongodb+srv://Cluster06218:dj9ZW9n0VECoINZe@cluster06218.af6kogl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster06218";
+const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri);
 const users = client.db("database").collection("users");
 const sessions = client.db("database").collection("sessions");
