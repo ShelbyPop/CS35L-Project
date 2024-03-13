@@ -1,12 +1,56 @@
 #!/bin/bash
 
+####### Ansi Colors: Don't remove
+N="$(printf '\033[')" x=30
+for a in Bl R G Y B M C W # 4-bit Black Red Green Yellow Blue Magenta Cyan White
+do eval $a='$N'"'"$((   x))"m'" \
+        b$a='$N'"'"$((60+x))"m'" \
+    ${a}bg='$N'"'"$((10+x))"m'" \
+    b${a}bg='$N'"'"$((70+x))"m'"        # bX=bright Xbg=background bXbg=brgt bgnd
+    x=$((x+1))
+done
+
+N="${N}0m"
+
 cd client
 npm install
-echo "STARTING CLIENT"
-npm start &
+#echo "STARTING CLIENT"
+#npm start &
 
 cd ../server
 npm install
+
+node verifyMongoUri.js $1
+
+if [[ $? -ne 0 ]]; then
+  echo " ${M}[ERR]${N}: Incorrect connection string was given"
+  exit 1
+fi
+
+
+echo "${C}[INFO]${N}: Copying URI to .env file"
 echo "MONGO_URI=$1;" >.env
-echo "STARTING SERVER"
-npm start
+
+cd ..
+echo ''
+read -p "   ${M}[?]${N}: Automatically start server now? ${M}[y/n]${N} " -n 1 yn
+echo ''
+
+case "$yn" in
+  [Yy]*)
+    echo "Ok! Running:"
+    echo "      ${C}$ npm run dev-both${N}"
+    npm run dev-both
+    ;;
+  [Nn]*)
+    echo "Ok! The setup is complete. To begin the server, run:"
+    echo "      ${C}$ npm run dev-both${N}"
+    ;;
+  *)
+    echo "Didn't understand what you mean, not starting server."
+    echo "The setup is complete. To begin the server, run:"
+    echo "      ${C}$ npm run dev-both${N}"
+    ;;
+esac
+
+exit 0
