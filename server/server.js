@@ -199,6 +199,19 @@ async function toggleToDo(objId) {
   return await todos.updateOne({ _id: objId }, updateDocument);
 }
 
+async function deleteToDo(objId) {
+  const cursor = todos.find({ _id: objId });
+  const todo = await cursor.toArray();
+  console.log(todo);
+
+  // First, make sure the todo with id actually exists
+  if (todo.length !== 1) {
+    return false;
+  }
+
+  return await todos.deleteOne({ _id: objId });
+}
+
 // post: modify database, get: asks for data from database
 // Express routes: https://expressjs.com/en/guide/routing.html
 
@@ -382,6 +395,7 @@ app.get("/todos/get", async function (req, res) {
   res.json(todo);
 });
 
+// Handle POST request for toggling completion status, given a todo id
 app.post("/todos/toggle", async function (req, res) {
   const id = req.query.id;
   console.log(`Toggle completion for todo ${id}`);
@@ -389,7 +403,6 @@ app.post("/todos/toggle", async function (req, res) {
   const objId = new ObjectId(id);
   const result = await toggleToDo(objId);
   console.log(result);
-  console.log(result ? "Todo creation success" : "Todo creation failed");
 
   if (result) {
     const cursor = todos.find({ _id: objId });
@@ -399,6 +412,18 @@ app.post("/todos/toggle", async function (req, res) {
   } else {
     res.status(400).send();
   }
+});
+
+// Handle POST request for deleting a todo, given its id
+app.post("/todos/delete", async function (req, res) {
+  const id = req.query.id;
+  console.log(`Delete todo ${id}`);
+
+  const objId = new ObjectId(id);
+  const result = await deleteToDo(objId);
+  console.log(result ? "Todo deletion success" : "Todo deletion failed");
+
+  result ? res.status(200).send() : res.status(400).send();
 });
 
 // start server; listening at port 5050

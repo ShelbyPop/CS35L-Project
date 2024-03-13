@@ -25,9 +25,7 @@ export async function createToDo(username, text) {
 
 // Get array of all todos for user
 export async function getToDos(username) {
-  const obj = {
-    username: username,
-  };
+  const obj = { username: username };
   const response = await fetch(
     `http://localhost:5050/todos/get?${new URLSearchParams(obj)}`
   );
@@ -46,9 +44,7 @@ export async function getToDos(username) {
 
 // Toggle completion of a todo, given its id
 export async function toggleToDo(id) {
-  const obj = {
-    id: id
-  };
+  const obj = { id: id };
   const response = await fetch(
     `http://localhost:5050/todos/toggle?${new URLSearchParams(obj)}`,
     {method: 'POST'}
@@ -63,5 +59,23 @@ export async function toggleToDo(id) {
   } else {
     console.log(`Ran into an issue while attempting to toggle completion of todo ${id}`);
     return null;
+  }
+}
+
+// Delete a todo, given its id
+export async function deleteToDo(id) {
+  const obj = { id: id };
+  const response = await fetch(
+    `http://localhost:5050/todos/delete?${new URLSearchParams(obj)}`,
+    {method: 'POST'}
+  );
+
+  console.log(response);
+  if (response.ok) {
+    console.log(`Successfully deleted todo ${id}`);
+    return true;
+  } else {
+    console.log(`Ran into an issue while attempting to toggle completion of todo ${id}`);
+    return false;
   }
 }

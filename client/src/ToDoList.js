@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './ToDoList.css'; 
-import { createToDo, getToDos, toggleToDo } from './ToDoRequests.js';
+import { createToDo, getToDos, toggleToDo, deleteToDo } from './ToDoRequests.js';
 
 const ToDoList = ({ username }) => {
   const [tasks, setTasks] = useState([]);
@@ -31,13 +31,13 @@ const ToDoList = ({ username }) => {
     setNewTask('');
   };
 
-  const deleteTask = (id) => {
+  const deleteTask = async (id) => {
+    await deleteToDo(id);
     setTasks(tasks.filter(task => task._id !== id));
-    // Also delete from database
   };
 
-  const toggleCompletion = (id) => {
-    toggleToDo(id);
+  const toggleCompletion = async (id) => {
+    await toggleToDo(id);
     setTasks(tasks.map(task => task._id === id ? { ...task, completed: !task.completed } : task));
   };
 
