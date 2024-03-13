@@ -87,10 +87,10 @@ class ImageButton extends React.Component {
   }
 }
 /**
- * Creates Button Object on screen, shows pressedImage when clicked.
+ * Creates Button Object on screen, shows pressedImage when clicked
  *
- * @param {*} { itemImage, price, buyItem } - itemImage (image of the item), price (Cost of the item), buyItem (buyItem method)
- * @return {*}  - returns The button object and pressed image while button is pressed.
+ * @param {*} { itemImage, price, buyItem } - itemImage (image of the item), price (number Cost of the item), buyItem (buyItem method)
+ * @return {*}  - returns The button object and pressed image while button is pressed
  */
 function ItemButton({ itemImage, price, buyItem }) {
   const [isPressed, setIsPressed] = React.useState(false);
@@ -111,10 +111,10 @@ function ItemButton({ itemImage, price, buyItem }) {
 }
 
 /**
- * Creates all the buttons and images relevant to the shop. 
+ * Creates all the buttons and images relevant to the shop
  *
- * @param {*} { username } - username of the player logged in
- * @return {*} - returns shop tabs and available/relevant items depending on what shop tab you are on.
+ * @param {*} { username } - string username of the player logged in
+ * @return {*} - returns shop tabs and available/relevant items depending on what shop tab you are on
  */
 const ShopButton = ({ username }) => {
   const [showShop, setShowShop] = useState(false);
@@ -135,10 +135,10 @@ const toggleShop = () => {
     setShowShop(!showShop);
   };
 /**
- * Sends method to purchase an item and rips points/coins from the user's account.
- * If the uesr cannot purchase an item, displays alert and does not purchase the item.
+ * Sends method to purchase an item and rips points/coins from the user's account
+ * If the uesr cannot purchase an item, displays alert and does not purchase the item
  *
- * @param {*} cost - the price of the item
+ * @param {*} cost - then number price of the item
  */
 const buyItem = async (cost) => {
     if (points >= cost) {
@@ -209,9 +209,9 @@ const buyItem = async (cost) => {
 
   const shopItemsRef = useRef(null);
   /**
-   * Enables autoscrolling when a user presses a shop-tab option.
+   * Enables autoscrolling when a user presses a shop-tab option
    *
-   * @param {*} setTab - passed in method to tell the server that we are on a different tab, and should display the relevant items.
+   * @param {*} setTab - passed in method to tell the server that we are on a different tab, and should display the relevant items
    * @return {*}  - returns scroll behaviour
    */
   const autoScroll = (setTab) => {

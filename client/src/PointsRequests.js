@@ -16,10 +16,10 @@
 // };
 
 /**
- * Grabs/Obtains points from the database according to the passed in username.
+ * Grabs/Obtains points from the database according to the passed in username
  *
  * @export
- * @param {*} username - user's username
+ * @param {*} username - user's username (string)
  * @return {*} 
  */
 export async function getPoints(username) {
@@ -41,12 +41,12 @@ export async function getPoints(username) {
 
 /**
  * Given a user's username as a string, add diff points (negative values also ok) to that user's points
- * Returns true if points successfully added. 
+ * Returns true if points successfully added.
  * Usage: addPoints(username, 5) to add 5 points, addPoints(username, -5) to subtract 5 points
  * 
  * @export
- * @param {*} username - user's username
- * @param {*} diff - the requested addition (or subtraction) of points from a user's account
+ * @param {*} username - user's username (string)
+ * @param {*} diff - the requested addition (or subtraction) of points from a user's account (int number)
  * @return {*} 
  */
 export async function addPoints(username, diff) {

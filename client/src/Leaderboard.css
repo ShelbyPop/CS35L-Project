@@ -6,6 +6,20 @@
     top: 75px;
 }
 
+.leaderboard-table tbody {
+    display: block;
+    width: 100%;
+    height: 500px; /* Adjust this value as needed */
+    overflow-y: auto;
+  }
+  
+.leaderboard-table thead,
+.leaderboard-table tbody tr {
+display: table;
+width: 100%;
+table-layout: fixed;
+}
+
 .leaderboard-table th, .leaderboard-table td {
     padding: 5px 10px;
     text-align: left;
