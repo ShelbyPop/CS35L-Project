@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Navigation.css'; // Make sure to style your popups and navigation
+import './Navigation.css'; 
 import SessionHistory from './SessionHistory.js';
 import Leaderboard from './Leaderboard.js';
 import { getPoints } from './PointsRequests.js';
@@ -7,6 +7,11 @@ import { parseUserSessions } from './SessionRequests.js';
 import { allItems, getAllItemCounts } from './ItemRequests.js';
 import { formatTime, formatDate } from './FormatDate.js';
 
+/**
+ * The PointsPopup function manages the Popup button in the leaderboard
+ *
+ * @param {*} { username }
+ */
 const PointsPopup = ({ username }) => {
   // Use these lines whenever you need a user's point total in a react component
   const [points, setPoints] = useState("");
@@ -20,6 +25,11 @@ const PointsPopup = ({ username }) => {
   );
 };
 
+/**
+ * The HistoryPopup displays a user's past sessions with start and end times
+ *
+ * @return {*} 
+ */
 const HistoryPopup = () => {
   const [query, setQuery] = useState("");
   const [data, setData] = useState([])
@@ -44,6 +54,11 @@ const HistoryPopup = () => {
   );
 };
 
+/**
+ * The LeaderboardPopup displays a table of all users and their points and is sorted by points
+ *
+ * @return {*} 
+ */
 const LeaderboardPopup = () => {
   const [query, setQuery] = useState("");
   const [data, setData] = useState([])
@@ -68,7 +83,14 @@ const LeaderboardPopup = () => {
   );
 };
 
-// Retrieve user stats from parseUserSessions & user item counts from getItemCounts
+/**
+ * The UserStatsPopup retrieves user stats from parseUserSessions and user item counts from getItemCounts
+ * It is used to display the popup containing most recent session, total time, average session length
+ * and counts of each item type
+ *
+ * @param {*} { username }
+ * @return {*} 
+ */
 const UserStatsPopup = ({ username }) => {
     const [stats, setStats] = useState(null);
     const [itemCt, setItemCt] = useState(Array(allItems.length).fill(null));
