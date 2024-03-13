@@ -1,4 +1,10 @@
-// Given a number of seconds, return a string in the format MM:SS (minutes:seconds)
+/**
+ * Formats input seconds into MM:SS format
+ *
+ * @export
+ * @param {string} seconds
+ * @return {string} String formatted as MM:SS (minutes:seconds)
+ */
 export function formatTime(seconds) {
   const sec = Number(seconds) % 60;
   const formatSec = (sec < 10) ? ("0" + sec) : sec;
@@ -7,7 +13,13 @@ export function formatTime(seconds) {
   return formatMin + ":" + formatSec;
 }
 
-// Given a date string, chop off the time zone
+/**
+ * Reformats a string representing a Date object to exclude time zone
+ *
+ * @export
+ * @param {string} dateString
+ * @return {string} Reformatted Date string
+ */
 export function formatDate(dateString) {
   return dateString.slice(4, dateString.length-33);
 }
