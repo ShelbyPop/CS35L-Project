@@ -459,7 +459,7 @@ app.get("/todos/get", async function (req, res) {
   res.json(todo);
 });
 
-// Handle POST request for inserting a new session
+// Handle POST request for inserting a new todo
 app.post("/todos/create", async function (req, res) {
   const username = req.query.username;
   const text = req.query.text;
