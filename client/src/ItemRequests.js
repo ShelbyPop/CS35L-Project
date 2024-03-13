@@ -2,7 +2,14 @@
 
 export const allItems = ["coffee", "cakes", "pies", "donuts", "waffles", "misc"];
 
-// Get the count of an item in a user's inventory
+/**
+ * Gets the item count of a certain item in a user's inventory saved to the database.
+ *
+ * @export
+ * @param {*} username - the user's username
+ * @param {*} item - the item to be counted
+ * @return {*} 
+ */
 export async function getItemCount(username, item) {
   if (!allItems.includes(item)) {
     console.log(`Item does not exist: ${item}`);
@@ -26,7 +33,14 @@ export async function getItemCount(username, item) {
   }
 }
 
-// Add one to the count of item in a user's inventory
+/**
+ * Increments count of item in user's profile stats on the database.
+ *
+ * @export
+ * @param {*} username - username
+ * @param {*} item - relevant item being added
+ * @return {*} 
+ */
 export async function addItem(username, item) {
   if (!allItems.includes(item)) {
     console.log(`Item does not exist: ${item}`);
@@ -49,7 +63,13 @@ export async function addItem(username, item) {
   }
 }
 
-// Get an array of the count of all items in a user's inventory, in the same order as allItems
+/**
+ * Gets a count in an array of all items in the user's inventory, same order as allItems[] constant
+ *
+ * @export
+ * @param {*} username - username
+ * @return {*} 
+ */
 export async function getAllItemCounts(username) {
   let newItemCt = Array(allItems.length).fill(null);
   for (let i = 0; i < allItems.length; i++) {

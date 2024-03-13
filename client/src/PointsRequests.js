@@ -14,6 +14,14 @@
 //   const result = await getPoints(username);
 //   (result === null) ? alert("Bad request") : alert(`${username} has ${result} points`)
 // };
+
+/**
+ * Grabs/Obtains points from the database according to the passed in username.
+ *
+ * @export
+ * @param {*} username - user's username
+ * @return {*} 
+ */
 export async function getPoints(username) {
   const obj = { username: username };
   const response = await fetch(
@@ -31,10 +39,16 @@ export async function getPoints(username) {
   }
 }
 
-// Given a user's username as a string, add diff points (negative values also ok) to that user's points
-// Return true if points were successfully added
-
-// Usage: addPoints(username, 5) to add 5 points, addPoints(username, -5) to subtract 5 points
+/**
+ * Given a user's username as a string, add diff points (negative values also ok) to that user's points
+ * Returns true if points successfully added. 
+ * Usage: addPoints(username, 5) to add 5 points, addPoints(username, -5) to subtract 5 points
+ * 
+ * @export
+ * @param {*} username - user's username
+ * @param {*} diff - the requested addition (or subtraction) of points from a user's account
+ * @return {*} 
+ */
 export async function addPoints(username, diff) {
   const obj = { username: username, diff: diff };
   const response = await fetch(

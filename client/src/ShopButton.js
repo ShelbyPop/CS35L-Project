@@ -51,7 +51,12 @@ import wahWahSound from './Assets/wahwah.mp3';
 // GUI: https://opengameart.org/content/pixel-art-wooden-gui-by-narik-soulofkiran
 
 
-// This Allows a new image to be displayed while the user clicks an image button.
+/**
+ * Tracks user pressing a button or not via isPressed and React.Component
+ *
+ * @class ImageButton - Creates a button and renders image depending on current mouse (pressing) behaviour
+ * @extends {React.Component}
+ */
 class ImageButton extends React.Component {
   constructor(props) {
     super(props);
@@ -81,7 +86,12 @@ class ImageButton extends React.Component {
     );
   }
 }
-
+/**
+ * Creates Button Object on screen, shows pressedImage when clicked.
+ *
+ * @param {*} { itemImage, price, buyItem } - itemImage (image of the item), price (Cost of the item), buyItem (buyItem method)
+ * @return {*}  - returns The button object and pressed image while button is pressed.
+ */
 function ItemButton({ itemImage, price, buyItem }) {
   const [isPressed, setIsPressed] = React.useState(false);
 
@@ -100,7 +110,12 @@ function ItemButton({ itemImage, price, buyItem }) {
   );
 }
 
-
+/**
+ * Creates all the buttons and images relevant to the shop. 
+ *
+ * @param {*} { username } - username of the player logged in
+ * @return {*} - returns shop tabs and available/relevant items depending on what shop tab you are on.
+ */
 const ShopButton = ({ username }) => {
   const [showShop, setShowShop] = useState(false);
   const [points, setPoints] = useState("");
@@ -112,12 +127,20 @@ const ShopButton = ({ username }) => {
   useEffect(() => {
     getPoints(username).then((points) => setPoints(points));
   }, [username, showShop]);
-
-  const toggleShop = () => {
+/**
+ * Toggles between showing and not showing the shop.
+ *
+ */
+const toggleShop = () => {
     setShowShop(!showShop);
   };
-
-  const buyItem = async (cost) => {
+/**
+ * Sends method to purchase an item and rips points/coins from the user's account.
+ * If the uesr cannot purchase an item, displays alert and does not purchase the item.
+ *
+ * @param {*} cost - the price of the item
+ */
+const buyItem = async (cost) => {
     if (points >= cost) {
       const success = await addPoints(username, -cost);
       if (success) {
@@ -184,8 +207,13 @@ const ShopButton = ({ username }) => {
   }
 
 
-  // Allows for autoscroll on shop-tab click.
   const shopItemsRef = useRef(null);
+  /**
+   * Enables autoscrolling when a user presses a shop-tab option.
+   *
+   * @param {*} setTab - passed in method to tell the server that we are on a different tab, and should display the relevant items.
+   * @return {*}  - returns scroll behaviour
+   */
   const autoScroll = (setTab) => {
     return () => {
       shopItemsRef.current.scrollIntoView({ behavior: 'smooth' });
