@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd client
+npm install
+echo "STARTING CLIENT"
+npm start &
+
+cd ../server
+npm install
+echo "MONGO_URI=$1;" >.env
+echo "STARTING SERVER"
+npm start
