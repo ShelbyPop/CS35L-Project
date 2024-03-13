@@ -31,38 +31,39 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
     }
 
 
-
+    
     const sessionPoints = 5;
     const cyclePoints = 10;
 
     if(cyclesCompleted === 8 && isNewTimerInput) { // RETURN once we have reached 4 cycles
-      // addPoints(username, cyclePoints).then((success) => {
-      //   if (success) {
-      //     console.log("Points successfully added after cycle break.");
-      //     showNotification({
-      //       title: '🌟 Points Added!',
-      //       message: `You've just earned ${cyclePoints} points! Great job! 🎉`,
-      //       color: 'pink',
-      //       autoClose: 3000,
-      //       style: {
-      //         backgroundColor: '#e8ad64',
-      //         color: '#000000',
-      //         fontFamily: '"Frankfurter Std", cursive',
-      //         fontSize: '1.5rem',
-      //         padding: '2rem',
-      //         borderRadius: '1.5rem',
-      //       },
-      //       radius: 50,
-      //       withCloseButton: false,
-      //     });
-      //   } else {
-      //     console.error("Failed to add points after cycle break.");
-      //   }
-      // });
 
       setCyclesCompleted(0);
-
     }
+    else if (cyclesCompleted === 6 && isNewTimerInput && seconds === 0)
+     addPoints(username, cyclePoints).then((success) => {
+      if (success) {
+        console.log("Points successfully added after cycle break.");
+        showNotification({
+          title: '🌟 Points Added!',
+          message: `Cycle completed: +${cyclePoints} points!`,
+         color: 'pink',
+          autoClose: 3000,
+          style: {
+            backgroundColor: '#e8ad64',
+            color: '#000000',
+          fontFamily: '"Frankfurter Std", cursive',
+         fontSize: '1.5rem',
+            padding: '2rem',
+          borderRadius: '1.5rem',
+          },
+         radius: 50,
+          withCloseButton: false,
+        });
+          } 
+    });
+  
+
+    
 
     const tempIntervalId = setInterval(() => {
 
@@ -73,22 +74,29 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
 
         return;
         }
+
       if (seconds === 0 && cyclesCompleted % 2 === 0) {
           playTimerDone(timerDoneSound);
           onTimerFinish();
-        setTimerStatus('sessionBreak');
-          setSeconds(5);
-          setTimerLength(5);
+          if (seconds === 0 && cyclesCompleted === 6) { // final quadrant, longer break
+              setTimerStatus('cycleBreak');
+              setSeconds(15);
+              setTimerLength(15);
+            }
+          else {
+            setTimerStatus('sessionBreak')
+             setSeconds(5);
+            setTimerLength(5);
+        }
 
           console.log("Session complete in Timer.js");
 
-
-
+          console.log(cyclesCompleted);
           addPoints(username, sessionPoints).then((success) => {
-            if (success) {
+            if (success && cyclesCompleted !== 6 && cyclesCompleted !== 7 &&  cyclesCompleted !== 8) {
               showNotification({
                 title: '🌟 Points Added!',
-                message: `You've just earned ${sessionPoints} points! Great job!`,
+                message: `Session complete: +${sessionPoints} points!`,
                 color: 'pink',
                 autoClose: 3000,
                 style: {
