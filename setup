@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ####### Ansi Colors: Don't remove
+
 N="$(printf '\033[')" x=30
 for a in Bl R G Y B M C W # 4-bit Black Red Green Yellow Blue Magenta Cyan White
 do eval $a='$N'"'"$((   x))"m'" \
@@ -12,10 +13,14 @@ done
 
 N="${N}0m"
 
+# Check for correct number of arguments
+if [[ $# -ne 1 ]]; then
+  echo " ${M}[ERR]${N}: Please specify the MongoDB connection string as the only argument"
+  exit 1
+fi
+
 cd client
 npm install
-#echo "STARTING CLIENT"
-#npm start &
 
 cd ../server
 npm install
@@ -26,7 +31,6 @@ if [[ $? -ne 0 ]]; then
   echo " ${M}[ERR]${N}: Incorrect connection string was given"
   exit 1
 fi
-
 
 echo "${C}[INFO]${N}: Copying URI to .env file"
 echo "MONGO_URI=$1;" >.env
