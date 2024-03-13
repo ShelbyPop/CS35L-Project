@@ -91,6 +91,7 @@ export default function LoginInput({ setUsername }) {
               <TextInput
                 label="Password"
                 placeholder="your password"
+                type={form.values.firstTime ? "text" : "password"}
                 {...form.getInputProps('password')}
               />
               <Checkbox
