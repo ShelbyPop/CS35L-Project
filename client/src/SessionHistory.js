@@ -1,7 +1,12 @@
 import React from 'react';
-import './Leaderboard.css'; // Import the CSS file for styling
+import './Leaderboard.css'; 
 import { formatTime, formatDate } from './FormatDate.js';
 
+/**
+ * Displays a table of user sessions including user names, start times, end times, and session lengths
+ * Uses `formatTime` and `formatDate` for displaying times and dates in a readable format
+ * 
+ */
 const SessionHistory = ({ data }) => {
   return (
     <table className="leaderboard-table">

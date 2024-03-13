@@ -1,4 +1,10 @@
 // src/Clock.js
+/**
+ * Clock component that displays the current time
+ * The time is updated every second
+ * 
+ * @component
+ */
 import React, { useState, useEffect } from 'react';
 
 const Clock = () => {
