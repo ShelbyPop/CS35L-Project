@@ -1,6 +1,31 @@
 // Helper functions for modifying todos for a user
 
 /**
+ * Gets array of all todos for user
+ *
+ * @export
+ * @param {string} username
+ * @return {Object[]} Array of all todos for user on success, null on failure
+ */
+export async function getToDos(username) {
+  const obj = { username: username };
+  const response = await fetch(
+    `http://localhost:5050/todos/get?${new URLSearchParams(obj)}`
+  );
+
+  console.log(response);
+  if (response.ok) {
+    console.log(`Successfully retrieved todos for ${username}`);
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } else {
+    console.log(`Ran into an issue while attempting to retrieve todos for ${username}`);
+    return null;
+  }
+}
+
+/**
  * Creates a todo, given a user and input text
  *
  * @export
@@ -26,31 +51,6 @@ export async function createToDo(username, text) {
     return data;
   } else {
     console.log("Ran into an issue while attempting to insert todo");
-    return null;
-  }
-}
-
-/**
- * Gets array of all todos for user
- *
- * @export
- * @param {string} username
- * @return {Object[]} Array of all todos for user on success, null on failure
- */
-export async function getToDos(username) {
-  const obj = { username: username };
-  const response = await fetch(
-    `http://localhost:5050/todos/get?${new URLSearchParams(obj)}`
-  );
-
-  console.log(response);
-  if (response.ok) {
-    console.log(`Successfully retrieved todos for ${username}`);
-    const data = await response.json();
-    console.log(data);
-    return data;
-  } else {
-    console.log(`Ran into an issue while attempting to retrieve todos for ${username}`);
     return null;
   }
 }

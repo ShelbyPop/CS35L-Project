@@ -365,6 +365,18 @@ app.get("/sessions/user", async function (req, res) {
   }
 });
 
+// Handle GET request for getting all of a user's todos
+app.get("/todos/get", async function (req, res) {
+  const username = req.query.username;
+  console.log(`Get todos for user ${username}`);
+
+  // Return array of all todos for user
+  const cursor = todos.find({ username: username });
+  const todo = await cursor.toArray();
+  console.log(todo);
+  res.json(todo);
+});
+
 // Handle POST request for inserting a new session
 app.post("/todos/create", async function (req, res) {
   const username = req.query.username;
@@ -381,18 +393,6 @@ app.post("/todos/create", async function (req, res) {
   } else {
     res.status(400).send();
   }
-});
-
-// Handle GET request for getting all of a user's todos
-app.get("/todos/get", async function (req, res) {
-  const username = req.query.username;
-  console.log(`Get todos for user ${username}`);
-
-  // Return array of all todos for user
-  const cursor = todos.find({ username: username });
-  const todo = await cursor.toArray();
-  console.log(todo);
-  res.json(todo);
 });
 
 // Handle POST request for toggling completion status, given a todo id

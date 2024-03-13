@@ -6,9 +6,9 @@ export const allItems = ["coffee", "cakes", "pies", "donuts", "waffles", "misc"]
  * Gets the item count of a certain item in a user's inventory saved to the database
  *
  * @export
- * @param {string} username - the  user's username (string)
- * @param {string} item - the item to be counted (string)
- * @return {*} 
+ * @param {string} username
+ * @param {string} item - the item to be counted
+ * @return {string} Item count represented as string on success, null on failure 
  */
 export async function getItemCount(username, item) {
   if (!allItems.includes(item)) {
@@ -37,9 +37,9 @@ export async function getItemCount(username, item) {
  * Increments count of item in user's profile stats on the database
  *
  * @export
- * @param {string} username - username (string)
- * @param {string} item - relevant item being added (string)
- * @return {string} 
+ * @param {string} username
+ * @param {string} item - relevant item being added
+ * @return {boolean} True on success, false on failure
  */
 export async function addItem(username, item) {
   if (!allItems.includes(item)) {
@@ -64,11 +64,11 @@ export async function addItem(username, item) {
 }
 
 /**
- * Gets a count in an array of all items in the user's inventory, same order as allItems[] constant
+ * Gets a count in an array of all items in the user's inventory, same order as allItems[]
  *
  * @export
- * @param {string} username - username (string)
- * @return {*} 
+ * @param {string} username
+ * @return {string[]} Array of all item counts, represented as strings 
  */
 export async function getAllItemCounts(username) {
   let newItemCt = Array(allItems.length).fill(null);

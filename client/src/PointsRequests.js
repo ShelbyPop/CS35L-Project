@@ -1,26 +1,17 @@
 // Helper functions for getting/setting points for a user
 
-// Given a user's username as a string, return the number of points of that user
-
-// Usage: 
-// Use these lines exactly whenever you need a user's point total in a react component
-// const [points, setPoints] = useState("");
-// useEffect(() => {
-//   getPoints(username).then((points) => setPoints(points));
-// }, [username]);
-
-// Or, if you can use async function (e.g. in a listener like this), do it like this example
-// const handleGetPoints = async (username) => {
-//   const result = await getPoints(username);
-//   (result === null) ? alert("Bad request") : alert(`${username} has ${result} points`)
-// };
-
 /**
- * Grabs/Obtains points from the database according to the passed in username
+ * Gets user's total points
  *
  * @export
- * @param {string} username - user's username (string)
- * @return {*} 
+ * @param {string} username
+ * @return {string} User's point total represented as a string on success, null on failure
+ * 
+ * @example
+ * 
+ * useEffect(() => {
+ *  getPoints(username).then((points) => setPoints(points));
+ *  }, [username]);
  */
 export async function getPoints(username) {
   const obj = { username: username };
@@ -40,14 +31,17 @@ export async function getPoints(username) {
 }
 
 /**
- * Given a user's username as a string, add diff points (negative values also ok) to that user's points
- * Returns true if points successfully added.
- * Usage: addPoints(username, 5) to add 5 points, addPoints(username, -5) to subtract 5 points
+ * Given a user's username as a string, adds diff points (negative values also ok) to that user's points
  * 
  * @export
  * @param {string} username - user's username (string)
- * @param {number} diff - the requested addition (or subtraction) of points from a user's account (int number)
- * @return {*} 
+ * @param {number} diff - the requested addition (or subtraction) of points from a user's account
+ * @return {boolean} True on addition (or subtraction) success, false on failure 
+ * 
+ * @example
+ * 
+ * // subtract 5 points
+ * addPoints(username, -5)
  */
 export async function addPoints(username, diff) {
   const obj = { username: username, diff: diff };

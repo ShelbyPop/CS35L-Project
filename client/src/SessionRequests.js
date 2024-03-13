@@ -57,9 +57,6 @@ export async function getUserSessions(username) {
   }
 }
 
-// Parse the array returned by getUserSessions() into an object with various user statistics:
-// most recent session, total number of sessions, total time spent focusing, average session length
-
 /**
  * Parses the array returned by getUserSessions() into an object with various user statistics:
  * most recent session, total number of sessions, total time spent focusing, and average session length
