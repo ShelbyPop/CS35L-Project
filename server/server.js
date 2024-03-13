@@ -14,7 +14,10 @@ const todos = client.db("database").collection("todos");
 
 const allItems = ["coffee", "cakes", "pies", "donuts", "waffles", "misc"];
 
-// Connect to MongoDB server
+/**
+ * Connects to MongoDB server
+ *
+ */
 async function connectToMongo() {
   try {
     await client.connect();
@@ -28,7 +31,12 @@ async function connectToMongo() {
 // Call the connectToMongo function to establish the connection
 connectToMongo();
 
-// Get array of user (users, if we messed up) matching username
+/**
+ * Gets array of all users matching username
+ *
+ * @param {string} username
+ * @return {Object[]} Array of MongoDB documents in the users collection, with matching username 
+ */
 async function getUser(username) {
   const cursor = users.find({ username: username });
   const user = await cursor.toArray();
@@ -36,7 +44,12 @@ async function getUser(username) {
   return user;
 }
 
-// Given a number of users, checks if numUsers is 1 and prints error messages otherwise
+/**
+ * Given a number of users, checks if numUsers is 1 and prints error messages to console if not
+ *
+ * @param {number} numUsers
+ * @return {boolean} True if numUsers is 1, else false
+ */
 function isValidUser(numUsers) {
   if (numUsers > 1) {
     console.log("Too many users, please fix bug!!");
@@ -48,7 +61,13 @@ function isValidUser(numUsers) {
   return true;
 }
 
-// Insert new user into users collection with empty sessions array
+/**
+ * Inserts new user into users collection with empty sessions array
+ *
+ * @param {string} username
+ * @param {string} password
+ * @return {Object} MongoDB document containing a boolean and the id of the inserted document on success
+ */
 async function createUser(username, password) {
   const user = await getUser(username);
   // Return if username already exists
@@ -68,17 +87,28 @@ async function createUser(username, password) {
   });
 }
 
-// Validate existence of user with matching password in collection (return boolean)
+/**
+ * Validates existence of user with matching password in collection
+ *
+ * @param {string} username
+ * @param {string} password
+ * @return {boolean} True if exactly 1 user exists and password matches stored password, else false
+ */
 async function loginUser(username, password) {
   const user = await getUser(username);
   if (!isValidUser(user.length)) {
-    return null;
+    return false;
   }
   console.log(`${user[0].password}, ${password}`);
   return (user.length === 1 && user[0].password === password);
 }
 
-// Return number of points of user
+/**
+ * Gets number of points of user
+ *
+ * @param {string} username
+ * @return {string} Number of points stored for a user as a string if user exists, else null
+ */
 async function getUserPoints(username) {
   const user = await getUser(username);
   if (!isValidUser(user.length)) {
@@ -87,7 +117,13 @@ async function getUserPoints(username) {
   return (user[0].points);
 }
 
-// Add points to user; return true if success and false if user not found
+/**
+ * Adds points to user
+ *
+ * @param {string} username
+ * @param {string} diff - number of points to add/subtract
+ * @return {boolean} True if success, false if user not found
+ */
 async function addUserPoints(username, diff) {
   const user = await getUser(username);
   if (!isValidUser(user.length)) {
@@ -109,7 +145,13 @@ async function addUserPoints(username, diff) {
   return true;
 }
 
-// Check how many of a given item a user has
+/**
+ * Checks how many of a given item a user has
+ *
+ * @param {string} username
+ * @param {string} item - name of item type to be counted, must be in allItems array
+ * @return {string} Number of item (as a string) that the given user has on success, null on failure 
+ */
 async function getUserItemCount(username, item) {
   const user = await getUser(username);
   if (!isValidUser(user.length)) {
@@ -122,7 +164,13 @@ async function getUserItemCount(username, item) {
   return null;
 }
 
-// Add 1 to the count of item, given a user
+/**
+ * Adds 1 to a user's item count for a specified item
+ *
+ * @param {string} username
+ * @param {string} item - name of item type to be incremented, must be in allItems array
+ * @return {boolean} True on update success, else false
+ */
 async function addUserItem(username, item) {
   const user = await getUser(username);
   if (!isValidUser(user.length)) {
@@ -137,7 +185,16 @@ async function addUserItem(username, item) {
   return false;
 }
 
-// Insert a new session into the sessions collection
+/**
+ * Inserts a new session into the sessions collection
+ *
+ * @param {string} username
+ * @param {string} startTime - Date string representing session start time
+ * @param {string} endTime - Date string representing session end time
+ * @param {string} sessionLength - length of session, in seconds & represented as string
+ * @return {Object} MongoDB document containing a boolean and the id of the inserted document on success,
+ *  else null if invalid user/start time/end time
+ */
 async function createSession(username, startTime, endTime, sessionLength) {
   // Only insert session if user is signed in and startTime/endTime is valid
   const user = await getUser(username);
@@ -157,7 +214,14 @@ async function createSession(username, startTime, endTime, sessionLength) {
   });
 }
 
-// Insert a new session into the sessions collection
+/**
+ * Inserts a new todo associated with a given user
+ *
+ * @param {string} username
+ * @param {string} text - user-inputted description for the todo
+ * @return {Object} MongoDB document containing a boolean and the id of the inserted document on success,
+ *  else null if another todo with the same text exists or if user is invalid
+ */
 async function createToDo(username, text) {
   const user = await getUser(username);
   if (!isValidUser(user.length)) {
@@ -183,7 +247,13 @@ async function createToDo(username, text) {
   });
 }
 
-// Toggle the "completed" property for the todo matching id
+/**
+ * Toggles the "completed" property for the todo matching objId
+ *
+ * @param {ObjectId} objId - MongoDB ObjectId of the existing todo
+ * @return {Object} MongoDB document containing Mongo-generated info on success, else null 
+ *  if there is no todo with the given objId
+ */
 async function toggleToDo(objId) {
   const cursor = todos.find({ _id: objId });
   const todo = await cursor.toArray();
@@ -199,6 +269,13 @@ async function toggleToDo(objId) {
   return await todos.updateOne({ _id: objId }, updateDocument);
 }
 
+/**
+ * Deletes the todo matching id
+ *
+ * @param {ObjectId} objId - MongoDB ObjectId of the existing todo
+ * @return {Object} MongoDB document containing Mongo-generated info on success, else null 
+ *  if there is no todo with the given objId
+ */
 async function deleteToDo(objId) {
   const cursor = todos.find({ _id: objId });
   const todo = await cursor.toArray();
@@ -206,7 +283,7 @@ async function deleteToDo(objId) {
 
   // First, make sure the todo with id actually exists
   if (todo.length !== 1) {
-    return false;
+    return null;
   }
 
   return await todos.deleteOne({ _id: objId });
