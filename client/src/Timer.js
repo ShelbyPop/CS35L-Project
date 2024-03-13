@@ -92,28 +92,30 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
           console.log("Session complete in Timer.js");
 
           console.log(cyclesCompleted);
-          addPoints(username, sessionPoints).then((success) => {
-            if (success && cyclesCompleted !== 6 && cyclesCompleted !== 7 &&  cyclesCompleted !== 8) {
-              showNotification({
-                title: '🌟 Points Added!',
-                message: `Session complete: +${sessionPoints} points!`,
-                color: 'pink',
-                autoClose: 3000,
-                style: {
-                  backgroundColor: '#e8ad64',
-                  color: '#000000',
-                  fontFamily: '"Frankfurter Std", cursive',
-                  fontSize: '1.5rem',
-                  padding: '2rem',
-                  borderRadius: '1.5rem',
-                },
-                radius: 50,
-                withCloseButton: false,
-              });
-            } else {
-              console.error("Failed to add points after session break.");
-            }
-          });
+          if (cyclesCompleted !== 6 && cyclesCompleted !== 7 &&  cyclesCompleted !== 8) {
+            addPoints(username, sessionPoints).then((success) => {
+              if (success) {
+                showNotification({
+                  title: '🌟 Points Added!',
+                  message: `Session complete: +${sessionPoints} points!`,
+                  color: 'pink',
+                  autoClose: 3000,
+                  style: {
+                    backgroundColor: '#e8ad64',
+                    color: '#000000',
+                    fontFamily: '"Frankfurter Std", cursive',
+                    fontSize: '1.5rem',
+                    padding: '2rem',
+                    borderRadius: '1.5rem',
+                  },
+                  radius: 50,
+                  withCloseButton: false,
+                });
+              } else {
+                console.error("Failed to add points after session break.");
+              }
+            });
+          }
 
           setCyclesCompleted(cyclesCompleted + 1);
           // return 0;
