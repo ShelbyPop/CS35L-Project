@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef} from 'react';
 import './ShopButton.css';
 import { getPoints, addPoints } from './PointsRequests.js';
+import { allItems, addItem } from './ItemRequests.js';
 import coffeeImage from './Assets/coffee_64x.png';
 import muffinImage from './Assets/muffin_64x.png';
 import toastImage from './Assets/toast_64x.png';
@@ -123,6 +124,7 @@ const ShopButton = ({ username }) => {
         const updatedPoints = await getPoints(username);
         setPoints(updatedPoints);
         playChaChing(); // Play the sound upon successful purchase
+        addItem(username, selectedTab);
         alert(`Item purchased! You now have ${updatedPoints} ${updatedPoints === 1 ? 'coin' : 'coins'} remaining.`);
       } else {
         alert('There was an issue with the transaction.');
@@ -181,6 +183,16 @@ const ShopButton = ({ username }) => {
     case 'misc': itemsToDisplay = miscItems; break;
   }
 
+
+  // Allows for autoscroll on shop-tab click.
+  const shopItemsRef = useRef(null);
+  const autoScroll = (setTab) => {
+    return () => {
+      shopItemsRef.current.scrollIntoView({ behavior: 'smooth' });
+      setTab();
+    };
+  };
+
   return (
     <div className="game-world">
       <button className="shop-button" onClick={toggleShop}>Shop</button>
@@ -192,15 +204,15 @@ const ShopButton = ({ username }) => {
               <img src={ShopWelcome} alt="Shop - Buy Below."/>
               <div className="shop-items">
                 <div className="shop-tabs">
-                  <ImageButton defaultImage={CoffeeButton} pressedImage={CoffeePressed} altText="Coffee" onClick={() => setSelectedTab('coffee')} />
-                  <ImageButton defaultImage={CakesButton} pressedImage={CakesPressed} altText="Cakes" onClick={() => setSelectedTab('cakes')} />
-                  <ImageButton defaultImage={PiesButton} pressedImage={PiesPressed} altText="Pies" onClick={() => setSelectedTab('pies')} />
-                  <ImageButton defaultImage={DonutsButton} pressedImage={DonutsPressed} altText="Donuts" onClick={() => setSelectedTab('donuts')} />
-                  <ImageButton defaultImage={WafflesButton} pressedImage={WafflesPressed} altText="Waffles" onClick={() => setSelectedTab('waffles')} />
-                  <ImageButton defaultImage={MiscButton} pressedImage={MiscPressed} altText="Misc" onClick={() => setSelectedTab('misc')} />
+                  <ImageButton defaultImage={CoffeeButton} pressedImage={CoffeePressed} altText="Coffee" onClick={autoScroll(() => setSelectedTab('coffee'))} />
+                  <ImageButton defaultImage={CakesButton} pressedImage={CakesPressed} altText="Cakes" onClick={autoScroll(() => setSelectedTab('cakes'))} />
+                  <ImageButton defaultImage={PiesButton} pressedImage={PiesPressed} altText="Pies" onClick={autoScroll(() => setSelectedTab('pies'))} />
+                  <ImageButton defaultImage={DonutsButton} pressedImage={DonutsPressed} altText="Donuts" onClick={autoScroll(() => setSelectedTab('donuts'))} />
+                  <ImageButton defaultImage={WafflesButton} pressedImage={WafflesPressed} altText="Waffles" onClick={autoScroll(() => setSelectedTab('waffles'))} />
+                  <ImageButton defaultImage={MiscButton} pressedImage={MiscPressed} altText="Misc" onClick={autoScroll(() => setSelectedTab('misc'))} />
                 </div>
 
-                <div className="shop-items">
+                <div className="shop-items" ref={shopItemsRef}>
                   {itemsToDisplay.map((item, index) => (
                     <ItemButton key={index} itemImage={item.image} price={item.price} buyItem={buyItem} />
                   ))}
