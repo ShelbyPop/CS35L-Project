@@ -28,6 +28,7 @@
     border-radius: 8px; 
     font-family: 'Lucida Console', monospace;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    text-shadow: none;
   }
   
 
