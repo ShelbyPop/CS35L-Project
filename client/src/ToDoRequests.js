@@ -1,6 +1,13 @@
 // Helper functions for modifying todos for a user
 
-// Create a todo, given a user and input text
+/**
+ * Creates a todo, given a user and input text
+ *
+ * @export
+ * @param {string} username
+ * @param {string} text
+ * @return {Object} The newly created todo on success, null on failure
+ */
 export async function createToDo(username, text) {
   const obj = {
     username: username,
@@ -23,7 +30,13 @@ export async function createToDo(username, text) {
   }
 }
 
-// Get array of all todos for user
+/**
+ * Gets array of all todos for user
+ *
+ * @export
+ * @param {string} username
+ * @return {Object[]} Array of all todos for user on success, null on failure
+ */
 export async function getToDos(username) {
   const obj = { username: username };
   const response = await fetch(
@@ -42,7 +55,13 @@ export async function getToDos(username) {
   }
 }
 
-// Toggle completion of a todo, given its id
+/**
+ * Toggles completion of a todo, given its id
+ *
+ * @export
+ * @param {string} id
+ * @return {Object} The newly updated todo on success, null on failure 
+ */
 export async function toggleToDo(id) {
   const obj = { id: id };
   const response = await fetch(
@@ -62,7 +81,13 @@ export async function toggleToDo(id) {
   }
 }
 
-// Delete a todo, given its id
+/**
+ * Deletes a todo, given its id
+ *
+ * @export
+ * @param {string} id
+ * @return {boolean} True on todo deletion success, false on failure 
+ */
 export async function deleteToDo(id) {
   const obj = { id: id };
   const response = await fetch(

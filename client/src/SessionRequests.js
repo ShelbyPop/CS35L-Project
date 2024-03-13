@@ -1,6 +1,15 @@
 // Helper functions for modifying or accessing a user's sessions
 
-// Create a session, given a user's username and Date objects startTime, endTime
+/**
+ * Creates a session, given a user's username and Date objects startTime, endTime
+ *
+ * @export
+ * @param {string} username
+ * @param {Date} startTime
+ * @param {Date} endTime
+ * @param {number} sessionLength
+ * @return {boolean} True on session creation success, false on failure
+ */
 export async function createSession(username, startTime, endTime, sessionLength) {
   const obj = {
     username: username,
@@ -25,7 +34,13 @@ export async function createSession(username, startTime, endTime, sessionLength)
   }
 }
 
-// Return an array of all of a user's sessions
+/**
+ * Returns an array of all of a user's sessions
+ *
+ * @export
+ * @param {string} username
+ * @return {Object[]} Array of user sessions on request success, null on failure
+ */
 export async function getUserSessions(username) {
   const obj = { username: username };
   const response = await fetch(`http://localhost:5050/sessions/user?${new URLSearchParams(obj)}`);
@@ -44,6 +59,15 @@ export async function getUserSessions(username) {
 
 // Parse the array returned by getUserSessions() into an object with various user statistics:
 // most recent session, total number of sessions, total time spent focusing, average session length
+
+/**
+ * Parses the array returned by getUserSessions() into an object with various user statistics:
+ * most recent session, total number of sessions, total time spent focusing, and average session length
+ * 
+ * @export
+ * @param {string} username
+ * @return {Object} Statistics for the user's sessions 
+ */
 export async function parseUserSessions (username) {
   const userSessionsArray = await getUserSessions(username);
   const totalSessions = userSessionsArray.length;
