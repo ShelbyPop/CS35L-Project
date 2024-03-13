@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { MongoClient, ObjectId } from "mongodb";
+import sha256 from 'crypto-js/sha256.js';
 
 const app = express();
 app.use(cors());
@@ -74,9 +75,11 @@ async function createUser(username, password) {
   if (user.length) {
     return;
   }
+  // Hash the password before storing it
+  const hashedPass = sha256(password).toString();
   return await users.insertOne({
     username: username,
-    password: password,
+    password: hashedPass,
     points: "0",
     coffee: "0",
     cakes: "0",
@@ -99,8 +102,10 @@ async function loginUser(username, password) {
   if (!isValidUser(user.length)) {
     return false;
   }
-  console.log(`${user[0].password}, ${password}`);
-  return (user.length === 1 && user[0].password === password);
+  // Hash the input password before compared it to the (hashed) correct password
+  const hashedPass = sha256(password).toString();
+  console.log(`${user[0].password}, ${hashedPass}`);
+  return (user.length === 1 && user[0].password === hashedPass);
 }
 
 /**
