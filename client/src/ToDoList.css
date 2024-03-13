@@ -16,9 +16,6 @@
     line-height: 1; 
   }
   
-  .todo-toggle-button:hover {
-    filter: brightness(85%);
-}
 
   .todo-list-container {
     font-size: 18px;
