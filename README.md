@@ -91,6 +91,15 @@ Virounika Mina📝
 [ToDo List Creation](https://medium.com/@worachote/building-a-todo-list-app-with-reactjs-a-step-by-step-guide-2c58b9b6c0f5)<br>
 
 
+## Project Behavior
+*Why Pomodoro?*
+The Pomodoro Technique is a time management method developed by Francesco Cirillo in the late 1980s. It breaks work into intervals, traditionally 25 minutes in length, separated by short breaks. Each interval is known as a "Pomodoro," named after the tomato-shaped kitchen timer Cirillo used as a university student. The basic steps are:
+1. Choose a task to work on.
+2. Set a timer for 25 minutes and work on the task until the timer rings.
+3. Take a short break (5 minutes) to rest and recharge.
+4. Every four Pomodoros, take a longer break (15-30 minutes).
+
+Once Café PomPom is up and running, you'll be greeted with a colorful, interactive café environment. Users can log in or create an account, set the Pomodoro timer, manage tasks, earn points, and shop for items. Below are screenshots of what a user may encounter. Here, we follow the journey of user <b>saltine crackers</b>:
 
 
 
