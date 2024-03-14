@@ -6,10 +6,15 @@ import { showNotification } from '@mantine/notifications';
 import timerDoneSound from './Assets/timerdone.mp3';
 import useSound from 'use-sound';
 
-
+/** 
+ * Draws a timer with audio and visual features
+ *
+ * @param {*} - Udpating and tracking features of timer
+ *      { timerLength, setTimerLength, username, isRunning, setIsRunning, onTimerFinish }
+ * @return {*} - Customized Pomodoro timer with sessions and cycles
+ */
 const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning, onTimerFinish }) => {
   const [seconds, setSeconds] = useState(timerLength);
-  // const [breakSeconds, setBreakSeconds] = useState(5 * 60);
   const [cyclesCompleted, setCyclesCompleted] = useState(0); // use for tracking which cycle we are on
   const [isNewTimerInput, setIsNewTimerInput] = useState(false); // use for tracking if there is new timer input
   const [timerStatus, setTimerStatus] = useState('work');
@@ -31,15 +36,17 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
     }
 
 
-    
-    const sessionPoints = 5;
-    const cyclePoints = 10;
+    const sessionPoints = 5; // user earns 5 pts upon completing a pomodoro session
+    const cyclePoints = 10; // user earns 10 pts upon completing a pomodoro cycle (4 sessions)
 
-    if(cyclesCompleted === 8 && isNewTimerInput) { // RETURN once we have reached 4 cycles
-
+    // cyclesCompleted = 1 pomodoro session
+      // 1 work session = +1 cyclesCompleted
+      // 1 break session = +1 cyclesCompleted
+      // 8 cyclesCompleted = 1 pomodoro cycle
+    if(cyclesCompleted === 8 && isNewTimerInput) { // reset after completing 1 pomodoro cycle
       setCyclesCompleted(0);
     }
-    else if (cyclesCompleted === 6 && isNewTimerInput && seconds === 0)
+    else if (cyclesCompleted === 6 && isNewTimerInput && seconds === 0) // add cycle points after reaching final break session
      addPoints(username, cyclePoints).then((success) => {
       if (success) {
         console.log("Points successfully added after cycle break.");
@@ -64,33 +71,37 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
   
 
     
-
-    const tempIntervalId = setInterval(() => {
-
-
+/** 
+ * Determines which countdowns (how many sec) to do based on session user is on
+ *
+ *  @return {*} - clearInterval(tempIntervalId)
+ *      - hook dependency and intializing variables to determine seconds
+ * */
+const tempIntervalId = setInterval(() => {
       if (seconds > 0) {
-        setSeconds((prevSeconds) => Math.max(0, prevSeconds - 1));
-
-
+        setSeconds((prevSeconds) => Math.max(0, prevSeconds - 1)); // timer countdown
         return;
         }
 
-      if (seconds === 0 && cyclesCompleted % 2 === 0) {
+      // due to the +1 cyclesCompleted increment starting at 0
+        // even-numbered cyclesCompleted are the break sessions
+      if (seconds === 0 && cyclesCompleted % 2 === 0) { 
           playTimerDone(timerDoneSound);
           onTimerFinish();
-          if (seconds === 0 && cyclesCompleted === 6) { // final quadrant, longer break
+          if (seconds === 0 && cyclesCompleted === 6) { // countdown for cycle break
               setTimerStatus('cycleBreak');
               setSeconds(15);
               setTimerLength(15);
             }
           else {
-            setTimerStatus('sessionBreak')
+            setTimerStatus('sessionBreak') // countdown for regular session break
              setSeconds(5);
             setTimerLength(5);
         }
 
           console.log("Session complete in Timer.js");
 
+          // +5 points for regular sessions
           console.log(cyclesCompleted);
           if (cyclesCompleted !== 6 && cyclesCompleted !== 7 &&  cyclesCompleted !== 8) {
             addPoints(username, sessionPoints).then((success) => {
@@ -117,16 +128,14 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
             });
           }
 
-          setCyclesCompleted(cyclesCompleted + 1);
-          // return 0;
-      } else {
+          setCyclesCompleted(cyclesCompleted + 1); // Increment cycleCompleted after break session
+      } 
+      else {
           clearInterval(intervalId);
-
-          setCyclesCompleted(cyclesCompleted + 1); // update cycle
-        setTimerStatus('work');
+          setCyclesCompleted(cyclesCompleted + 1); // Increment cycleCompleted after work session
+          setTimerStatus('work');
           setIsNewTimerInput(false);
           setIsRunning(false);
-          // setBreakSeconds(5 * 60);
           return 0;
         }
     }, 1000);
@@ -135,6 +144,13 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
     return () => clearInterval(tempIntervalId);
   }, [seconds, timerLength, isRunning]);
 
+
+  /**
+   * Determines Message in Status Bar with switch case invoked by changing sessions
+   * 
+   * @param {string} timerStatus - Sets what session timer is on
+   * @return {string} - Message displayed in status bar
+   */
   const getMessage = () => {
     switch (timerStatus) {
       case 'work':
@@ -148,23 +164,34 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
     }
   };
 
-  // Format seconds into MM:SS
+
+  /**
+   * Format time in MM:SS
+   *
+   * @param {*} timeInSeconds
+   * @return {*} - Displays Time in MM:SS format
+   */
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
     return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   };
 
-  const progress = (timerLength - seconds) / timerLength;
 
-  // filling the quarters according to which cycle we are on
+// Calculate what % we are through the current session
+  const progress = (timerLength - seconds) / timerLength; 
+
+
+  /**
+   * Draw Timer that Fills Quadrants according to the session user is on
+   *
+   * @param {*} quadrantIndex - 
+   * @return {*} - Manually drawn circle with quadrants
+   */
   const getQuadrantFill = (quadrantIndex) => {
-
-
-
     if (cyclesCompleted === 0) {
-      if (quadrantIndex === 1 && isNewTimerInput) { // check if there is new time input
-        return `rgba(200, 162, 200, ${progress})`;
+      if (quadrantIndex === 1 && isNewTimerInput) { // Check if there is new time input
+        return `rgba(200, 162, 200, ${progress})`; // Increase opacity of quadrant as session progresses
       }
       else {
         return 'transparent';
@@ -172,7 +199,7 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
     }
 
     if (cyclesCompleted === 1) {
-      if (quadrantIndex === 1 ) { // make sure previous fillings present during break
+      if (quadrantIndex === 1 ) { // Previously filled quadrants remain filled during break
         return `rgba(200, 162, 200)`;
       }
 
@@ -183,10 +210,10 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
 
 
     if (cyclesCompleted === 2) {
-      if (quadrantIndex === 1 ) { // make sure previous fillings do not get reset
+      if (quadrantIndex === 1 ) { // Previously filled quadrants remain filled
         return `rgba(200, 162, 200)`;
       }
-      if (quadrantIndex === 2 && isNewTimerInput) { // check if there is new time input
+      if (quadrantIndex === 2 && isNewTimerInput) { 
         return `rgba(200, 162, 200, ${progress})`;
       }
       else {
@@ -195,7 +222,7 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
     }
 
     if (cyclesCompleted === 3) {
-      if (quadrantIndex === 1 ) { // make sure previous fillings present during break
+      if (quadrantIndex === 1 ) { // 
         return `rgba(200, 162, 200)`;
       }
       if (quadrantIndex === 2) {
@@ -281,15 +308,13 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
     }
   };
 
-
-// did some clock reformatting!
   return (
       <div>
         <div className="circular-timer">
-          <svg className="circular-timer-svg" width="300" height="300">
+          <svg className="circular-timer-svg" width="300" height="300"> 
             <g transform="rotate(-90, 150, 150)">
               <path
-                  d="M 150 150 L 265 150 A 110 200 0 0 1 150 260 Z" // manually drew quadrants
+                  d="M 150 150 L 265 150 A 110 200 0 0 1 150 260 Z" // Manually drew quadrants
                   fill={getQuadrantFill(1)}
               ></path>
               <path
@@ -305,7 +330,7 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
                   fill={getQuadrantFill(4)}
               ></path>
               <circle
-                  cx="150"       // create outer white ring
+                  cx="150"       // Drew outer ring of timer
                   cy="150"
                   r="110"
                   stroke="white"
@@ -314,7 +339,7 @@ const Timer = ({ timerLength, setTimerLength, username, isRunning, setIsRunning,
               ></circle>
               <circle
                   className="circular-timer-progress"
-                  cx="150"   // create pink fill-up ring
+                  cx="150"   // Drew pink progress bar
                   cy="150"
                   r="110"
                   strokeDasharray={`${progress * 691} 691`}
