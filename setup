@@ -36,6 +36,8 @@ echo "${C}[INFO]${N}: Copying URI to .env file"
 echo "MONGO_URI=$1;" >.env
 
 cd ..
+npm install
+
 echo ''
 read -p "   ${M}[?]${N}: Automatically start server now? ${M}[y/n]${N} " -n 1 yn
 echo ''

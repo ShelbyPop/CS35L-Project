@@ -3,7 +3,6 @@
     "dev-both": "concurrently --names=\"C,S\" --prefix-colors magenta,cyan --kill-others \"npm run --prefix client dev\" \"npm run --prefix server dev\""
   },
   "dependencies": {
-    "chalk": "^5.3.0",
     "concurrently": "^8.2.2"
   }
 }
