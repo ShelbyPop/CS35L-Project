@@ -28,6 +28,25 @@ We use MongoDB for our datastore needs due to its user-friendliness and ability 
 
 Terminology: A collection is a group of similar documents (like a data table), and a database is a group of collections. We have 3 distinct collections in our MongoDB database: users, sessions, and todos. The users collection stores basic information about every user, including their username, hashed password, current point total, and quantity of each shop item. In the sessions collection, each document corresponds to a single recorded focus session, with the user who created the session, the session start and end time, and the session length. Each document in the todos collection corresponds to a single todo (displayed in the ToDoList component) and stores information about the user who created the todo, the display text for the todo, and the completion status of the todo.
 
+<b>BACKEND</b>
+Our backend features a collection of Express endpoints that handle user authentication, session management, points tracking, and more. For better organization, the first word in each route path corresponds to the primary collection from which data is being retrieved, although some routing methods query data from multiple collections.
+
+Endpoints Include: <br>
+`/users/create`: POST request to create a new user account, given a username and password. This requires each user to have a unique username so that users can be easily identified by username (this is in addition to the unique MongoDB object ID created for each user stored in the collection) <br>
+`/users/login`: GET request to authenticate a user, given a username and password. This compares hashed input password against stored hashed password <br>
+`/users/points/get`: GET request to retrieve a user’s point total, given a username<br>
+`/users/points/add`: POST request for changing a user’s point total, given a username and quantity of points to be added/subtracted<br>
+`/users/items/get`: GET request for accessing the count of an item in a user’s inventory, given a username and an item category<br>
+`/users/items/add`: POST request for incrementing the item count in a user’s inventory by 1, given a username and an item category<br>
+`/users/leaderboard`: GET request for retrieving all documents in the user's collection matching a keyword query. This returns only the data matching the query, which will filter documents by any substring matching a username or point total<br> 
+`/sessions/create`: POST request to add a focus session to the database, given a username, start time, end time, and session length<br>
+`/sessions/history`: GET request for retrieving all documents in the sessions collection matching a keyword query. This returns only the data matching the query, which will filter documents by any substring matching a username<br>
+`/sessions/user`: GET request for retrieving all documents in the sessions collection for a user, given a username to search for. This differs from /sessions/history endpoint since it will send an error status if the username does not exist, while the /sessions/history endpoint will just send an empty array<br>
+`/todos/get`: GET request for retrieving all documents in the todos collection for a user, given a username to search for<br>
+`/todos/create`: POST request for inserting a new todo, given a username and todo display text<br>
+`/todos/toggle`: POST request for toggling completion status, given the MongoDB object ID of the todo (as a string)<br>
+`/todos/delete`: POST request for deleting a todo, given the MongoDB object ID of the todo (as a string)
+
 
 
 ## Setup & Commands
@@ -44,6 +63,50 @@ If either command has nonempty output, identify the PID(s) of any processes usin
 ```
 sudo kill -9 PID
 ```
-for each (replacing PID with the actual PID)
+for each (replacing PID with the actual PID).
+
+Now to actually run the app, run:
+```
+git clone https://github.com/ShelbyPop/CS35L-Project
+cd CS35L-Project
+./setup CONNECTION_STRING
+```
+In the last command, replace <b>CONNECTION_STRING</b> with the actual MongoDB connection string in quotations (provided in the individual reports). Note: the connection string is in the commit history because we didn’t hide it until recently, but the password has been changed so that string no longer works.<br>
+Go to http://localhost:3000/ to view the app (may start automatically). After setting up the first time, just run
+```
+npm run dev-both
+```
+to start the app.
+
+## Contributors
+Isabelle Hong🗂️<br> 
+Iris Shi⏱️<br>
+Shelby Falde🎨<br>
+Virounika Mina📝
+
+
+## Sources
+[The Pomodoro Technique](https://www.asundergrad.pitt.edu/study-lab/study-skills-tools-resources/pomodoro-technique)<br>
+[CSS Animations](https://www.w3schools.com/css/css3_animations.asp)<br>
+[ToDo List Creation](https://medium.com/@worachote/building-a-todo-list-app-with-reactjs-a-step-by-step-guide-2c58b9b6c0f5)<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
