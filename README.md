@@ -13,6 +13,8 @@ The navigation bar located at the top of the page becomes visible when hovered o
 
 The shop allows for purchasing different pastries with points earned. Users may view the count of items purchased by type, last session, average session length, and total session time. 
 
+![CafePomPom](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/pompomhomepage.png)
+
 ## Components
 <b>FRONTEND</b>
 The frontend of Café PomPom is a vibrant interface crafted with React.js. The key components include:
@@ -101,12 +103,23 @@ The Pomodoro Technique is a time management method developed by Francesco Cirill
 
 Once Café PomPom is up and running, you'll be greeted with a colorful, interactive café environment. Users can log in or create an account, set the Pomodoro timer, manage tasks, earn points, and shop for items. Below are screenshots of what a user may encounter. Here, we follow the journey of user <b>saltine crackers</b>:
 
+*The user logs in*
+![LoggingIn](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/login.png)
 
+*5 points are rewarded after the completion of a work session as the timer enters the 5-minute break*
+![5PointsEarned](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/gotpoints.png)
 
+*The timer progresses during the third work session*
+![3rdSession](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/thirdsession.png)
 
+*The user spends 12 points on purchasing buttered pancakes from the shop*
+![Shopping](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/shopping.png)
 
+*The user is very happy about their pancake purchase, and they go to view their inventory and see that they have many desserts*
+![Inventory](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/inventory.png)
 
-
+*The user views the Leaderboard that shows the collective points across all players*
+![ViewLeaderBoard](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/leaderboard.png)
 
 
 
