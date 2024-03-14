@@ -13,12 +13,19 @@ import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles/global.css'; // Please don't delete this line, it will mess up the checkbox
 import '@mantine/notifications/styles.css';
 
+/**
+ * The main component for the Café PomPom web app
+ * This component manages the layout and functionality
+ */
 function App() {
   const [timerLength, setTimerLength] = useState(25 * 60); // Set a default timer length so it's not 0
   const [sessionStartTime, setSessionStartTime] = useState(null);
   const [username, setUsername] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
-
+ /**
+   * Sets the timer length and starts the timer
+   * @param {number} length - The length of the timer in minutes
+   */
   const onSetTimer = (length) => {
     setTimerLength(length ? length * 1 : 25 * 60); // Corrected for minutes
    // TODO: change 1 back to 60 for actual minutes
@@ -26,6 +33,10 @@ function App() {
     setSessionStartTime(new Date()); // Record the start time of the session
   };
 
+   /**
+   * Function called when the timer finishes
+   * This function logs the session details and creates a new session in the database
+   */
   const onTimerFinish = async () => {
     console.log("Timer cycle completed!");
     const sessionEndTime = new Date(Date.now() - 1000); // offset by 1 second due to tempIntervalId delay
