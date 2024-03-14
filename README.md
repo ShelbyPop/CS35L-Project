@@ -103,22 +103,22 @@ The Pomodoro Technique is a time management method developed by Francesco Cirill
 
 Once Café PomPom is up and running, you'll be greeted with a colorful, interactive café environment. Users can log in or create an account, set the Pomodoro timer, manage tasks, earn points, and shop for items. Below are screenshots of what a user may encounter. Here, we follow the journey of user <b>saltine crackers</b>:
 
-*The user logs in*
+### <b>*The user logs in*</b>
 ![LoggingIn](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/login.png)
 
-*5 points are rewarded after the completion of a work session as the timer enters the 5-minute break*
+### <b> *5 points are rewarded after the completion of a work session as the timer enters the 5-minute break*</b>
 ![5PointsEarned](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/gotpoints.png)
 
-*The timer progresses during the third work session*
+### <b> *The timer progresses during the third work session* </b>
 ![3rdSession](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/thirdsession.png)
 
-*The user spends 12 points on purchasing buttered pancakes from the shop*
+### <b> *The user spends 12 points on purchasing buttered pancakes from the shop* </b>
 ![Shopping](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/shopping.png)
 
-*The user is very happy about their pancake purchase, and they go to view their inventory and see that they have many desserts*
+### <b> *The user is very happy about their pancake purchase, and they go to view their inventory and see that they have many desserts* </b>
 ![Inventory](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/inventory.png)
 
-*The user views the Leaderboard that shows the collective points across all players*
+### <b> *The user views the Leaderboard that shows the collective points across all players* </b>
 ![ViewLeaderBoard](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/leaderboard.png)
 
 
