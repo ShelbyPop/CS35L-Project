@@ -6,6 +6,8 @@ import { formatTime, formatDate } from './FormatDate.js';
  * Displays a table of user sessions including user names, start times, end times, and session lengths
  * Uses `formatTime` and `formatDate` for displaying times and dates in a readable format
  * 
+ * @param {*} { data }
+ * @return {*} 
  */
 const SessionHistory = ({ data }) => {
   return (

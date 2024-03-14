@@ -31,7 +31,7 @@ export default function LoginInput({ setUsername }) {
   });
 
   /**
-   *
+   * This function manages requests for logging in as a user or creating a new account
    *
    * @param {*} values
    */
@@ -69,9 +69,12 @@ export default function LoginInput({ setUsername }) {
     form.reset(); // Reset form values
   };
 
-
+  /**
+   * Changes the login form state when the button is clicked
+   *
+   */
   const handleClick = () => {
-    setIsOpen(!isOpen); // CHANGE the login form state when the button is clicked
+    setIsOpen(!isOpen);
   };
 
   return (

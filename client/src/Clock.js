@@ -1,12 +1,11 @@
-// src/Clock.js
+import React, { useState, useEffect } from 'react';
+
 /**
  * Clock component that displays the current time
  * The time is updated every second
  * 
  * @component
  */
-import React, { useState, useEffect } from 'react';
-
 const Clock = () => {
   const [time, setTime] = useState(new Date());
 
@@ -18,6 +17,11 @@ const Clock = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+  /**
+   * Formats the current time
+   *
+   * @return {*} 
+   */
   const formattedTime = () => {
     const options = { hour: 'numeric', minute: 'numeric', second: 'numeric' };
     return new Intl.DateTimeFormat('en-US', options).format(time);
@@ -25,7 +29,7 @@ const Clock = () => {
 
   return (
     <div>
-<div className="custom-clock" style={{ marginTop: '10px' }}>Current time: {formattedTime()} </div>
+      <div className="custom-clock" style={{ marginTop: '10px' }}>Current time: {formattedTime()} </div>
     </div>
   );
 };

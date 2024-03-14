@@ -86,10 +86,11 @@ class ImageButton extends React.Component {
     );
   }
 }
+
 /**
  * Creates Button Object on screen, shows pressedImage when clicked
  *
- * @param {*, number,method} { itemImage, price, buyItem } - itemImage (image of the item), price (Cost of the item), buyItem (buyItem method)
+ * @param {*, number, method} { itemImage, price, buyItem } - itemImage (image of the item), price (Cost of the item), buyItem (buyItem method)
  * @return {*}  - returns The button object and pressed image while button is pressed
  */
 function ItemButton({ itemImage, price, buyItem }) {
@@ -127,6 +128,7 @@ const ShopButton = ({ username }) => {
   useEffect(() => {
     getPoints(username).then((points) => setPoints(points));
   }, [username, showShop]);
+
 /**
  * Toggles between showing and not showing the shop.
  *
@@ -134,6 +136,7 @@ const ShopButton = ({ username }) => {
 const toggleShop = () => {
     setShowShop(!showShop);
   };
+
 /**
  * Sends method to purchase an item and rips points/coins from the user's account
  * If the uesr cannot purchase an item, displays alert and does not purchase the item
@@ -209,6 +212,7 @@ const buyItem = async (cost) => {
 
 
   const shopItemsRef = useRef(null);
+
   /**
    * Enables autoscrolling when a user presses a shop-tab option
    *

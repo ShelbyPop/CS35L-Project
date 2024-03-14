@@ -154,14 +154,26 @@ const UserStatsPopup = ({ username }) => {
     }
 };
 
+/**
+ * Manages the other popups defined in this file, and it also displays the
+ * user's username if a user is logged in.
+ * 
+ * @param {*} { username }
+ * @return {*} 
+ */
 const Navigation = ({ username }) => {
   const [activePopup, setActivePopup] = useState('');
-
+ 
+  /**
+   * Closes popup if open or opens requested popup
+   *
+   * @param {*} popupName
+   */
   const showPopup = (popupName) => {
       if (activePopup === popupName) {
-          setActivePopup(''); // Close the popup if it's already open
+          setActivePopup('');
       } else {
-          setActivePopup(popupName); // Open the requested popup
+          setActivePopup(popupName);
       }
   };
   
