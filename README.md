@@ -52,6 +52,12 @@ Endpoints Include: <br>
 
 
 ## Setup & Commands
+> [!NOTE]
+> The commit history of this repository appears to contain a MongoDB connection string. However,
+> this string was only in place during development and is not present in the most recent version of 
+> the code. Additionally, the password in the connection string in the commit history has already
+> been revoked, so it is no longer a valid connection string for our cluster either way.
+
 To set up the Café PomPom app, you'll need Node.js (v20.11.0) and npm installed on your system. Clone the repository, install dependencies, and start the local server. Here are some commands you'll need to interact with the project repository and set up the application. 
 We assume you have Git and Node.js installed already. Note that these setup instructions are only guaranteed to work on Mac. 
 Additionally, please make sure that ports 3000 and 5050 are not already in use, or else we cannot guarantee that the app will run. To do this, run the following commands:
