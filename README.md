@@ -144,6 +144,7 @@ Virounika Mina📝
 - Created the frontend portion of the ToDoList component
 - Set up the Shop component
 - CSS styling throughout the web app
+- Miscellaneous code fixes throughout the codebase
 - Miscellaneous JavaDocs for multiple components
 - Wrote significant portion of README
 - For more contributions, please view individual report
