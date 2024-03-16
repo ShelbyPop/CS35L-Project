@@ -4,7 +4,7 @@
   <img src="https://github.com/ShelbyPop/CS35L-Project/blob/b198aab3aa9d8e50bed19fd5c28aa6e294f9f4f6/client/src/cat2.png" width="50" height="50">
 </svg>
 
-Welcome to Café PomPom, a productivity app that provides users with an engaging way to manage their time and tasks. From the principles of the Pomodoro technique with a playful interface, Café PomPom encourages focus and efficiency through timed work sessions, while rewarding users with breaks and virtual shop access where they can redeem points earned for completing tasks. 
+Welcome to Café PomPom, a productivity app that provides users with an engaging way to manage their time and tasks. From the principles of the Pomodoro technique with a playful interface, Café PomPom encourages focus and efficiency through timed work sessions, while rewarding users with breaks and virtual shop access where they can redeem points earned for completing tasks. The standout aspects of our project are the cute interface with custom art created by one of our group members, as well as the diverse array of features implemented.
 
 Users should begin with the login button. The login feature is accessible through a click on the floating cat. New users should check the box “First-time user” and ensure their password contains at least 6 characters, otherwise log in with your credentials.
 The timer opens with a default session length of 25 minutes, and is followed by a 5-minute break. 5 points are awarded after a session is completed. 4 sessions equal 1 cycle, and upon completing a cycle, a user earns 10 points. A user can view their current status with the dynamic status bar below the timer, and get notified of points awarded through popup notifications in the app. A user can enter a number into the timer bar, click Set Timer, and watch the timer begin. Upon logging in, a user can update their todo list, using the TODO LIST button, for quick and easy access across login sessions.
@@ -12,8 +12,6 @@ The timer opens with a default session length of 25 minutes, and is followed by 
 The navigation bar located at the top of the page becomes visible when hovered over and keeps updated information about a user, such as points. The user must be logged in to access their information and earn points. The navigation bar allows a user to verify that they are logged in; the username will appear on the right of the navigation bar. Under history, users can see all sessions of all users, searching for their own sessions or their friends! The navigation bar also includes a leaderboard displaying all users and their points. 
 
 The shop allows for purchasing different pastries with points earned. Users may view the count of items purchased by type, last session, average session length, and total session time. 
-
-The standout aspects of our project are the cute interface with custom art created by one of our group members, as well as the diverse array of features implemented.
 
 ![CafePomPom](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/pompomhomepage.png)
 
