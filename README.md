@@ -90,8 +90,11 @@ to start the app.
 Isabelle Hong🗂️
 - Set up a separate npm package for the backend
 - Set up MongoDB cluster + structured the collections (users, sessions, todos) within the database
-- Wrote all Express endpoints
-- Wrote all functions in the frontend that interacted with routes via the Fetch API
+- Wrote all Express endpoints and wrote all functions in the frontend that interacted with routes via the Fetch API
+  - Managing user login & account creation
+  - Accessing and modifying point totals, item counts, and todos for each user
+  - Recording a new focus session
+  - Accessing all user data for Leaderboard & all session data for Session History + user stats
 - Hashed passwords before storing them in the users collection
 - Wrote the SessionHistory and Leaderboard React components, which display formatted tables with session/user data from the backend and support search queries
 - Wrote the LoginInput component, the form for user login & account creation
@@ -116,7 +119,7 @@ Iris Shi⏱️
 - (incomplete: implementing user chat -> more details in written report)
 
 
-Shelby Falde🎨<br>
+Shelby Falde🎨
  - Created several pixel-art pieces
    - Main background for the images
    - Muffin, toast, coffee sprites for shop items
@@ -126,14 +129,24 @@ Shelby Falde🎨<br>
    - Created button animation in shop
    - Also personalized scrollbar and most CSS features for the Shop
    - Isolated tab menus that display respective items depending on tab pressed.
- - Small contributions/tweaks to Leaderboard and Sessionhistory's CSS
+ - Small contributions/tweaks to Leaderboard and SessionHistory's CSS
  - Javadocs comments for Shop, and a couple others such as some of PointsRequests and ItemRequests
  - Contributed to images in README
  - Some debugging for .gitignore file(s)
 
    
 Virounika Mina📝
-
+- Set up the frontend 
+- Set up the initial web app + App component
+- Significant contributions to the Timer component, including notifications and work status
+- Created the Clock + TimerInput components
+- Created the Navigation component, with popups for each tab
+- Created the frontend portion of the ToDoList component
+- Set up the Shop component
+- CSS styling throughout the web app
+- Miscellaneous JavaDocs for multiple components
+- Wrote significant portion of README
+- For more contributions, please view individual report
 
 ## Sources
 [The Pomodoro Technique](https://www.asundergrad.pitt.edu/study-lab/study-skills-tools-resources/pomodoro-technique)<br>
