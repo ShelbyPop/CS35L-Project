@@ -101,7 +101,21 @@ Isabelle Hong🗂️
 - Contributed the backend portion of the README
 - Helped troubleshoot other members' work, e.g. Git issues, running the server, fixing React components, fixing missing dependencies, removing node_modules
 
-Iris Shi⏱️<br>
+Iris Shi⏱️
+- Built timer
+  - Drew circles, shapes, and quadrants of timer using coordinates
+  - Set up second-tracking status bar
+  - Set up quadrant-opacity system for tracking # of sessions per cycle
+  - Implemented 5-min breaks
+  - Connected timer to backend/user components
+- README frontend + formatting
+- JavaDocs for timer-related files
+- Wrote CSS files serving as the basis of homepage theme (ie: App.css for items/fonts/background/clock, Leaderboard.css for tables)
+- Troubleshooting frontend/formatting: re-formatted and re-shifted items as new components got added to better suit theme of app
+- Troubleshooting and maintaining timer: as backend/user components got added/deleted, fixed timer and got it to work again
+- (incomplete: implementing user chat -> more details in written report)
+
+
 Shelby Falde🎨<br>
 Virounika Mina📝
 
