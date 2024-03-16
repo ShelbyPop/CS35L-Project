@@ -87,7 +87,7 @@ npm run dev-both
 to start the app.
 
 ## Contributors
-Isabelle Hong🗂️<br>
+Isabelle Hong🗂️
 - Set up a separate npm package for the backend
 - Set up MongoDB cluster + structured the collections (users, sessions, todos) within the database
 - Wrote all Express endpoints
@@ -100,6 +100,7 @@ Isabelle Hong🗂️<br>
 - Wrote JavaDocs, mainly for any functions relating to the backend
 - Contributed the backend portion of the README
 - Helped troubleshoot other members' work, e.g. Git issues, running the server, fixing React components, fixing missing dependencies, removing node_modules
+
 Iris Shi⏱️<br>
 Shelby Falde🎨<br>
 Virounika Mina📝
