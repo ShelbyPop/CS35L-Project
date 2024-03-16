@@ -117,6 +117,21 @@ Iris Shi⏱️
 
 
 Shelby Falde🎨<br>
+ - Created several pixel-art pieces
+   - Main background for the images
+   - Muffin, toast, coffee sprites for shop items
+   - Compiled and stitched art assets together to create buttons and shop backgrounds, and any other wooden art featured.
+     - (Assets created by DustDFG on OpenGameArt.org, also credited elsewhere and where relevant)
+ - Created most of Shop feature, using methods created by others to fetch and set to back-end
+   - Created button animation in shop
+   - Also personalized scrollbar and most CSS features for the Shop
+   - Isolated tab menus that display respective items depending on tab pressed.
+ - Small contributions/tweaks to Leaderboard and Sessionhistory's CSS
+ - Javadocs comments for Shop, and a couple others such as some of PointsRequests and ItemRequests
+ - Contributed to images in README
+ - Some debugging for .gitignore file(s)
+
+   
 Virounika Mina📝
 
 
