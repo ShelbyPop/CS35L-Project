@@ -13,6 +13,8 @@ The navigation bar located at the top of the page becomes visible when hovered o
 
 The shop allows for purchasing different pastries with points earned. Users may view the count of items purchased by type, last session, average session length, and total session time. 
 
+The standout aspects of our project are the cute interface with custom art created by one of our group members, as well as the diverse array of features implemented.
+
 ![CafePomPom](https://github.com/ShelbyPop/CS35L-Project/blob/eac1affa7167a87952a9e384430398d3348053ee/client/src/pompomhomepage.png)
 
 ## Components
@@ -87,7 +89,19 @@ npm run dev-both
 to start the app.
 
 ## Contributors
-Isabelle Hong🗂️<br> 
+Isabelle Hong🗂️<br>
+- Set up a separate npm package for the backend
+- Set up MongoDB cluster + structured the collections (users, sessions, todos) within the database
+- Wrote all Express endpoints
+- Wrote all functions in the frontend that interacted with routes via the Fetch API
+- Hashed passwords before storing them in the users collection
+- Wrote the SessionHistory and Leaderboard React components, which display formatted tables with session/user data from the backend and support search queries
+- Wrote the LoginInput component, the form for user login & account creation
+- Wrote the setup script for setting up the web app
+- Contributed some CSS styling, e.g. for the SessionHistory & Leaderboard tables
+- Wrote JavaDocs, mainly for any functions relating to the backend
+- Contributed the backend portion of the README
+- Helped troubleshoot other members' work, e.g. Git issues, running the server, fixing React components, fixing missing dependencies, removing node_modules
 Iris Shi⏱️<br>
 Shelby Falde🎨<br>
 Virounika Mina📝
